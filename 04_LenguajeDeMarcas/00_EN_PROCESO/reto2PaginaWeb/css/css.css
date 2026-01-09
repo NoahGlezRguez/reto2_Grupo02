@@ -10,6 +10,7 @@
     background-color: #f8f8f8;
    /*padding: 10px;*/
     padding-left: 10px;
+    
     border-radius: 1rem;
   
     
@@ -37,6 +38,13 @@
     height: 100%;
   
   
+}
+
+.cartelera, .promo, .contacto, .inicio, .sesion{
+    background-color: rgba(0, 153, 135, 0.082);
+    border-radius: 5px;  
+    border-bottom: 1px solid rgba(24, 134, 121 );
+    
 }
 
 /*--------------------------------------------------------*/
@@ -173,16 +181,19 @@ hr{
 }
 
 .peliculas{
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     border-radius: 2rem;
     padding: 2rem;
     text-align: left;
     background-color: #eaabdc1f;
     box-shadow: #3333336f 0px 3px 5px;   
+    transition: ease 0.3s, color 0.3s;
+    
 }
 
 .img {
@@ -195,4 +206,9 @@ hr{
 .img img {
     width: 100%;
     max-width: 80rem;
+}
+.peliculas:hover{
+
+    background-color: #eaabdc57;
+    border: 2px  solid pink;
 }
