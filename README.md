@@ -1,2 +1,2 @@
-# reto2_Grupo01
-Repositorio del grupo 01 para el reto 2 de DAM
+# reto2_Grupo02
+Repositorio del grupo 02 para el reto 2 de DAM
