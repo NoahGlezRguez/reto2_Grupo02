@@ -1,46 +1,44 @@
 create database cine_Elorrieta
-collate utf8mb4_spanish_ci; /* is collate ok ? */
+collate utf8mb4_spanish_ci;
 
-/* poner auto increment en los id ? */
-/* poner update on cascade ? */
 /* cuales valores poner not null */
 
 create table Cine(
-	IDCine int primary key,
+	IDCine int unsigned auto_increment primary key,
 	nom varchar (50) not null
 );
 
 create table sala(
-	IDCine int,
-	numSala int,
+	IDCine int unsigned not null,
+	numSala int unsigned auto_increment,
 	constraint PK_sala primary key (IDcine, numSala),
-	constraint FK_Cine_sala foreign key (IDCine) references Cine (IDCine) on delete cascade /* ODC ?? */
+	constraint FK_Cine_sala foreign key (IDCine) references Cine (IDCine) on update cascade on delete cascade
 );
 
 create table genero(
-	IDGen int primary key,
+	IDGen int unsigned auto_increment primary key,
     NomGen varchar(20) not null
 );
 
 create table pelicula(
-	IDpeli int primary key,
+	IDpeli int unsigned auto_increment primary key,
     NomPeli varchar(50) not null,
-    Duracion int not null, /* time???? */
-    IDGen int,
-    constraint FK_genero_pelicula foreign key (IDGen) references Genero (IDGen)
+    Duracion int unsigned not null,
+    IDGen int unsigned not null,
+    constraint FK_genero_pelicula foreign key (IDGen) references Genero (IDGen) on update cascade
 );
 
 create table sesion(
-	IDsesion int primary key, 
+	IDsesion int unsigned auto_increment primary key, 
     fec date not null,
     hora_ini time not null,
     hora_fin time not null,
-    precio float not null, /* float? */
-    IDCine int,
-	NumSala int,
-    IDPeli int,
-    constraint FK_Sala_Sesion foreign key (IDCine, NumSala) references sala (IDCine, NumSala),
-    constraint FK_Pelicula_Sesion foreign key (IDPeli) references Pelicula (IDPeli)
+    precio decimal(4,2) not null, /* float? */
+    IDCine int unsigned not null,
+	NumSala int unsigned not null,
+    IDPeli int unsigned not null,
+    constraint FK_Sala_Sesion foreign key (IDCine, NumSala) references sala (IDCine, NumSala) on update cascade on delete cascade,
+    constraint FK_Pelicula_Sesion foreign key (IDPeli) references Pelicula (IDPeli) on update cascade on delete cascade
 );
 
 create table Cliente(
@@ -48,28 +46,26 @@ create table Cliente(
     NomCli varchar (20) not null,
     Ape varchar (20) not null,
     mail varchar(100) unique not null,
-    password varchar(25) not null /* is this right ? idk how to save the password and I also dk why it is blued */
+    password varchar(255) not null
 
 );
 
 create table Compra(
-
-	IDCompra int primary key,
+	IDCompra int unsigned auto_increment primary key,
     FecCompra date not null,
     plataforma enum ('web','app') not null, 
     DNI varchar(9) not null,
-    constraint FK_Cliente_Compra foreign key (DNI) references Cliente (DNI)
-    
+    constraint FK_Cliente_Compra foreign key (DNI) references Cliente (DNI) on update cascade on delete cascade
 );
 
 create table Entrada(
 
-	IDEntrada int primary key,
-    CantPersonas int not null,
-    IDSesion int not null,
-    IDCompra int not null,
-    constraint FK_Sesion_Entrada foreign key (IDSesion) references Sesion(IDSesion),
-    constraint FK_Compra_Entrada foreign key (IDCompra) references Compra(IDCompra)
+	IDEntrada int unsigned auto_increment primary key,
+    CantPersonas int unsigned not null,
+    IDSesion int unsigned not null,
+    IDCompra int unsigned not null,
+    constraint FK_Sesion_Entrada foreign key (IDSesion) references Sesion(IDSesion) on update cascade on delete cascade,
+    constraint FK_Compra_Entrada foreign key (IDCompra) references Compra(IDCompra) on update cascade on delete cascade
     
 );
 
