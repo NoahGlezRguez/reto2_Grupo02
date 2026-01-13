@@ -158,12 +158,11 @@ header{
     margin: 20px 0;
 }
 
-<<<<<<< Updated upstream:04_LenguajeDeMarcas/00_EN_PROCESO/reto2PaginaWeb/css/css.css
-.peliculas{
-=======
+
+
 .peliculas, .peliestrenos{
 
->>>>>>> Stashed changes:04_LenguajeDeMarcas/00_EN_PROCESO/web/css/css.css
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -187,13 +186,12 @@ header{
 .img img {
     width: 100%;
     max-width: 80rem;
-<<<<<<< Updated upstream:04_LenguajeDeMarcas/00_EN_PROCESO/reto2PaginaWeb/css/css.css
-=======
-}
+
+}   
 .peliculas:hover{
 
     background-color: #eaabdc57;
-    border: 2px  solid pink;
+    border: 2px  solid pink;        
 }
 
 .estrenos{
@@ -231,5 +229,5 @@ header{
 .img img{
 
     max-width: 90%;
->>>>>>> Stashed changes:04_LenguajeDeMarcas/00_EN_PROCESO/web/css/css.css
+
 }
