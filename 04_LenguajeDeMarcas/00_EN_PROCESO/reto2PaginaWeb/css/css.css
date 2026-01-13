@@ -89,12 +89,12 @@ footer {
     text-align: center;
     padding: 20px;
     background-color: #f0f0f0;
-    margin-top: 20px;
+    margin-top: 3rem;
     height: 200px;
     border-radius: 1rem;
 }
 
-.indeximg {
+.indeximg, .proximg{
     margin: 0;
     max-width: 100%;
     height: auto;
@@ -130,11 +130,6 @@ header{
     margin: 1rem;
 }
 
-/* this hr is gonna be deleted */
-hr{
-    width: 15rem;
-    margin-left: 0;
-}
 
 #titulo, #title, #preguntasf {
     color: #0c4600;
@@ -163,7 +158,12 @@ hr{
     margin: 20px 0;
 }
 
+<<<<<<< Updated upstream:04_LenguajeDeMarcas/00_EN_PROCESO/reto2PaginaWeb/css/css.css
 .peliculas{
+=======
+.peliculas, .peliestrenos{
+
+>>>>>>> Stashed changes:04_LenguajeDeMarcas/00_EN_PROCESO/web/css/css.css
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -176,6 +176,7 @@ hr{
     box-shadow: #3333336f 0px 3px 5px;   
 }
 
+
 .img {
     display: flex;
     justify-content: center;
@@ -186,4 +187,49 @@ hr{
 .img img {
     width: 100%;
     max-width: 80rem;
+<<<<<<< Updated upstream:04_LenguajeDeMarcas/00_EN_PROCESO/reto2PaginaWeb/css/css.css
+=======
+}
+.peliculas:hover{
+
+    background-color: #eaabdc57;
+    border: 2px  solid pink;
+}
+
+.estrenos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.peliestrenos{
+
+    margin:2rem
+}
+
+#subproximo, #titulo, #prox{
+
+    justify-self: center;
+    margin-top: 2rem;
+    color: #0c4600;
+}
+
+#parrafotitulo{
+
+    margin: 2rem;
+    display: flex;
+    background-color: #e4d8e11f;
+    box-shadow: #33333341 0px 3px 5px;  
+    border: 2px solid #f1eeee85;
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 90%;
+    justify-content: center;
+    
+}
+
+.img img{
+
+    max-width: 90%;
+>>>>>>> Stashed changes:04_LenguajeDeMarcas/00_EN_PROCESO/web/css/css.css
 }
