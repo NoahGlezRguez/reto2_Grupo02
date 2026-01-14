@@ -55,6 +55,8 @@ create table Compra(
     FecCompra date not null,
     plataforma enum ('web','app') not null, 
     DNI varchar(9) not null,
+    precioCompra decimal(4,2) not null, /** VERIFICAR **/
+    descuento int unsigned not null,  /** VERIFICAR **/
     constraint FK_Cliente_Compra foreign key (DNI) references Cliente (DNI) on update cascade on delete cascade
 );
 
