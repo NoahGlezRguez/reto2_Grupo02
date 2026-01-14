@@ -23,7 +23,7 @@ create table pelicula(
 	IDpeli int unsigned auto_increment primary key,
     NomPeli varchar(50) not null,
     Duracion int unsigned not null, /*minutos*/
-   /* precio_inicial decimal (4,2) not null ,*/
+   /* precio_inicial decimal (4,2) not null ,*/  /* RECOMENDADO POR ARANTZA TAMBIÉN  */ 
     IDGen int unsigned not null,
     constraint FK_genero_pelicula foreign key (IDGen) references Genero (IDGen) on update cascade
 );
@@ -97,4 +97,4 @@ insert into pelicula values(5, 'Sweet dreams', 140, 1);
 insert into pelicula values(6, 'El llanto maldito', 115, 1);
 insert into pelicula values(7, 'Mi madre y yo', 100, 3);
 insert into pelicula values(8, 'The F*k end of the world', 125, 2);
-
+insert into pelicula values(9, 'El sillón', 135, 1);
