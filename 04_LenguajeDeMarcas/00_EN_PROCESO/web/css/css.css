@@ -1,18 +1,15 @@
 .menu {
 
     display: flex;
-    margin-right: 20px;
     list-style: none;
     justify-content: right;
     align-items: center;
-    width: 100%;
+
     height: 60px;
     background-color: #f8f8f8;
    /*padding: 10px;*/
-    padding-left: 10px;
-    
+    padding-left: 2rem;
     border-radius: 1rem;
-  
     
 }
 
@@ -227,16 +224,23 @@ header{
 
 #parrafotitulo{
 
-    margin: 2rem;
+    
     display: flex;
     background-color: #e4d8e11f;
     box-shadow: #33333341 0px 3px 5px;  
     border: 2px solid #f1eeee85;
     padding: 2rem;
     border-radius: 1rem;
-    max-width: 90%;
-    justify-content: center;
+    max-width: 80%;
+    margin: 2rem;
     
+}
+
+#bienvenida{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .img img{
