@@ -1,18 +1,15 @@
 .menu {
 
     display: flex;
-    margin-right: 20px;
     list-style: none;
     justify-content: right;
     align-items: center;
-    width: 100%;
+
     height: 60px;
     background-color: #f8f8f8;
    /*padding: 10px;*/
-    padding-left: 10px;
-    
+    padding-left: 2rem;
     border-radius: 1rem;
-  
     
 }
 
@@ -102,7 +99,7 @@ footer {
     border-radius: 1rem;
 }
 
-.indeximg {
+.indeximg, .proximg{
     margin: 0;
     max-width: 100%;
     height: auto;
@@ -136,12 +133,6 @@ header{
     align-items:start;
     justify-content: left;
     margin: 1rem;
-}
-
-/* this hr is gonna be deleted */
-hr{
-    width: 15rem;
-    margin-left: 0;
 }
 
 #titulo, #title, #preguntasf {
@@ -180,7 +171,7 @@ hr{
     margin: 20px 0;
 }
 
-.peliculas{
+.peliculas, .peliestrenos{
 
     display: flex;
     flex-direction: column;
@@ -211,4 +202,49 @@ hr{
 
     background-color: #eaabdc57;
     border: 2px  solid pink;
+}
+
+.estrenos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.peliestrenos{
+
+    margin:2rem
+}
+
+#subproximo, #titulo, #prox{
+
+    justify-self: center;
+    margin-top: 2rem;
+    color: #0c4600;
+}
+
+#parrafotitulo{
+
+    
+    display: flex;
+    background-color: #e4d8e11f;
+    box-shadow: #33333341 0px 3px 5px;  
+    border: 2px solid #f1eeee85;
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 80%;
+    margin: 2rem;
+    
+}
+
+#bienvenida{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img img{
+
+    max-width: 90%;
+
 }
