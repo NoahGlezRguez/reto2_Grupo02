@@ -1,5 +1,6 @@
-/*create database cine_elorrieta;
-drop database cine_elorrieta;*/
+/*drop database cine_elorrieta;*/
+create database cine_elorrieta;
+
 use cine_elorrieta;
 
 create table Cine(
@@ -10,7 +11,7 @@ create table Cine(
 create table sala(
 	numSala int unsigned auto_increment,
 	IDCine int unsigned not null,
-	constraint PK_sala primary key (numSala, IDcine),
+	primary key (numSala, IDcine),
 	constraint FK_Cine_sala foreign key (IDCine) references Cine (IDCine) on update cascade on delete cascade
 );
 
@@ -61,17 +62,14 @@ create table Compra(
 	IDCompra int unsigned auto_increment primary key,
     FecCompra timestamp default current_timestamp not null,
     plataforma enum ('web','app') not null, 
-    DNI varchar(9) not null,
     descuento decimal (5,2) not null, 
     total decimal(4,2) not null,
+	DNI varchar(9) not null,
     constraint FK_Cliente_Compra foreign key (DNI) references Cliente (DNI) on update cascade on delete cascade
     
 );
 
-/*----------------- insert de compra -------------------*/
-insert into compra values(1, '', 'web', '12345678A', 0.00, 6.30);
-insert into compra values(2, '', 'app', '54769853Ñ', );
-/*----------------- fin de insert de compra -------------------*/
+
 
 create table Entrada(
 
@@ -88,24 +86,19 @@ create table Entrada(
 /* si en los inserts quieres insertar un id que no sabes si existe puedes poner null y automaticamente le asigna el número que le correspondería 
 porque tiene el auto increment*/
 
-/*--------------------- insert de entrada ---------------*/
-insert into entrada values(1, 1, 6.30, 15, 1);
-insert into entrada values();
-insert into entrada values();
-insert into entrada values();
-/*--------------------- fin de insert de entrada ---------------*/
+
 
 /*------------------- insert de cine -----------------*/
 insert into Cine values (1, 'Elorrieta Cines');
 /*------------------- fin de insert de cine -----------------*/
 
 /* ------------------- insert se salas -----------------*/
-insert into Salas values(1, 'Elorrieta Cines');
-insert into Salas values(2, 'Elorrieta Cines');
-insert into Salas values(3, 'Elorrieta Cines');
-insert into Salas values(4, 'Elorrieta Cines');
-insert into Salas values(5, 'Elorrieta Cines');
-insert into Salas values(6, 'Elorrieta Cines');
+insert into Sala values(1, 1);
+insert into Sala values(2, 1);
+insert into Sala values(3, 1);
+insert into Sala values(4, 1);
+insert into Sala values(5, 1);
+insert into Sala values(6, 1);
 /* ------------------- fin de insert se salas -----------------*/
 
 /*------------------- insert de genero -----------------*/
@@ -170,11 +163,20 @@ insert into sesion values(36, '2026-01-22', '21:30', '23:10', 8.00, 1, 6, 7); /*
 /*------------------- fin de insert de sesion -----------------*/
 
 /*------------------- insert de cliente -----------------*/
-insert into cliente values('12345478A', 'ana', 'rosa', 'ana@gmail.com', '1234');
+insert into cliente values('12345678A', 'ana', 'rosa', 'ana@gmail.com', '1234');
 insert into cliente values('12345678B', 'juan', 'ramirez', 'juan@gmail.com', '4321');
 insert into cliente values('12345678C', 'maria', 'hernandez', 'maria@gmail.com', '5423');
 insert into cliente values('21321265A', 'luis', 'martinez', 'luis@gmail.com', '6666');
 insert into cliente values('54769853Ñ', 'J', 'PG', 'jpg@gmail.com', 'JPEG');
 /*------------------- fin de insert de cliente -----------------*/
 
+/*----------------- insert de compra -------------------*/
+insert into compra values(1, current_timestamp, 'web', 0.00, 6.30, '12345678A');
+insert into compra values(2, current_timestamp, 'app', 20.00, 25.6,  '54769853Ñ');
+/*----------------- fin de insert de compra -------------------*/
+/*--------------------- insert de entrada ---------------*/
+insert into entrada values(1, 1, 6.30, 15, 1);
+insert into entrada values(2, 2, 16.00, 21, 2);
+insert into entrada values(3, 2, 16.00, 36, 2);
 
+/*--------------------- fin de insert de entrada ---------------*/
