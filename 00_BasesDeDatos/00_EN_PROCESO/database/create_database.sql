@@ -1,4 +1,4 @@
-/*drop database cine_elorrieta;*/
+/*drop database cine_elorrieta; */
 create database cine_elorrieta;
 
 use cine_elorrieta;
@@ -174,10 +174,169 @@ insert into cliente values('54769853Ñ', 'J', 'PG', 'jpg@gmail.com', 'JPEG');
 /*----------------- insert de compra -------------------*/
 insert into compra values(1, current_timestamp, 'web', 0.00, 6.30, '12345678A');
 insert into compra values(2, current_timestamp, 'app', 20.00, 25.6,  '54769853Ñ');
+insert into compra values(3, current_timestamp, 'web', 20.00, 11.60, '12345678A');
+insert into compra values(4, current_timestamp, 'app', 30.00, 16.31, '12345678B');
+insert into compra values(5, current_timestamp, 'web', 0.00, 8.00, '21321265A');
+insert into compra values(6, current_timestamp, 'app', 20.00, 13.28, '54769853Ñ');
+/*-----------VERIFICAR----------------*/
+
 /*----------------- fin de insert de compra -------------------*/
 /*--------------------- insert de entrada ---------------*/
 insert into entrada values(1, 1, 6.30, 15, 1);
 insert into entrada values(2, 2, 16.00, 21, 2);
 insert into entrada values(3, 2, 16.00, 36, 2);
 
+/*-----------VERIFICAR----------------*/
+
+
+insert into entrada values
+(null, 1, 6.30, 3, 3),
+(null, 1, 6.90, 7, 3);
+
+
+
+insert into entrada values
+(null, 1, 7.22, 1, 4),
+(null, 1, 8.00, 9, 4),
+(null, 1, 6.30, 15, 4);
+
+
+
+insert into entrada values
+(null, 1, 8.00, 10, 5);
+
+
+
+insert into entrada values
+(null, 1, 7.65, 8, 6),
+(null, 1, 9.00, 11, 6);
+
+
+
+insert into entrada values
+(null, 2, 18.00, 11, 6);
+
+/*-----------VERIFICAR----------------*/
+
+
 /*--------------------- fin de insert de entrada ---------------*/
+
+
+
+/* ---------------- consultas para comprobar la base de datos + consultas de ayuda para program ------------------*/
+
+
+/*datos que debería contener la entrada*/
+select identrada, cantpersonas, importe, numsala, hora_ini, hora_fin, nompeli, nomgen
+from entrada natural join sesion natural join pelicula natural join sala natural join genero;
+
+select * from compra;
+
+
+/* sala, sesion 3, aforo de sala y aforo disponible*/
+ select  numsala, aforo, aforo-cantpersonas 'aforo disponible'
+ from sala natural join sesion natural join entrada
+ where idsesion = 3;
+ 
+ /*--------- SESIONES disponibles según la fecha actual ---------*/
+ select * from sesion
+where fec > current_date();
+
+/* --------- SESIONES disponibles según la fecha y hora actual ---------*/
+select * from sesion
+where fec > current_date()
+and hora_ini > current_time();
+
+/* ---------------- fin de consultas para comprobar la base de datos ------------------*/
+
+
+
+
+
+
+/* *************************************** CONSULTAS DEL RETO ***************************************** */
+/* ======================================================================================================== */
+/*● El dinero recaudado por cada película con recaudación superior a una cifra
+dada.*/
+select sum(importe) 'recaudacion', nompeli, idpeli
+from entrada natural join sesion natural join pelicula
+group by nompeli, idpeli
+HAVING sum(importe) > 10;
+
+/*● La duración media de las películas por género.*/
+
+select round(avg(duracion),1) 'duracion media', nomgen
+from pelicula natural join genero
+group by nomgen;
+
+/*● El número de sesiones ofrecidas por película. Debe permitir filtrar por género
+o por precio.*/
+
+select count(*) 'numero de sesiones', nompeli
+from sesion natural join pelicula
+group by nompeli;
+/*Debe permitir filtrar por género
+o por precio.?????*/
+
+/*● El precio medio de las películas por género.*/
+
+select round(avg(precio),2) 'precio medio', nomgen
+from pelicula natural join genero natural join sesion
+group by nomgen;
+
+/*● Datos de las películas con mayor recaudación.*/
+
+/*son las 3 con más recaudación*/
+select IDpeli, nompeli, Duracion, Caratula, sum(importe)'recaudacion'  
+from entrada natural join sesion natural join pelicula
+group by idpeli
+order by recaudacion desc
+limit 3;
+
+/* ● Datos de los clientes a los que se les ha aplicado mayores descuentos en sus
+compras. */
+ 
+ select DNI, NomCli, Ape, mail, sum(descuento) as descuento_total_suma
+ from cliente natural join compra
+ group by descuento
+ order by sum(descuento) desc
+ limit 3;
+ 
+ /*● Datos de los clientes que han adquirido mayor número de entradas.*/
+
+select DNI, NomCli, Ape, mail, count(*) 'numero de entradas adquiridas'
+from cliente natural join compra natural join entrada
+group by idcompra
+order by count(*) desc
+limit 3;
+
+/*● Datos de los clientes que han gastado más dinero. */
+
+select DNI, NomCli, Ape, mail, sum(total) 'total gastado'
+from cliente natural join compra
+group by DNI
+order by sum(total) desc
+limit 3;
+
+/*● Datos de las películas con un número de espectadores inferior a una cantidad dada.*/
+
+select IDpeli, NomPeli, Duracion, Caratula, IDGen, sum(cantpersonas) as numero_de_espectadores
+from pelicula natural join sesion natural join entrada
+group by idpeli
+having numero_de_espectadores < 3
+order by numero_de_espectadores desc;
+
+/*  ● Datos de los clientes que aún no han comprado ninguna entrada. */
+
+select DNI, NomCli, Ape, mail
+from cliente
+where dni not in (select dni from compra);
+
+
+
+/* *************************************** FIN DE CONSULTAS DEL RETO ***************************************** */
+/* ======================================================================================================== */
+
+
+
+
