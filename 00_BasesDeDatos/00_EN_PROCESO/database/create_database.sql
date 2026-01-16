@@ -11,6 +11,7 @@ create table Cine(
 create table sala(
 	numSala int unsigned auto_increment,
 	IDCine int unsigned not null,
+    aforo int,
 	primary key (numSala, IDcine),
 	constraint FK_Cine_sala foreign key (IDCine) references Cine (IDCine) on update cascade on delete cascade
 );
@@ -93,12 +94,12 @@ insert into Cine values (1, 'Elorrieta Cines');
 /*------------------- fin de insert de cine -----------------*/
 
 /* ------------------- insert se salas -----------------*/
-insert into Sala values(1, 1);
-insert into Sala values(2, 1);
-insert into Sala values(3, 1);
-insert into Sala values(4, 1);
-insert into Sala values(5, 1);
-insert into Sala values(6, 1);
+insert into Sala values(1, 1, 30);
+insert into Sala values(2, 1, 50);
+insert into Sala values(3, 1, 65);
+insert into Sala values(4, 1, 30);
+insert into Sala values(5, 1, 20);
+insert into Sala values(6, 1, 60);
 /* ------------------- fin de insert se salas -----------------*/
 
 /*------------------- insert de genero -----------------*/
