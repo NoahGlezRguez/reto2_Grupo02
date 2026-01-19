@@ -1,91 +1,36 @@
-<?php
-session_start();
+<!-- header -->
+<!-- https://www.php.net/manual/en/function.require.php-->
+<?php require('./include/header.php'); ?>
 
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "cine_elorrieta";
+<main id="cartelera">
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+    <?php
+    include('./include/dbconnect.php');
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    $result = $conn->query("SELECT * FROM pelicula natural join genero");
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+    //https://www.php.net/manual/en/mysqli-result.fetch-all.php
+    
+    //https://www.php.net/manual/en/control-structures.foreach.php
+    foreach ($rows as $pelicula) {
+        $id = $pelicula["IDpeli"];
+        $nombre = $pelicula["NomPeli"];
+        $duracion = $pelicula["Duracion"];
+        $caratula = $pelicula["Caratula"];
+        $genero = $pelicula["NomGen"];
 
-$sql = "SELECT * FROM pelicula";
-$result = $conn->query($sql);
-?>
+        echo "<div class=\"peliculas\">
+            <img src=" . $caratula . " alt=" . $nombre . " width =\"150px\" height=\"200px\">
+            <p><b>Título:</b> " . $nombre . "<br/>
+            <b>Género:</b> " . $genero . " <br/>
+            <b>Duración:</b> " . $duracion . " min.<br/>
+           </p>
+        </div>";
+    }
+    $conn->close();
+    ?>
+    <!-- end of the area -->
+</main>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="language" content="es">
-    <meta name="description" content="cine elorrieta, venta de entradas para películas actuales">
-    <meta name="rating" content="general">
-    <meta name="keywords" content="cine, entradas, venta, sesiones, cartelera, peliculas, terror, acción, españa, entretenimiento, ocio">
-    <title>Cartelera</title>
-    <link rel="icon" type="image/jpeg" href="img/logo1.jpeg">
-    <link rel="stylesheet" href="css/css.css">
-    <script type="javascript" src="js/js.js"></script>
-</head>
-<body>
-
-    <header> 
-        <div>
-            <a href="index.html"><img src="img/logo.png" alt="Cines Elorrieta Logo" class="logoheader"></a>
-            <h1 id="title">Elorrieta <br/> Web</h1>
-        </div>
-
-        <div class="socialMedia">
-            <a href="https://www.facebook.com" target="_blank"><img src="img/fblogo.png" alt="logo de facebook" ></a>
-            <a href="https://www.instagram.com" target="_blank"><img src="img/iglogo.png" alt="logo de instagram" ></a>
-            <a href="https://www.twitter.com" target="_blank"><img src="img/xlogo.png" alt="logo de x" ></a>
-            <a href="https://www.tiktok.com" target="_blank"><img src="img/tiktoklogo.png" alt="logo de tiktok" ></a>
-        </div>
-
-    </header>
-
-
-        <ul class="menu">
-            <li><a href="index.html" >Inicio</a></li>
-            <li class="cartelera"><a href="cartelera.html">Cartelera</a></li>
-            <li><a href="promociones.html">Promociones</a></li>
-            <li><a href="contacto.html">Contacto</a></li>
-            <li><a href="sesion.html"> 👤 Iniciar sesión</a></li>
-        </ul>
-    <main id= "cartelera"> 
-       
-
-        <?php
-        if ($result && $result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-        ?>
-            <div class="peliculas">
-                <img src="<?= $row['Caratula'] ?>" alt="pelicula" width="150" height="200">
-                <p>
-                    <b>Título:</b> <?= $row['NomPeli'] ?><br>
-                    <b>Género:</b> <?= $row['IDGen'] ?><br>
-                    <b>Duración:</b> <?= $row['Duracion'] ?> min<br>
-                </p>
-            </div>
-        <?php
-            }
-        } else {
-            echo "<p>No hay películas disponibles</p>";
-        }
-
-        $conn->close();
-        ?>
-    </main>
-
-    <footer>
-        <p>© 2024 Cines Elorrieta. Todos los derechos reservados.</p> <br/>
-        <p> <a id="preguntas" href="preguntas.html">Preguntas frecuentes</a></p>
-    </footer>
-
-</body>
-</html>
-</body>
-</html>
+<!-- footer
+<?php require('./include/footer.php'); ?>
