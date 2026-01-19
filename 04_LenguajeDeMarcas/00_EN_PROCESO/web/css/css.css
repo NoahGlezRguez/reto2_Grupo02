@@ -13,8 +13,18 @@
     
 }
 
-.menu li a {
+.menu li .CerSes {
+    background-color: rgba(168, 0, 0, 0.534);
+    border-radius: 5em;
+}
+.menu li .CerSes:hover {
+    background-color: rgba(255, 104, 104, 0.654);
+    color: white;
+} 
+/* Usuario sin hover */
+.menu li, .menu li a {
     text-decoration: none;
+    height: 100%;
     color: #333;
     font-weight: bold;
     padding: 0px 15px;
@@ -23,20 +33,12 @@
     display: flex;
     align-items: center;
     border-radius: 5px;   
-}
-.menu li a:hover {
-
-    background-color: rgba(24, 134, 121, 0.654);
-    color: white;
-    border-radius: 5px;     
-    
-}       
-
-.menu li {
-    height: 100%;
-    font-size: 1.2rem;
   
 }
+.menu li a:hover {
+    background-color: rgba(24, 134, 121, 0.654);
+    color: white;
+} 
 
 .cartelera, .promo, .contacto, .inicio, .sesion{
     background-color: rgba(0, 153, 135, 0.082);
