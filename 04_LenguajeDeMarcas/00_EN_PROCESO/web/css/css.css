@@ -213,8 +213,17 @@ header{
 }
 
 .peliestrenos{
-
-    margin:2rem
+    margin: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ccc;
+    border-radius: 2rem;
+    text-align: left;
+    background-color: #eaabdc1f;
+    box-shadow: #3333336f 0px 3px 5px;
 }
 
 #subproximo, #titulo, #prox{
@@ -261,7 +270,7 @@ header{
     border-top-right-radius: 2rem;
 
 }
-.peliculas, .peliestrenos{
+.peliculas{
 
     margin: 5rem;
     display: flex;
