@@ -11,7 +11,7 @@ include('./include/dbconnect.php');
 
 // Recuperar datos del formulario
 $usuario = $_POST['user'];
-$contrasena = $_POST['pass'];
+$contrasena = md5($_POST['pass'], false);
 
 // Consulta SQL
 $sql = "SELECT * FROM Cliente WHERE NomCli = '$usuario' AND userpassword = '$contrasena'";

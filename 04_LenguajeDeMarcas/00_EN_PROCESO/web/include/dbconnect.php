@@ -1,9 +1,9 @@
 <?php
 # cambiar: servidor, puerto, password
 $db_server = 'localhost';
-$db_port = 3306;
-$db_user_name = 'root';
-$db_password = '12345';
+$db_port = 33080;
+$db_user_name = 'admin';
+$db_password = 'ElorrietaCines123';
 $db_name = 'cine_elorrieta';
 
 
