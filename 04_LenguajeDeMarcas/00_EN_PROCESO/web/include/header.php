@@ -41,7 +41,7 @@ session_start();
   </header>
 
   <ul class="menu">
-    <li class="inicio"><a href="index.php">Inicio</a></li>
+    <li><a href="index.php">Inicio</a></li>
     <li><a href="cartelera.php">Cartelera</a></li>
     <li><a href="promociones.html">Promociones</a></li>
     <li><a href="contacto.html">Contacto</a></li>
@@ -50,8 +50,8 @@ session_start();
     <!-- https://www.php.net/manual/en/reserved.variables.session.php-->
     <?php
     if (isset($_SESSION["nombre"])) {
-      echo "<li><a href=\"login.php\">" . $_SESSION["nombre"] . "</a></li>";
-      echo "<li><a href=\"logout.php\"> Cerrar sesion </a></li>";
+      echo "<li> 🙋 " . $_SESSION["nombre"] . "</li>";
+      echo "<li><a href=\"logout.php\" class=\"CerSes\"> Cerrar sesion </a></li>";
     } else {
       echo "<li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
     }

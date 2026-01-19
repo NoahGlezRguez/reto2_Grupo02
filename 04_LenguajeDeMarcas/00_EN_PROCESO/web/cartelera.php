@@ -7,7 +7,7 @@
     <?php
     include('./include/dbconnect.php');
 
-    $result = $conn->query("SELECT * FROM pelicula natural join genero");
+    $result = $conn->query("SELECT * FROM pelicula natural join genero order by IDPeli asc");
     $rows = $result->fetch_all(MYSQLI_ASSOC);
     //https://www.php.net/manual/en/mysqli-result.fetch-all.php
     
