@@ -12,8 +12,9 @@
     border-radius: 1rem;
     
 }
+
 .menu li .CerSes {
-    background-color: red;
+    background-color: rgba(168, 0, 0, 0.534);
     border-radius: 5em;
 }
 .menu li .CerSes:hover {
@@ -37,7 +38,8 @@
 .menu li a:hover {
     background-color: rgba(24, 134, 121, 0.654);
     color: white;
-}       
+} 
+
 .cartelera, .promo, .contacto, .inicio, .sesion{
     background-color: rgba(0, 153, 135, 0.082);
     border-radius: 5px;  
@@ -60,6 +62,7 @@
         width: 100%;
         align-items: center;
         justify-content: center;
+        
     }
     .menu li a:hover {
         align-items: center;
@@ -79,8 +82,24 @@
         flex-direction: column;
         align-items: center;
     }
+
+    .contenido div{
+      
+        margin: 0rem;
+
+    }
+
+    .contenido img{
+
+        width: 150px;
+        height: 200px;
+    }
+
+
     
 }   
+
+
 
 /* here 👆 you can add more styles of your web page BUT do NOT modify what is already there */
 /*--------------------------------------------------------*/
@@ -172,21 +191,7 @@ header{
     margin: 20px 0;
 }
 
-.peliculas, .peliestrenos{
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #ccc;
-    border-radius: 2rem;
-    padding: 2rem;
-    text-align: left;
-    background-color: #eaabdc1f;
-    box-shadow: #3333336f 0px 3px 5px;   
-    transition: ease 0.3s, color 0.3s;
-    
-}
 
 .img {
     display: flex;
@@ -200,15 +205,6 @@ header{
     max-width: 80rem;
 }
 
-.peliculas img{
-    border-radius: 1em;
-}
-
-.peliculas:hover{
-
-    background-color: #eaabdc57;
-    border: 2px  solid pink;
-}
 
 .estrenos{
     display: flex;
@@ -217,8 +213,17 @@ header{
 }
 
 .peliestrenos{
-
-    margin:2rem
+    margin: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ccc;
+    border-radius: 2rem;
+    text-align: left;
+    background-color: #eaabdc1f;
+    box-shadow: #3333336f 0px 3px 5px;
 }
 
 #subproximo, #titulo, #prox{
@@ -253,4 +258,74 @@ header{
 
     max-width: 90%;
 
+}
+
+.titulopeli{
+    background-color: rgba(235, 170, 213, 0.705);
+    color:#4f0964;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+
+}
+.peliculas{
+
+    margin: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    text-align: left;
+    background-color: #eaabdc1f;
+    box-shadow: #3333336f 0px 3px 5px;   
+    transition: ease 0.3s, color 0.3s;
+    width: 50%;
+   
+    
+}
+
+.peliculas img{
+    border-radius: 1rem;
+    
+}
+
+.contenido{
+
+    display: flex;
+    justify-content: center;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+    
+}
+.contenido div{
+    margin: 1rem    
+}
+
+.detallepelicula{
+   
+    font-size: 1.5rem;
+
+}
+
+.titulopelitexto{
+    font-size: 2rem;
+    
+}
+
+#versesiones{
+
+    width: 8rem;
+    height: 3rem;
+    border-radius: 1rem;
+    border: solid rgba(235, 161, 198, 0.589) 0.1rem;
+    background-color: rgba(235, 170, 213, 0.705);
+    color:#4f0964;
+    font-size: 1rem;
+    font-weight: bold;
+    
 }
