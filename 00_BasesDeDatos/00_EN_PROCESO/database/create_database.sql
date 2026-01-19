@@ -258,23 +258,37 @@ and hora_ini > current_time();
 /* ======================================================================================================== */
 /*● El dinero recaudado por cada película con recaudación superior a una cifra
 dada.*/
-select sum(importe) 'recaudacion', nompeli, idpeli
+select sum(importe) 'recaudacion €', nompeli, idpeli
 from entrada natural join sesion natural join pelicula
 group by nompeli, idpeli
 HAVING sum(importe) > 10;
 
 /*● La duración media de las películas por género.*/
 
-select round(avg(duracion),1) 'duracion media', nomgen
+select round(avg(duracion),1) 'duracion media min\'', nomgen
 from pelicula natural join genero
 group by nomgen;
 
 /*● El número de sesiones ofrecidas por película. Debe permitir filtrar por género
 o por precio.*/
 
+/*filtrado por un genero*/
 select count(*) 'numero de sesiones', nompeli
-from sesion natural join pelicula
+from sesion natural join pelicula p
+where p.idgen = (select idgen from genero where nomgen = 'terror')
 group by nompeli;
+
+/*numero de sesiones por pelicula*/
+select count(*) 'numero de sesiones', nompeli
+from sesion natural join pelicula p
+group by nompeli;
+
+/*filtrado por precio*/
+select count(*) 'numero de sesiones', nompeli
+from sesion s natural join pelicula p
+where s.precio > 6
+group by nompeli;
+
 /*Debe permitir filtrar por género
 o por precio.?????*/
 
@@ -332,7 +346,7 @@ select DNI, NomCli, Ape, mail
 from cliente
 where dni not in (select dni from compra);
 
-
+use cine_elorrieta;
 
 /* *************************************** FIN DE CONSULTAS DEL RETO ***************************************** */
 /* ======================================================================================================== */
