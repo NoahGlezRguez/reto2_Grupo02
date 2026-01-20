@@ -1,6 +1,7 @@
 package vista;
 
 import controlador.*;
+import modelo.Pelicula;
 
 public class Menu {
 
@@ -22,7 +23,7 @@ public class Menu {
 			
 			entrada = Main.teclado.nextLine();
 			
-			if (ValidarTipoEntrada.checkSoloNumeroPositivoEntero(entrada)) {
+			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
 				
 				seleccion = Integer.parseInt(entrada);
 				
@@ -57,7 +58,7 @@ public class Menu {
 				
 				entrada = Main.teclado.nextLine();
 				
-				if (ValidarTipoEntrada.checkSoloNumeroPositivoEntero(entrada)) {
+				if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
 					
 					seleccion = Integer.parseInt(entrada);
 					
@@ -76,4 +77,52 @@ public class Menu {
 			return (seleccion - 1);
 		}
 	
+	public static Pelicula cartelera(Pelicula cartelera[]) {
+		
+		String		pelicula = null;
+		int			seleccionIndice = 0;
+		boolean		esCorrecto;
+		String		entrada;
+		Pelicula	seleccionPeli;
+		
+		do {
+			esCorrecto = true;
+			if (cartelera != null) {
+				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\t\t\tCARTELERA ACTUAL\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+				for(int i = 0; i < cartelera.length; i++) {
+					pelicula = """
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\tPelícula nº %d:
+	\t[🎬]Título:	%s
+	\t[🎞️]Género:	%s
+	\t[⌛]Duración:	%s minutos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+							""".formatted(i + 1, cartelera[i].getNombrePeli(), cartelera[i].getGenero(), cartelera[i].getDuracion());
+					System.out.print(pelicula);
+				}
+			
+				System.out.println("\n\t·····> Introduzca el nº de la película (o -1 para cancelar la compra): ");
+				entrada = Main.teclado.nextLine();
+				if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+					seleccionIndice = Integer.parseInt(entrada);
+					if ((seleccionIndice < 1 || seleccionIndice > cartelera.length) && (seleccionIndice != -1)) {
+						esCorrecto = false;
+						System.out.println("Error, opcion incorrecta, vuelvalo a intentar");//dar formato de msg de error
+					}
+					if (seleccionIndice == -1) {
+						System.out.println("Cancelando compra..." + "\n".repeat(15));
+						esCorrecto = true;
+						return (null);
+					}
+				}
+				else
+					System.out.println("Error, dato incorrecto");//dar formato de msg de error
+			}
+			else
+				System.out.println("Error, no hay cartelera disponible ahora mismo, lo sentimos");//dar formato de msg de error
+				
+		} while (!esCorrecto);
+		seleccionPeli = cartelera[seleccionIndice - 1];
+		return (seleccionPeli);
+	}
 }
