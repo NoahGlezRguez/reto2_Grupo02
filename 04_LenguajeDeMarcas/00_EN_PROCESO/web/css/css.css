@@ -329,3 +329,56 @@ header{
     font-weight: bold;
     
 }
+
+/*          nnnnnnnnnnnnnnnnnnnnnnnnn               */
+
+#Loginform{
+    justify-self: center;
+    width:40%;
+    height: auto;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: #3333336f 0px 3px 5px;
+    margin-bottom: 6rem;
+    background-color: #f0acb521;
+    font-size: 1.2rem;
+    color: rgb(83, 38, 5);
+    max-width: 20rem;
+}
+
+#formISB{
+
+    border-radius: 2rem;
+    height: 1.7rem;
+    background-color: pink;
+    border: 1px solid salmon;
+    font-weight: bold;
+    box-shadow: #3333336f 0px 3px 5px;
+}
+
+#formISB:hover{
+
+    background-color: rgb(238, 125, 146);
+}
+
+#usuario, #password{
+
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    background-color:#f0acb500;
+    border-bottom: 1px solid salmon;
+}
+
+#usuario:focus, #password:focus{
+    outline: none;
+}
+
+.subtitulo{
+
+    justify-self: center;
+    margin-top: 3rem;
+}
+
+/*          nnnnnnnnnnnnnnnnnnnnnnnnn               */

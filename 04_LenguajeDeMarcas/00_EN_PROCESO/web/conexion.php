@@ -14,7 +14,7 @@ $usuario = $_POST['user'];
 $contrasena = md5($_POST['pass'], false);
 
 // Consulta SQL
-$sql = "SELECT * FROM Cliente WHERE NomCli = '$usuario' AND userpassword = '$contrasena'";
+$sql = "SELECT * FROM Cliente WHERE mail = '$usuario' AND userpassword = '$contrasena'";
 
 // Ejecutar consulta
 $result = $conn->query($sql);
@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
 } else {
     // Si no existe, mensaje de error (lo resuelvo mediante url)
     // header("Location: ../index.html?errorea=1");
-    echo "<script> alert('Usuario no existe');window.location='login.php';</script>";
+    echo "<script> alert('Usuario y/o contraseña incorrectos');window.location='login.php';</script>";
     exit();
 }
 

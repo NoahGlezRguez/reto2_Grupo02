@@ -6,21 +6,22 @@
     <!-- this area is the one the you will work with -->
 
   
-    <h1>Mi cuenta</h1>
-    <div>
-       ¿Aún no estás registrado?
-      <a href="registrar.php">Crear cuenta</a><br>
-    </div>
+    <h2 class="subtitulo">Mi cuenta</h2>
+    
     
     <div id="Loginform">
       <form action="conexion.php" method="post">
-        <fieldset>
-          <label for="usuario">Usuario:</label>
-          <input type="text" name="user" id="usuario" placeholder="Nombre de usuario" required /><br /><br />
+        
+          <label for="usuario">Correo:</label>
+          <input type="email" name="user" id="usuario" placeholder="Correo electrónico" required /><br /><br />
           <label for="password">Contraseña:</label>
-          <input type="password" name="pass" id="password" placeholder="contraseña" required /><br /><br />
-          <input type="submit" value="Iniciar sesion" />
-        </fieldset>
+          <input type="password" name="pass" id="password" placeholder="Contraseña" required /><br /><br />
+          <input type="submit" value="Iniciar sesion" id="formISB" />
+          
+          <div id="textoIS">
+              <p>¿Aún no estás registrado?<br><a href="registrar.php">Crear nueva cuenta</a><br></p>
+              
+          </div>
       </form>
 
     </div>
