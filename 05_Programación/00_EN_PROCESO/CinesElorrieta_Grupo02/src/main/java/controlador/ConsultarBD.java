@@ -1,6 +1,7 @@
 package controlador;
 
 import java.sql.*;
+import modelo.*;
 
 public class ConsultarBD {
 
@@ -58,5 +59,49 @@ public class ConsultarBD {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static Pelicula[] consultarCartelera() { //metodo de prueba
+		
+		Pelicula cartelera[] = null;
+		int	numPelis = 0;
+		String		consulta = "select distinct pelicula.idpeli, NomPeli, duracion, nomgen\r\n"
+								+ "from sesion join pelicula on sesion.IDPeli = pelicula.IDPeli join genero on pelicula.IDgen = genero.idgen\r\n"
+								+ "where fec >= current_timestamp()";
+		Statement	sentencia = null;
+		ResultSet 	result = null;
+		
+		Connection conexion = ConsultarBD.getConect();
+		if (conexion != null) {
+			try {
+				sentencia = conexion.createStatement();
+				result = sentencia.executeQuery(consulta);
+				while(result.next())
+					numPelis++;
+				cartelera = new Pelicula[numPelis];
+				result = sentencia.executeQuery(consulta);
+				for(int i = 0; i < numPelis; i++)
+				{
+					cartelera[i] = new Pelicula();
+					if (result.next()) {
+						cartelera[i].setIdPeli(Integer.parseInt(result.getString("IDPeli")));
+						cartelera[i].setNombrePeli(result.getString("NomPeli"));
+						cartelera[i].setDuracion(Integer.parseInt(result.getString("Duracion")));
+						cartelera[i].setGenero(result.getString("NomGen"));
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				conexion.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		else
+			System.out.println("Error de conexión con la base de datos al consultar la cartelera...");
+		return (cartelera);
 	}
 }
