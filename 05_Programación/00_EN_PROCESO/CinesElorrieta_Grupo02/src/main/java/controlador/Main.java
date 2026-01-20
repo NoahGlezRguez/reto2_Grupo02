@@ -7,9 +7,9 @@ public class Main {
 
 	public static String 	entrada;
 	public static Scanner 	teclado = new Scanner(System.in);
-	public static String		rutaBD = "jdbc:mysql://localhost:33080/CinesElorrieta";//ajustar a la ruta real 
-	public static String		user = "admin";
-	public static String		pw = "CinesElorrieta123";
+	public static String	rutaBD = "jdbc:mysql://10.5.6.116:33080/CinesElorrieta";//ajustar a la ruta real 
+	public static String	user = "admin";
+	public static String	pw = "CinesElorrieta123";
 	
 	
 	
