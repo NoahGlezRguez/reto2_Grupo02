@@ -3,8 +3,19 @@ package vista;
 import controlador.*;
 import modelo.Pelicula;
 
+/**
+ * Esta clase contiene métodos que muestran en pantalla distintos tipos de menú, con el formato correspondiente
+ * y toda la información necesaria.
+ */
 public class Menu {
 
+	/**
+	 *
+	 * @param titulo
+	 * @param opciones
+	 * @param peticion
+	 * @return
+	 */
 	public static int opciones(String titulo, String opciones[], String peticion) {
 		
 		int		seleccion = 0;
