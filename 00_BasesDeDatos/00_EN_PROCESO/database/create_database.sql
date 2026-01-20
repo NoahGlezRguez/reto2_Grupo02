@@ -164,11 +164,11 @@ insert into sesion values(36, '2026-01-22', '21:30', '23:10', 8.00, 1, 6, 7); /*
 /*------------------- fin de insert de sesion -----------------*/
 
 /*------------------- insert de cliente -----------------*/
-insert into cliente values('12345678A', 'ana', 'rosa', 'ana@gmail.com', '1234');
-insert into cliente values('12345678B', 'juan', 'ramirez', 'juan@gmail.com', '4321');
-insert into cliente values('12345678C', 'maria', 'hernandez', 'maria@gmail.com', '5423');
-insert into cliente values('21321265A', 'luis', 'martinez', 'luis@gmail.com', '6666');
-insert into cliente values('54769853Ñ', 'J', 'PG', 'jpg@gmail.com', 'JPEG');
+insert into cliente values('12345678A', 'ana', 'rosa', 'ana@gmail.com', md5('1234'));
+insert into cliente values('12345678B', 'juan', 'ramirez', 'juan@gmail.com', md5('4321'));
+insert into cliente values('12345678C', 'maria', 'hernandez', 'maria@gmail.com', md5('5423'));
+insert into cliente values('21321265A', 'luis', 'martinez', 'luis@gmail.com', md5('6666'));
+insert into cliente values('54769853Ñ', 'J', 'PG', 'jpg@gmail.com', md5('JPEG'));
 /*------------------- fin de insert de cliente -----------------*/
 
 /*----------------- insert de compra -------------------*/
