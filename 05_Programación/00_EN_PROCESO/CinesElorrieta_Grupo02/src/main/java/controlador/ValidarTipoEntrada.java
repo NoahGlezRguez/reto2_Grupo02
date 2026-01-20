@@ -19,7 +19,7 @@ public class ValidarTipoEntrada {
 			
 			boolean esCorrecto = true;
 
-			if(entrada != null && !entrada.isEmpty()) {
+			if(entrada != null && !entrada.isBlank()) {
 				entrada = entrada.trim();
 				for (int i = 0; i < entrada.length(); i++) {
 					if (!Character.isLetter(entrada.charAt(i)) && entrada.charAt(i) != ' ' && entrada.charAt(i) != '\t') 
@@ -41,7 +41,7 @@ public class ValidarTipoEntrada {
 		public static boolean checkSoloAlfanumerico(String entrada) {
 			boolean esCorrecto = true;
 
-			if(entrada != null && !entrada.isEmpty()) {
+			if(entrada != null && !entrada.isBlank()) {
 				entrada = entrada.trim();
 				for (int i = 0; i < entrada.length(); i++) {
 					if (!Character.isLetterOrDigit(entrada.charAt(i)) && entrada.charAt(i) != ' ' && entrada.charAt(i) != '\t') 
@@ -55,28 +55,7 @@ public class ValidarTipoEntrada {
 			return (esCorrecto);
 		}
 		
-		/**
-		 * Valida que la entrada sea un número entero positivo.
-		 * @param entrada - String a validar
-		 * @return true si solo contiene dígitos, false en caso contrario
-		 */
-		public static boolean checkSoloNumeroPositivoEntero(String entrada) {
-			boolean esCorrecto = true;
-
-			if(entrada != null && !entrada.isEmpty()) {
-				entrada = entrada.trim();
-				for (int i = 0; i < entrada.length(); i++) {
-					if (!Character.isDigit(entrada.charAt(i)))
-						esCorrecto = false;
-				}
-				if (!esCorrecto)
-					MostrarMsg.errores(3);
-			}
-			else
-				MostrarMsg.errores(0);
-			return (esCorrecto);
-		}
-		
+			
 		/**
 		 * Permite dígitos y un único punto decimal como separador.
 		 * 
@@ -89,7 +68,7 @@ public class ValidarTipoEntrada {
 			boolean	hayNums = false;
 			int		numPuntos = 0;
 
-			if(entrada != null && !entrada.isEmpty()) {
+			if(entrada != null && !entrada.isBlank()) {
 				entrada = entrada.trim();
 				for (int i = 0; i < entrada.length(); i++) {
 					
@@ -124,4 +103,49 @@ public class ValidarTipoEntrada {
 		}
 	
 
+		public static boolean checkSoloNumeroEntero(String entrada) {
+			
+			boolean esCorrecto = false;
+			
+			if (entrada != null && !entrada.isBlank()) {
+				entrada = entrada.trim();
+				esCorrecto = true;
+				
+				if (entrada.charAt(0) == '-' || entrada.charAt(0) == '+') 
+					entrada = entrada.substring(1);
+				
+				if (!checkNum(entrada)) 
+					esCorrecto = false;
+				else {
+					try {
+						Integer.parseInt(entrada);
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+						System.out.println("Error, el nº es muy grande...");//dar formato con msg de error
+						esCorrecto = false;
+					}
+				}
+			
+			}
+			else
+				System.out.println("Error, entrada vacia");//formatear con un msg de error
+			return (esCorrecto);
+		}
+		
+	private static boolean checkNum(String entrada) {
+			
+			boolean esCorrecto = true;
+			char	c = ' ';
+			
+			for (int i = 0; i < entrada.length(); i++) {
+				c = entrada.charAt(i);
+				if (!Character.isDigit(c)){
+					esCorrecto = false;
+					System.out.println("Error, esto no es un numero...");//formatear con un msg de error
+				}
+			}
+			
+			return (esCorrecto);
+	}
+		
 }
