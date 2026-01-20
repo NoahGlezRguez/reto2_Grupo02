@@ -41,7 +41,7 @@ public class Menu {
 		return (seleccion - 1);
 	}
 	
-	public static int siNo(String titulo, String peticion) {
+	public static int siNo(String titulo) {
 			
 			int		seleccion = 0;
 			boolean	esCorrecto;
@@ -53,7 +53,7 @@ public class Menu {
 				
 				System.out.print("\t\t1.- Sí.\n\t\t2.- No.\n");
 				
-				System.out.printf("\n\t·····> %s: ", peticion);
+				System.out.printf("\n\t·····> Introduzca su respuesta: ");
 				
 				entrada = Main.teclado.nextLine();
 				
