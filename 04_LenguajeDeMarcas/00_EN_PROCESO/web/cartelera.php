@@ -19,29 +19,29 @@
         $caratula = $pelicula["Caratula"];
         $genero = $pelicula["NomGen"];
 
-        echo "
-        <div class=\"peliculas\">
-                <div class=\"titulopeli\">
-                    <h2 class=\"titulopelitexto\">" . $nombre . "</h2>
+        echo '
+        <div class="peliculas">
+                <div class="titulopeli">
+                    <h2 class="titulopelitexto">' . $nombre . '</h2>
                 </div>
-                <div class=\"contenido\">
+                <div class="contenido">
 
                     <div>
-                        <img src=" . $caratula . " alt=" . $nombre . " width =\"250px\" height=\"350px\">
+                        <img src=' . $caratula . ' alt=' . $nombre . ' width ="250px" height="350px">
                     </div>
 
                     <div>
-                        <p class=\"detallepelicula\"><b>Género:</b> " . $genero . "<br/>
-                        <b>Duración:</b> " . $duracion . "
+                        <p class="detallepelicula"><b>Género:</b> ' . $genero . '<br/>
+                        <b>Duración:</b> ' . $duracion . '
                         </p>
                     </div>
 
                     <div>
-                        <button id=\"versesiones\">Ver sesiones</button>
+                        <button id="versesiones">Ver sesiones</button>
                     </div>
             
                 </div>
-        </div>";
+        </div>';
     }
     
     $conn->close();

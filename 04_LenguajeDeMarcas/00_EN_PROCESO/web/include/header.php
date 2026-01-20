@@ -6,7 +6,7 @@ session_start();
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="iso-8859-1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="language" content="es" />
   <meta name="description" content="cine elorrieta, venta de entradas para películas actuales" />

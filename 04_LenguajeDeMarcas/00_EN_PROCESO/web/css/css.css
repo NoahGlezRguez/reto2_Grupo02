@@ -313,8 +313,8 @@ header{
 }
 
 .titulopelitexto{
-    font-size: 2rem;
-    
+    font-size: 3em;
+    font-family:Georgia, 'Times New Roman', Times, serif
 }
 
 #versesiones{
