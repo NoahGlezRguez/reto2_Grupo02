@@ -15,7 +15,6 @@
             <img class="indeximg" src="img/presentacion.png" alt="cine">
         </div>
 
-
         <div>
             <h2 id="subproximo">Próximos Estrenos</h2>
           
@@ -35,8 +34,10 @@
                     <img src="img/proximo3.png" alt="pelicula" width ="150px" height="200px">
                     <p><b>Título:</b> Cat-Man <br> <b>Estreno: </b> 30 de septiembre</p> 
                 </div>
-
-               
+                <div class="peliestrenos" >
+                    <img src="img/proximo4.png" alt="pelicula" width ="150px" height="200px">
+                    <p><b>Título:</b> Los "THE SIMPSONS 2" <br> <b>Estreno: </b> 2026</p> 
+                </div> 
             </div >
 
 
