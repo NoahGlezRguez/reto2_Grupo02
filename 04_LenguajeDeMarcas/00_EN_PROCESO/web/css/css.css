@@ -347,7 +347,7 @@ header{
     max-width: 20rem;
 }
 
-#formISB{
+#formISB, #enviar, #resetar{
 
     border-radius: 2rem;
     height: 1.7rem;
