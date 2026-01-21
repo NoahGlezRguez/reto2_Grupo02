@@ -44,7 +44,7 @@ session_start();
     <li><a href="index.php">Inicio</a></li>
     <li><a href="cartelera.php">Cartelera</a></li>
     <li><a href="promociones.html">Promociones</a></li>
-    <li><a href="contacto.html">Contacto</a></li>
+    <li><a href="contacto.php">Contacto</a></li>
 
     <!-- nombre de usuario cargado de la sesion, si existe-->
     <!-- https://www.php.net/manual/en/reserved.variables.session.php-->
