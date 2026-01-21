@@ -332,7 +332,7 @@ header{
 
 /*          nnnnnnnnnnnnnnnnnnnnnnnnn               */
 
-#Loginform{
+.Loginform{
     justify-self: center;
     width:40%;
     height: auto;
@@ -347,7 +347,9 @@ header{
     max-width: 20rem;
 }
 
-#formISB, #enviar, #resetar{
+
+
+#formISB, #enviar, #resetar, #submitnewuser, #resetnewuser{
 
     border-radius: 2rem;
     height: 1.7rem;
@@ -362,7 +364,7 @@ header{
     background-color: rgb(238, 125, 146);
 }
 
-#usuario, #password{
+#usuario, #password, .inputcrear{
 
     border-top: 0;
     border-left: 0;
@@ -371,7 +373,7 @@ header{
     border-bottom: 1px solid salmon;
 }
 
-#usuario:focus, #password:focus{
+#usuario:focus, #password:focus, .inputcrear:focus{
     outline: none;
 }
 
@@ -384,7 +386,7 @@ header{
 /*          nnnnnnnnnnnnnnnnnnnnnnnnn               */
 /* contacto */
 
-.contactform{
+.contactform, #crearCuenta{
     justify-self: left;
     width: 50%;
     height: auto;

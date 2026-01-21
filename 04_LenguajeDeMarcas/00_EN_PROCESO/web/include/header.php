@@ -17,7 +17,7 @@ session_start();
   <!-- luego crear una funcion que cambie dinamicamente el titulo ... -->
   <link rel="icon" type="image/jpeg" href="img/logo1.jpeg" />
   <link rel="stylesheet" href="css/css.css" />
-  <script src="js/script.js"></script>
+  <script src="js/js.js"></script>
 </head>
 
 <body>
