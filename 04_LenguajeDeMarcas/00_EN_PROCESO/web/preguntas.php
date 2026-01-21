@@ -16,6 +16,9 @@
         <h3>¿Que le pasa a mi informacion cuando creo una cuenta?</h3>
         <p>¡En Elorrieta Cines no recopilamos los datos de nuestrxs clientes! ¡Tu informacion personal nunca será usada para nada mas que para identificarte!</p>
         <br/>
+        <h3>¡Me equivoqué en mi contraseña al crear mi cuenta! ¿Que puedo hacer para solucionarlo?</h3>
+        <p>Contactanos, y un experto se encargará de tu caso.</p>
+        <br/>
         <h3>¿Como puedo borrar mi cuenta?</h3>
         <p>¡No puedes! :D</p>
         <br/>
