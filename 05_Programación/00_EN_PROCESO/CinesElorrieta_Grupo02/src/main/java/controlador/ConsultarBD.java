@@ -26,45 +26,10 @@ public class ConsultarBD {
 		return(conexion);
 	}
 
-	public static void id_pelis_consulta() { //metodo de prueba
+	public static Pelicula[] consultarCartelera() { 
 		
-		int	pelis_ids[] = null;
-		int	numPelis = 0;
-		
-		Connection conexion = ConsultarBD.getConect();
-		Statement	sentencia = null;
-		ResultSet 	result = null;
-		try {
-			sentencia = conexion.createStatement();
-			result = sentencia.executeQuery("Select * from Pelicula"); //ajustar a lo que necesitemos
-			while(result.next())
-				numPelis++;
-			pelis_ids = new int[numPelis];
-			result = sentencia.executeQuery("Select * from Pelicula");
-			for(int i = 0; i < numPelis; i++)
-			{
-				if (result.next())
-					pelis_ids[i] = Integer.parseInt(result.getString("IDPeli"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		for (int i = 0; i < numPelis; i++) {
-			System.out.printf("\t- item %d -> id de peli = %d.\n", i, pelis_ids[i]);
-		}
-		try {
-			conexion.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public static Pelicula[] consultarCartelera() { //metodo de prueba
-		
-		Pelicula cartelera[] = null;
-		int	numPelis = 0;
+		Pelicula 	cartelera[] = null;
+		int			numPelis = 0;
 		String		consulta = "select distinct pelicula.idpeli, NomPeli, duracion, nomgen\r\n"
 								+ "from sesion join pelicula on sesion.IDPeli = pelicula.IDPeli join genero on pelicula.IDgen = genero.idgen\r\n"
 								+ "where fec >= current_timestamp()";
@@ -103,5 +68,108 @@ public class ConsultarBD {
 		else
 			System.out.println("Error de conexión con la base de datos al consultar la cartelera...");
 		return (cartelera);
+	}
+	
+
+	public static String[] consultarFechas(Pelicula peliculaElegida) { 
+		
+		String		fechas[] = null;
+		int			numDias = 0;
+		String		consulta = "select fec"
+								+ " from sesion join pelicula on sesion.IDPeli = pelicula.IDPeli\r\n"
+								+ " where fec >= current_timestamp() and pelicula.IDPeli = " + peliculaElegida.getIdPeli();
+		Statement	sentencia = null;
+		ResultSet 	result = null;
+		
+		Connection conexion = ConsultarBD.getConect();
+		if (conexion != null) {
+			numDias = contarTuplas(consulta, conexion);
+			
+			if (numDias > 0) {
+				fechas = new String[numDias];
+			
+				try {
+					sentencia = conexion.createStatement();
+					result = sentencia.executeQuery(consulta);
+					result = sentencia.executeQuery(consulta);
+					
+					for(int i = 0; i < numDias; i++) {
+						fechas[i] = new String();
+						if (result.next()) {
+							fechas[i] = result.getString("fec");
+						}
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			} 
+			
+			try {
+				conexion.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		else
+			System.out.println("Error de conexión con la base de datos al consultar la cartelera...");
+		return (fechas);
+	}
+	
+	
+	private static int contarTuplas(String consulta, Connection conexion) {
+		
+		int			numTuplas = 0;
+		Statement	sentencia = null;
+		ResultSet 	result = null;
+		
+		try {
+			sentencia = conexion.createStatement();
+			result = sentencia.executeQuery(consulta);
+			while(result.next())
+				numTuplas++;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			numTuplas = -1;
+		}
+		return (numTuplas);
+		
+	}
+	
+	public static Sesion[] consultarSesiones(Pelicula peliculaElegida, String fechaElegida){//esto tiene tela... hay que volcar datos en objeto
+
+		
+		int		numSesiones = 0;
+		Sesion	sesionesPelicula[] = null;
+		int		sesiones_ids[] = null;
+		String	consulta = "Select hora_ini from Sesion where IDPeli = " + peliculaElegida.getIdPeli(); //ajustar consulta
+		
+		Connection 	conexion = ConsultarBD.getConect();
+		Statement	sentencia = null;
+		ResultSet 	result = null;
+		try {
+			sentencia = conexion.createStatement();
+			result = sentencia.executeQuery(consulta);
+			while(result.next())
+				numSesiones++;
+			sesiones_ids = new int[numSesiones];
+			result = sentencia.executeQuery(consulta);
+			for(int i = 0; i < numSesiones; i++)
+			{
+				if (result.next())
+					sesiones_ids[i] = Integer.parseInt(result.getString("IDSesion"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		for (int i = 0; i < numSesiones; i++) {
+			System.out.printf("\t- item %d -> id de sesion = %d.\n", i, sesiones_ids[i]);
+		}
+		try {
+			conexion.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return (sesionesPelicula);
 	}
 }
