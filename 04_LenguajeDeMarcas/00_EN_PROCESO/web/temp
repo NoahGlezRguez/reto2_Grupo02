@@ -1,0 +1,44 @@
+/* header */
+
+if (isset($_SESSION["nombre"])) {
+      echo "<li> 🙋 " . $_SESSION["nombre"] . "</li>";
+      echo "<li><a href=\"logout.php\" class=\"CerSes\"> Cerrar sesion </a></li>";
+    } else {
+      echo "<li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
+    }
+
+/* css */
+
+.menu li .CerSes {
+    background-color: red;
+    border-radius: 5em;
+}
+.menu li .CerSes:hover {
+    background-color: rgba(255, 104, 104, 0.654);
+    color: white;
+} 
+/* Usuario sin hover */
+.menu li, .menu li a {
+    text-decoration: none;
+    height: 100%;
+    color: #333;
+    font-weight: bold;
+    padding: 0px 15px;
+    transition: background-color 0.3s, color 0.3s;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;   
+  
+}
+.menu li a:hover {
+    background-color: rgba(24, 134, 121, 0.654);
+    color: white;
+} 
+
+/* index */
+
+<div class="peliestrenos" >
+                    <img src="img/proximo4.png" alt="pelicula" width ="150px" height="200px">
+                    <p><b>Título:</b> Los "THE SIMPSONS 2" <br> <b>Estreno: </b> 2026</p> 
+                </div> 
