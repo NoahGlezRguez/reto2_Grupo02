@@ -8,16 +8,14 @@ public class ValidarTipoEntradaTest {
 
 	@Test
 	public void testCheckSoloLetrasTrue() {
-		boolean expectedResult = true;
-		boolean actualResult = ValidarTipoEntrada.checkSoloLetras("nombreUSUARIO");
-		assertTrue(expectedResult == actualResult);
+		boolean result = ValidarTipoEntrada.checkSoloLetras("nombreUSUARIO");
+		assertTrue("Nombreusuario debe ser true", result);
 	}
 	
 	@Test
 	public void testCheckSoloLetrasFalse() {
-		boolean expectedResult = false;
-		boolean actualResult = ValidarTipoEntrada.checkSoloLetras(null);
-		assertTrue(expectedResult == actualResult);
+		boolean result = ValidarTipoEntrada.checkSoloLetras("1");
+		assertFalse("1 debe ser False porque es numero", result);
 	}
 
 	@Test
