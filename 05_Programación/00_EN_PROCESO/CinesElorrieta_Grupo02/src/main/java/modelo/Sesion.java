@@ -8,9 +8,11 @@ public class Sesion {
 	String		horaFin;
 	double		precio;	
 	int			aforoDisponible;
-	Sala		salaSesion;
-	Pelicula	peliculaSesion;
-
+	int			salaSesion;
+	int			peliculaSesion;
+	//objetos:
+		//sala 		sala
+		//pelicula 	pelicula
 	
 	
 	
@@ -19,12 +21,16 @@ public class Sesion {
 	
 	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
 	
+	public Sesion() {
+		
+	}
+	
 	public Sesion(int idSesion, String fecSesion, String horaInicio, String horaFin, double precio, int aforoDisponible,
-			Sala salaSesion, Pelicula peliculaSesion) {
+			int salaSesion, int peliculaSesion) {
 		this.idSesion = idSesion;
 		this.fecSesion = fecSesion;
 		this.horaInicio = horaInicio;
-		this.horaFin = horaFin;
+		this.horaFin = horaFin;	//creo que sobra este atributo
 		this.precio = precio;
 		this.aforoDisponible = aforoDisponible;
 		this.salaSesion = salaSesion;
@@ -68,16 +74,16 @@ public class Sesion {
 	public void setAforoDisponible(int aforoDisponible) {
 		this.aforoDisponible = aforoDisponible;
 	}
-	public Sala getSalaSesion() {
+	public int getSalaSesion() {
 		return salaSesion;
 	}
-	public void setSalaSesion(Sala salaSesion) {
+	public void setSalaSesion(int salaSesion) {
 		this.salaSesion = salaSesion;
 	}
-	public Pelicula getPeliculaSesion() {
+	public int getPeliculaSesion() {
 		return peliculaSesion;
 	}
-	public void setPeliculaSesion(Pelicula peliculaSesion) {
+	public void setPeliculaSesion(int peliculaSesion) {
 		this.peliculaSesion = peliculaSesion;
 	}
 	
