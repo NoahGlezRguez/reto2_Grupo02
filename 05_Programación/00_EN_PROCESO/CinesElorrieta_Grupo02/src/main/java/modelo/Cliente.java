@@ -152,20 +152,26 @@ public class Cliente {
 	private boolean validarExistencia(String cadena){
 		
 		boolean valido = true;
-		Connection 	conexion;
-		Statement	sentencia = null;
+		Connection 	conexion = null;
+		PreparedStatement	sentencia = null;
 		ResultSet 	result = null;
-		String consulta = "select dni from cliente where dni = "+cadena+";";
+		String consulta = "select dni from cliente where dni = ?";
 		
 		try {
-			conexion = ConsultarBD.conectarConBD();
-			sentencia = conexion.createStatement();
-			result = sentencia.executeQuery(consulta);
 			
+			conexion = ConsultarBD.conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			sentencia.setString(1,cadena);
+			result = sentencia.executeQuery();
+			
+			System.out.println("lolitas calientes");
 			if(result.next()){
 				
 				valido = false;
 				System.out.println("\nError, El usuario ya existe");
+			}
+			else {
+				System.out.println("culo");
 			}
 			
 			result.close();
@@ -174,6 +180,12 @@ public class Cliente {
 			
 		}catch(Exception e) {
 			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			System.out.println("noah ");
 			e.printStackTrace();
 		}
 		
@@ -238,7 +250,7 @@ public class Cliente {
 			System.out.println("\nIntroduzca el correo electrónico");
 			cadena = teclado.nextLine();
 			
-			if(cadena.indexOf('@') != cadena.lastIndexOf('@')) {
+			if(cadena.indexOf('@') != cadena.lastIndexOf('@') || cadena.charAt(0) == '@' || cadena.contains("@") == false || cadena.contains(".") == false) {
 				
 				System.out.println("\nPor favor introduzca un correo electrónico válido");
 				valid = false;
@@ -308,6 +320,16 @@ public class Cliente {
 		
 	}
 	
+	public void main (String [] args) {
+		
+		String nombre = pedirNombre();
+		//String apellido = pedirApellido();
+		//String mail = pedirEmail();
+		//String pass = pedirContraseña();
+		//String dni = pedirDni();
+		
+		//Cliente luis = new Cliente(dni, mail, nombre, apellido, pass);
+	}
 	
 	
 	
