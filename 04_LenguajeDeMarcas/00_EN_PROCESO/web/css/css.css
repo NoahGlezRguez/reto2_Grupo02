@@ -155,7 +155,7 @@ header{
     margin: 1rem;
 }
 
-#titulo, #title, #preguntasf {
+#titulo, #title {
     color: #0c4600;
 }
 
@@ -435,3 +435,31 @@ header{
 }
 
 /*FIN contacto*/
+
+/* nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn */
+/* faq🖕 */
+
+#faqdiv {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    align-items: center;
+    justify-self: center;
+    border: .25em solid #D68EBC;
+    border-radius: 2em;
+    box-shadow: #326b5d60 0em 2em 15em;
+    padding: 5em;
+}
+
+#preguntasf {
+    justify-self: center;
+    font-size: 3em;
+    font-style: italic;
+    color: #0c4600;
+}
+
+#faqimg {
+    height: 25em;
+    width: 25em;
+    border-radius: 2em;
+}
