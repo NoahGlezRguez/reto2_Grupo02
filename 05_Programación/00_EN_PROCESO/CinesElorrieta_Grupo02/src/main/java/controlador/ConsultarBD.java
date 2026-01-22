@@ -7,13 +7,13 @@ import modelo.*;
 
 public class ConsultarBD {
 
-	//private static String	rutaBD = "jdbc:mysql://localhost:33060/cine_elorrieta";//ajustar a la ruta real 
+	private static String	rutaBD = "jdbc:mysql://10.5.6.116:3307/cine_elorrieta";//ajustar a la ruta real 
 	
-	//private static String	user = "dam_v";
-	//private static String	pw = "Elorrieta00-";
-	private static String	rutaBD = "jdbc:mysql://127.0.0.1:3306/cine_elorrieta";
-	private static String	user = "DAM_v";
-	private static String	pw = "37E836Zy!!184";
+	private static String	user = "dam_v";
+	private static String	pw = "Elorrieta00-";
+	//private static String	rutaBD = "jdbc:mysql://127.0.0.1:3306/cine_elorrieta";
+	//private static String	user = "DAM_v";
+	//private static String	pw = "";
 	
 	public static Connection conectarConBD() {
 		
@@ -35,15 +35,15 @@ public class ConsultarBD {
 		
 		ArrayList<Pelicula> 	cartelera = new ArrayList<>();
 		Pelicula				peliculaOfertada = null;
-		String				consulta = 	"select distinct p.idpeli, p.NomPeli, p.duracion, g.nomgen "
+		String					consulta = 	"select distinct p.idpeli, p.NomPeli, p.duracion, g.nomgen "
 										+ "from sesion s "
 										+ "join pelicula p on s.IDPeli = p.IDPeli "
 										+ "join genero g on p.IDgen = g.idgen "
 										+ "where fec >= current_timestamp()";
-		Connection 	conexion;
+
+		Connection	conexion = null;
 		Statement	sentencia = null;
-		ResultSet 	result = null;
-		
+		ResultSet	result = null;
 		try {
 			conexion = ConsultarBD.conectarConBD();
 			sentencia = conexion.createStatement();
@@ -60,12 +60,23 @@ public class ConsultarBD {
 				cartelera.add(peliculaOfertada);
 			}
 			
-			result.close();
-			sentencia.close();
-			conexion.close();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+		} finally {
+			
+			try {
+				if (result != null)
+						result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+			
+			} catch (SQLException e){
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return (cartelera);
@@ -79,7 +90,7 @@ public class ConsultarBD {
 									+ " from sesion "
 									+ " where fec >= current_timestamp() and IDPeli = ?"; //como hay que sustituir un atributo, usas preparedStatement y no Statement	
 		
-		Connection 			conexion;
+		Connection 			conexion = null;
 		PreparedStatement	sentencia = null;
 		ResultSet 			result = null;
 		
@@ -87,19 +98,29 @@ public class ConsultarBD {
 		try {	
 			conexion = ConsultarBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
-			sentencia.setInt(2, peliculaElegida.getIdPeli());//sustituir el ? por el id de la peliElegida
+			sentencia.setInt(1, peliculaElegida.getIdPeli());//sustituir el ? por el id de la peliElegida
 			
 			result = sentencia.executeQuery();
 			
 			while (result.next()) 
 				fechas.add(result.getString("fec"));
-
-			result.close();
-			sentencia.close();
-			conexion.close();
-			
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			
+			try {
+				if (result != null)
+						result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+			
+			} catch (SQLException e){
+				e.printStackTrace();
+			}
+			
 		}		
 		
 		return (fechas);
@@ -110,11 +131,11 @@ public class ConsultarBD {
 		ArrayList<Sesion>	sesionesPelicula = new ArrayList<>();
 		Sesion				sesionDisponible = null;
 		
-		String	consulta = "select hora_ini, numsala, precio"
-							+ "from sesion"
+		String	consulta = "select idsesion, fec, hora_ini, hora_fin, precio, numsala, idpeli "
+							+ "from sesion "
 							+ "where idpeli = ? and fec = ?"; //ajustar consulta
 		
-		Connection 			conexion;
+		Connection 			conexion = null;
 		PreparedStatement	sentencia = null;
 		ResultSet 			result = null;
 		
@@ -137,16 +158,27 @@ public class ConsultarBD {
 				sesionDisponible.setPrecio(result.getDouble("precio"));
 				sesionDisponible.setSalaSesion(result.getInt("Numsala")); 
 				sesionDisponible.setPeliculaSesion(result.getInt("IDPeli"));
+				sesionDisponible.setPelicula(peliculaElegida);
 				
 				sesionesPelicula.add(sesionDisponible);
 			}
-			result.close();
-			sentencia.close();
-			conexion.close();
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			
+			try {
+				if (result != null)
+						result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+			
+			} catch (SQLException e){
+				e.printStackTrace();
+			}
+			
 		}
 
 		return (sesionesPelicula);

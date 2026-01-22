@@ -1,5 +1,7 @@
 package controlador;
 
+import java.util.ArrayList;
+
 import modelo.*;
 import vista.*;
 
@@ -90,7 +92,7 @@ public class OperacionesCompra {
 	
 	private static Pelicula elegirPelicula() {
 		
-		Pelicula cartelera[] = null;
+		ArrayList<Pelicula> cartelera = new ArrayList<>();
 		Pelicula peliculaElegida = null;
 		
 		cartelera = ConsultarBD.consultarCartelera();
@@ -104,8 +106,8 @@ public class OperacionesCompra {
 	
 	private static String elegirFecha(Pelicula peliculaElegida) {
 		
-		String		fechas[] = null;
-		String		fechaElegida = null;
+		ArrayList<String>	fechas = new ArrayList<>();
+		String				fechaElegida = null;
 		
 		fechas = ConsultarBD.consultarFechas(peliculaElegida);
 		fechaElegida = Menu.fechas(fechas, peliculaElegida);
@@ -115,8 +117,8 @@ public class OperacionesCompra {
 	
 	private static Sesion elegirSesion(Pelicula peliculaElegida, String fechaElegida) {
 		
-		Sesion		sesiones[] = null;
-		Sesion		sesionElegida = null;
+		ArrayList<Sesion>	sesiones = new ArrayList<>();
+		Sesion				sesionElegida = null;
 		
 		sesiones = ConsultarBD.consultarSesiones(peliculaElegida, fechaElegida);
 		if (sesiones != null)
