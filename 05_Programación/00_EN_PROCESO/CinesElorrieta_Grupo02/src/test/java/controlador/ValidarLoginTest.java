@@ -1,9 +1,8 @@
+
 package controlador;
 
 import static org.junit.Assert.*;
-
 import java.sql.SQLException;
-
 import org.junit.Test;
 
 public class ValidarLoginTest {
@@ -22,12 +21,12 @@ public class ValidarLoginTest {
 
 	@Test(expected = SQLException.class)
 	public void testSQLException() throws Exception {
-		boolean resultado = ValidarLogin.validar("889", "cuaqluierdato");
+		ValidarLogin.validar("889", "cuaqluierdato");
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testNullConection() throws Exception {
-		boolean resultado = ValidarLogin.validar("prueba1", "123");
+		ValidarLogin.validar("prueba1", "123");
 	}
 
 }
