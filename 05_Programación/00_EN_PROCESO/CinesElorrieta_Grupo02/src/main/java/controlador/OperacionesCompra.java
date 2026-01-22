@@ -92,14 +92,40 @@ public class OperacionesCompra {
 	
 	private static Pelicula elegirPelicula() {
 		
-		ArrayList<Pelicula> cartelera = new ArrayList<>();
-		Pelicula peliculaElegida = null;
+		ArrayList<Integer> 	cartelera = new ArrayList<>();
+		Pelicula 			peliculaElegida = null;
+		String				entrada = null;
+		int					seleccionIndice = 0;
+		boolean				esCorrecto;
+		
 		
 		cartelera = ConsultarBD.consultarCartelera();
 		
-		if (cartelera != null) 
-			peliculaElegida = Menu.cartelera(cartelera);
-		
+		if (cartelera.size() > 0) {
+
+			do {
+				esCorrecto = true;
+				System.out.println("\n\t·····> Introduzca el nº de la película (o -1 para cancelar la compra): ");
+				entrada = Main.teclado.nextLine();
+				
+				if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+					seleccionIndice = Integer.parseInt(entrada);
+					if ((seleccionIndice < 1 || seleccionIndice > cartelera.size()) && (seleccionIndice != -1)) {
+						esCorrecto = false;
+						System.out.println("Error, opcion incorrecta, vuelvalo a intentar");//dar formato de msg de error
+					}
+					if (seleccionIndice == -1) {
+						System.out.println("\n\t...Cancelando compra..." + "\n".repeat(15));
+						esCorrecto = true;
+					}
+				}
+				else
+					System.out.println("Error, dato incorrecto");//dar formato de msg de error
+				
+			} while (!esCorrecto);
+		}
+			else
+				System.out.println("Error, no hay cartelera disponible ahora mismo, lo sentimos");//dar formato de msg de error
 		return (peliculaElegida);
 		
 	}

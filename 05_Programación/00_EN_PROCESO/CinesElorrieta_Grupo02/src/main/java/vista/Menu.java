@@ -90,56 +90,20 @@ public class Menu {
 			return (seleccion - 1);
 		}
 	
-	public static Pelicula cartelera(ArrayList<Pelicula> cartelera) {
+	public static void cartelera(int i, String tituloPeli, String genero, int duracion) {
 		
 		String		pelicula = null;
-		int			seleccionIndice = 0;
-		boolean		esCorrecto, salirYa = false;
-		String		entrada;
-		Pelicula	seleccionPeli;
-		
-		do {
-			esCorrecto = true;
-			if (cartelera != null) {
-				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\t\tCARTELERA ACTUAL\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-				for(int i = 0; i < cartelera.size(); i++) {
-					pelicula = """
+
+		pelicula = """
 			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			\tPelícula nº %d:
 				\t[🎬]Título:	%s
 				\t[🎞️]Género:	%s
-				\t[⌛]Duración:	%s minutos
+				\t[⌛]Duración:	%d minutos
 			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
-							""".formatted(i + 1, cartelera.get(i).getNombrePeli(), cartelera.get(i).getGenero(), cartelera.get(i).getDuracion());
+							""".formatted(i + 1, tituloPeli, genero, duracion);
 					System.out.print(pelicula);
-				}
-			
-				System.out.println("\n\t·····> Introduzca el nº de la película (o -1 para cancelar la compra): ");
-				entrada = Main.teclado.nextLine();
-				if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
-					seleccionIndice = Integer.parseInt(entrada);
-					if ((seleccionIndice < 1 || seleccionIndice > cartelera.size()) && (seleccionIndice != -1)) {
-						esCorrecto = false;
-						System.out.println("Error, opcion incorrecta, vuelvalo a intentar");//dar formato de msg de error
-					}
-					if (seleccionIndice == -1) {
-						System.out.println("\n\t...Cancelando compra..." + "\n".repeat(15));
-						esCorrecto = true;
-						salirYa = true;
-					}
-				}
-				else
-					System.out.println("Error, dato incorrecto");//dar formato de msg de error
-			}
-			else
-				System.out.println("Error, no hay cartelera disponible ahora mismo, lo sentimos");//dar formato de msg de error
-				
-		} while (!esCorrecto && !salirYa);
-		if (!salirYa)
-			seleccionPeli = cartelera.get(seleccionIndice - 1);
-		else
-			seleccionPeli = null;
-		return (seleccionPeli);
+
 	}
 	
 	//recibe las fechas ya consultadas y la peli en cuestion, las muestra con formato, pide una saleccion, la valida y devuelve la fecha elegida validada

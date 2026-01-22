@@ -4,11 +4,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import modelo.*;
+import vista.Menu;
 
 public class ConsultarBD {
 
 	private static String	rutaBD = "jdbc:mysql://10.5.6.116:3307/cine_elorrieta";//ajustar a la ruta real 
-	
+
 	private static String	user = "dam_v";
 	private static String	pw = "Elorrieta00-";
 	//private static String	rutaBD = "jdbc:mysql://127.0.0.1:3306/cine_elorrieta";
@@ -31,15 +32,15 @@ public class ConsultarBD {
 		return(conexion);
 	}
 
-	public static ArrayList<Pelicula> consultarCartelera() { 
+	public static ArrayList<Integer> consultarCartelera() { 
 		
-		ArrayList<Pelicula> 	cartelera = new ArrayList<>();
-		Pelicula				peliculaOfertada = null;
 		String					consulta = 	"select distinct p.idpeli, p.NomPeli, p.duracion, g.nomgen "
 										+ "from sesion s "
 										+ "join pelicula p on s.IDPeli = p.IDPeli "
 										+ "join genero g on p.IDgen = g.idgen "
 										+ "where fec >= current_timestamp()";
+		int						i = 0;
+		ArrayList<Integer>		idPelis = new ArrayList<>();
 
 		Connection	conexion = null;
 		Statement	sentencia = null;
@@ -50,14 +51,8 @@ public class ConsultarBD {
 			result = sentencia.executeQuery(consulta);
 
 			while (result.next()) {
-				peliculaOfertada = new Pelicula();
-				
-				peliculaOfertada.setIdPeli(result.getInt("IDPeli"));
-				peliculaOfertada.setNombrePeli(result.getString("NomPeli"));
-				peliculaOfertada.setDuracion(result.getInt("Duracion"));
-				peliculaOfertada.setGenero(result.getString("NomGen"));
-				
-				cartelera.add(peliculaOfertada);
+				idPelis.add(result.getInt("IDPeli"));
+				Menu.cartelera(i + 1, result.getString("NomPeli"), result.getString("NomGen"), result.getInt("Duracion"));
 			}
 			
 		} catch (SQLException e) {
@@ -77,9 +72,8 @@ public class ConsultarBD {
 				e.printStackTrace();
 			}
 			
-		}
-		
-		return (cartelera);
+		}	
+		return (idPelis);
 	}
 	
 
