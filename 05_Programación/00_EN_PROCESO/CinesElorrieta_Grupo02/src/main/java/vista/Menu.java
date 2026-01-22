@@ -200,54 +200,94 @@ public class Menu {
 
 	}
 	
+	public static Sesion sesiones(Sesion sesiones[], String fechaElegida, Pelicula peliculaElegida) {
+		
+		Sesion		sesionElegida = null;
+		int			seleccionIndice = 0;
+		boolean		esCorrecto;
+		String		entrada = null, sesionesDisponibles = null;
+		
+		do {
+			esCorrecto = true;
+			if (sesiones != null) {
+				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\t\tSESIONES DISPONIBLES del día "
+						+ fechaElegida
+						+ "\n\t\t[🎬] Película: "
+						+ peliculaElegida.getNombrePeli() + "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+				for(int i = 0; i < sesiones.length; i++) {
+					sesionesDisponibles = """				
+							\n\tOpción nº %d:\t- Hora %sh Sala %d - precio %f€.						
+							""".formatted(i + 1, sesiones[i].getHoraInicio().substring(0, 5), sesiones[i].getSalaSesion().getNumSala(), sesiones[i].getPrecio());
+					System.out.print(sesionesDisponibles);
+				}
+				sesionesDisponibles = """				
+						\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --
+						\tPARA VOLVER A LA CARTELERA introduzca:	-1.
+						\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --			
+												""";
+				System.out.printf("%s\n\t·····> Introduzca el nº de la sesión: ", sesionesDisponibles);
+				
+				entrada = Main.teclado.nextLine();
+				if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+					seleccionIndice = Integer.parseInt(entrada);
+					if ((seleccionIndice < 1 || seleccionIndice > sesiones.length) && (seleccionIndice != -1)) {
+						esCorrecto = false;
+						System.out.println("Error, opcion incorrecta, vuelvalo a intentar");//dar formato de msg de error
+					}
+					if (seleccionIndice == -1) {
+						System.out.println("...Volviendo atrás, a ver fechas..." + "\n".repeat(15));
+						esCorrecto = true;
+						return (null);
+					}
+					else {
+						
+					}
+						
+				}
+				else {
+					System.out.println("Error, dato incorrecto");//dar formato de msg de error
+					esCorrecto = false;
+				}
+					
+			}
+			else {
+				System.out.println("Error, no hay cartelera disponible ahora mismo, lo sentimos");//dar formato de msg de error
+				esCorrecto = false;
+			}
+				
+		} while (!esCorrecto);
+		sesionElegida = sesiones[seleccionIndice - 1];
+		return (sesionElegida);
+	}
 	
-	
-//	public static Pelicula sesiones(Sesion sesiones[]) { //falta cambiar el contenido y ajustarlo a las sesiones, esto es un frankestein
-//		
-//		String		pelicula = null;
-//		int			seleccionIndice = 0;
-//		boolean		esCorrecto;
-//		String		entrada;
-//		Pelicula	seleccionPeli;
-//		
-//		do {
-//			esCorrecto = true;
-//			if (sesiones != null) {
-//				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\t\t\tSESIONES PELÍCULA %s\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-//				for(int i = 0; i < sesiones.length; i++) {
-//					pelicula = """
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//\tPelícula nº %d:
-//	\t[🎬]Título:	%s
-//	\t[🎞️]Género:	%s
-//	\t[⌛]Duración:	%s minutos
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
-//							""".formatted(i + 1, sesiones[i].getNombrePeli(), sesiones[i].getGenero(), sesiones[i].getDuracion());
-//					System.out.print(pelicula);
-//				}
-//			
-//				System.out.println("\n\t·····> Introduzca el nº de la película (o -1 para cancelar la compra): ");
-//				entrada = Main.teclado.nextLine();
-//				if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
-//					seleccionIndice = Integer.parseInt(entrada);
-//					if ((seleccionIndice < 1 || seleccionIndice > sesiones.length) && (seleccionIndice != -1)) {
-//						esCorrecto = false;
-//						System.out.println("Error, opcion incorrecta, vuelvalo a intentar");//dar formato de msg de error
-//					}
-//					if (seleccionIndice == -1) {
-//						System.out.println("Cancelando compra..." + "\n".repeat(15));
-//						esCorrecto = true;
-//						return (null);
-//					}
-//				}
-//				else
-//					System.out.println("Error, dato incorrecto");//dar formato de msg de error
-//			}
-//			else
-//				System.out.println("Error, no hay cartelera disponible ahora mismo, lo sentimos");//dar formato de msg de error
-//				
-//		} while (!esCorrecto);
-//		seleccionPeli = cartelera[seleccionIndice - 1];
-//		return (seleccionPeli);
-//	}
+	public static int pedirNumPersonas(Sesion sesionElegida) {
+		
+		int	numPersonas = 0;
+		boolean esCorrecto;
+		String entrada = "";
+		String	peticion = """
+				\t\t- ¿Para cuántas personas desea comprar esta entrada?
+				\t\t- Aforo actual disponible para esta sesión: %s asientos libres de %s.
+				\t\t\t<<<<Para volver atrás, introduzca -1 >>>>
+				\t\t- Introduzca su respuesta: """.formatted(sesionElegida.getAforoDisponible(), sesionElegida.getSalaSesion().getAforoSala());
+		do {
+			esCorrecto = true;
+			
+			System.out.print(peticion);
+			entrada = Main.teclado.nextLine();
+			if (!ValidarTipoEntrada.checkSoloNumeroEntero(entrada))//si no es un nº entero
+				esCorrecto = false;
+			else {
+				numPersonas = Integer.parseInt(entrada);
+				if (numPersonas < 1 && numPersonas != -1) {
+					esCorrecto = false;
+					System.out.println("Error, debe ser mínimo para una persona");
+					numPersonas = 0;
+				}
+			}
+			
+		} while(!esCorrecto); //mientras sea incorrecto o no le de a "volver atrás"
+		
+		return (numPersonas);
+	}
 }

@@ -8,8 +8,8 @@ public class Sesion {
 	String		horaFin;
 	double		precio;	
 	int			aforoDisponible;
-	Sala		salaSesion;
-	Pelicula	peliculaSesion;
+	Sala			salaSesion;
+	Pelicula		peliculaSesion;
 
 	
 	

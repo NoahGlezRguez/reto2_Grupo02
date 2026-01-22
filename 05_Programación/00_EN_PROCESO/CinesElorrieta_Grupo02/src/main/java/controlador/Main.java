@@ -10,7 +10,6 @@ import vista.MostrarMsg;
  */
 public class Main {
 
-	public static String 	entrada = "";
 	public static Scanner 	teclado = new Scanner(System.in);
 	public static boolean	reiniciar = true;
 

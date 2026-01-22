@@ -29,24 +29,24 @@ public class OperacionesCompra {
 		do {
 			peliculaElegida = elegirPelicula();
 			
-			if (peliculaElegida == null)
+			if (peliculaElegida == null) //si cliente pulsa "volver atrás"
 				seCancelaLaCompra = true;
 		 	else {
 		 		do{
 			 		fechaElegida = elegirFecha(peliculaElegida);
 			 		
-			 		if (fechaElegida.equals("1")) 
+			 		if (fechaElegida.equals("1")) //si cliente pulsa "volver atrás"
 			 			volverALaCartelera = true;
 			 		else {
 				 		do {
 				 			sesionElegida = elegirSesion(peliculaElegida, fechaElegida);	
 					 		
-				 			if (sesionElegida == null)
+				 			if (sesionElegida == null)//si cliente pulsa "volver atrás"
 				 				volverAFechas = true;
 				 			else {
 				 				do {
-				 					numPersonas = Menu.pedirNumPersonas();
-				 					if (numPersonas < 0)
+				 					numPersonas = Menu.pedirNumPersonas(sesionElegida);
+				 					if (numPersonas < 0)//si cliente pulsa "volver atrás"
 				 						volverASesiones = true;
 				 					else {
 				 						/*
@@ -64,7 +64,6 @@ public class OperacionesCompra {
 				 					}
 				 						
 				 				} while (!volverASesiones);
-				 				
 				 				volverASesiones = false;
 				 				numPersonas = 0;
 			 				
