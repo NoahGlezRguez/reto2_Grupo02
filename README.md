@@ -1,23 +1,36 @@
 # reto2_Grupo02
 Repositorio del grupo 02 para el reto 2 de DAM
 
+
 Aquí va un chuletario ultra-rápido, pensado justo para clavar el título del commit y dejar los detalles para la descripción 👌
 
 🧠 Fórmula mental
+
 ¿Qué hice? → type
 ¿Dónde lo hice? → scope
-> type(scope): que hace el cambio
+
+type(scope): que hace el cambio
 
 📌 TYPES (elige uno)
+
 feat → nueva funcionalidad
+
 fix → corrección de bug
+
 refactor → cambio interno sin cambiar comportamiento
+
 perf → mejora de rendimiento
+
 style → formato / lint / espacios / ; (no lógica)
+
 test → tests nuevos o corregidos
+
 docs → documentación
+
 build → dependencias, build, versiones
+
 ops → infra, CI/CD, deploy
+
 chore → tareas generales (init, configs, cleanup)
 
 📦 SCOPES (elige uno simple)
@@ -25,23 +38,39 @@ chore → tareas generales (init, configs, cleanup)
 Usa una palabra clara. Ejemplos comunes:
 
 Funcionalidad / dominio
+
 auth
+
 user
+
 payment
+
 orders
+
 search
+
 Capa técnica
+
 api
+
 ui
+
 frontend
+
 backend
+
 db
 
 Tooling / proyecto
+
 config
+
 deps
+
 ci
+
 docker
+
 build
 
 👉 Si no aporta valor, omite el scope.
@@ -49,8 +78,11 @@ build
 ✍️ DESCRIPCIÓN (reglas rápidas)
 
 verbo en presente e imperativo
+
 corta y clara
+
 sin mayúscula inicial
+
 sin punto final
 
 ✅ Ejemplos buenos
@@ -70,8 +102,6 @@ feat(api)!: remove status endpoint
 
 Título = resumen para humanos
 Descripción = detalles para el futuro tú
-
-
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
