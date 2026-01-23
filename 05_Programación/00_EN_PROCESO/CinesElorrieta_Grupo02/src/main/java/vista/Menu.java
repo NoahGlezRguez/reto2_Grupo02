@@ -54,39 +54,37 @@ public class Menu {
 	}
 	
 	//sirve para las decisiones de confirmacion
-	public static int siNo(String titulo) {
+	public static int siNo(String peticion) {
 			
-			int		seleccion = 0;
-			boolean	esCorrecto;
-			String	entrada;
+		int		seleccion = 0;
+		boolean	esCorrecto;
+		String	entrada, menu = """
+		\n\t------> %s <<<<<<------
+		\t\t1.- Sí.\n\t\t2.- No.\n
+		\t·····> Introduzca su respuesta: """.formatted(peticion);
+		
+		do {
+			esCorrecto = true;
+			System.out.print(menu);
+			entrada = Main.teclado.nextLine();
 			
-			do {
-				esCorrecto = true;
-				System.out.printf("\n\t------> %s <<<<<<------\n\n", titulo);
+			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
 				
-				System.out.print("\t\t1.- Sí.\n\t\t2.- No.\n");
+				seleccion = Integer.parseInt(entrada);
 				
-				System.out.printf("\n\t·····> Introduzca su respuesta: ");
-				
-				entrada = Main.teclado.nextLine();
-				
-				if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
-					
-					seleccion = Integer.parseInt(entrada);
-					
-					if ((seleccion < 1) || (seleccion > 2)) {
-						//MostrarMensajeDeError.mostrarError(8);
-						esCorrecto = false;
-					}
-				}
-				else 
+				if ((seleccion < 1) || (seleccion > 2)) {
+					//MostrarMensajeDeError.mostrarError(8);
 					esCorrecto = false;
-				
-			} while (!esCorrecto);
+				}
+			}
+			else 
+				esCorrecto = false;
 			
-			System.out.println("\n-----------------------------------------------------------------------\n");
-			
-			return (seleccion - 1);
+		} while (!esCorrecto);
+		
+		System.out.println("\n-----------------------------------------------------------------------\n");
+		
+		return (seleccion - 1);
 		}
 	
 	//muestra una pelicula de la cartelera
@@ -102,8 +100,8 @@ public class Menu {
 				\t[⌛]Duración:	%d minutos
 			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 							""".formatted(i + 1, tituloPeli, genero, duracion);
-					System.out.print(pelicula);
-
+		
+		System.out.print(pelicula);
 	}
 	
 	//muestra una fecha de una peli de la cartelera
@@ -114,8 +112,8 @@ public class Menu {
 		fecha = """				
 			\n\tOpción nº %d:\t- Día %s/%s/%s.						
 			""".formatted(i + 1, fechaOfertada.substring(8, 10), fechaOfertada.substring(5, 7), fechaOfertada.substring(0, 4));
-			System.out.print(fecha);
-
+			
+		System.out.print(fecha);
 	}
 	
 	//muestra los datos de una sesion de una pelicula de un dia determinado
@@ -128,14 +126,13 @@ public class Menu {
 		""".formatted(i, duracion.substring(0, 5), sala, precio);
 		
 		System.out.print(sesionDisponible);
-
 	}
 	
-	public static int pedirNumPersonas(Sesion sesionElegida) {
+	public static int pedirNumPersonas(Sesion sesionElegida) { //esto es un frankestein sin dar forma
 		
-		int	numPersonas = 0;
+		int		numPersonas = 0;
 		boolean esCorrecto;
-		String entrada = "";
+		String 	entrada = "";
 		String	peticion = """
 				\t\t- ¿Para cuántas personas desea comprar esta entrada?
 				\t\t- Aforo actual disponible para esta sesión: %s asientos libres de %s.
