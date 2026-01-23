@@ -104,6 +104,41 @@ public class ValidarTipoEntrada {
 	}
 
 	/**
+	 * Evalua si es numero entero. Si es asi, devuelve true, falso en caso
+	 * contrario.
+	 * 
+	 * @param s valor de entrada
+	 * @return true si es numero entero, falso caso contrario
+	 */
+	public static boolean esEntero(String s) {
+		boolean r = false;
+		if (!esVacio(s)) {
+			final String MIN = "2147483648", MAX = "2147483647";
+			boolean signo = s.charAt(0) == '-' || s.charAt(0) == '+';
+			int i = signo ? 1 : 0;
+			if (!(signo && s.length() == 1)) {
+				boolean digit = esDigito(s.substring(i));
+
+				if (digit) {
+					String absoluto = signo ? s.substring(1) : s;
+					int l = absoluto.length();
+
+					if (l < 10) {
+						r = true;
+					} else if (l == 10) {
+						r = absoluto.compareTo(s.charAt(0) == '-' ? MIN : MAX) <= 0;
+					}
+
+				}
+			}
+
+		}
+
+		return r;
+
+	}
+
+	/**
 	 * Comprueba si un caracter es digito
 	 * 
 	 * @param c valor de entrada
