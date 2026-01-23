@@ -59,7 +59,7 @@ if(isset($_POST['registrarse'])){
     // mensaje de error con la base de datos
         echo "<script> alert('Error');window.location='crearCuenta.php';</script>";
     }
-}
+} // ALERTA ERROR ALERTA ERROR SI PONES EL MISMO DNI DOS VECES, LA WEB SE MUERE, HAY QUE CONTROLARLO
 
 // Cerrar conexion
 $conn->close();

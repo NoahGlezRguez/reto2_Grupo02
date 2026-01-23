@@ -37,7 +37,10 @@
                     </div>
 
                     <div>
-                        <button id="versesiones">Ver sesiones</button>
+                        <form action="sesion.php" method="post">
+                            <input type="hidden" name="idpeli" value='. $id .'>
+                            <input type="submit" id="versesiones" name="versesbot" value="Ver sesiones"/>
+                        </form>
                     </div>
             
                 </div>

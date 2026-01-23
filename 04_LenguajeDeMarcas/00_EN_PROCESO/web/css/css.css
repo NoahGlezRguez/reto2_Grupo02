@@ -463,3 +463,30 @@ header{
     width: 25em;
     border-radius: 2em;
 }
+
+/* FIN de FAQ */
+
+/* nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn */
+/* sesiones */
+
+#sesmaindiv{
+    display: flex;
+    align-content: center; justify-content: space-evenly;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+#sesmaindiv p {
+    align-items: center; justify-items: space-evenly;
+    align-self: center; justify-self: center;
+}
+
+.sesdiv {
+    box-shadow: #0000003f 0em 2em 5em;
+    background-color: white;
+    border-radius: 15em;
+    width: 15em;
+    height: auto;
+    padding: 1em;
+    margin: 1em;
+}

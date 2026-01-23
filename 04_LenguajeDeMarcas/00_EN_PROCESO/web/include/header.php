@@ -50,7 +50,11 @@ session_start();
     <!-- https://www.php.net/manual/en/reserved.variables.session.php-->
     <?php
     if (isset($_SESSION["nombre"])) {
-      echo "<li> 🙋 " . $_SESSION["nombre"] . "</li>";
+      if ($_SESSION["nombre"] == "J"){
+        echo "<li><img src='img/anovapetpet.gif'/ width='50em' height='50em'></li>";
+      } else {
+        echo "<li> 🙋 " . $_SESSION["nombre"] . "</li>";
+      }
       echo "<li><a href=\"logout.php\" class=\"CerSes\"> Cerrar sesion </a></li>";
     } else {
       echo "<li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
