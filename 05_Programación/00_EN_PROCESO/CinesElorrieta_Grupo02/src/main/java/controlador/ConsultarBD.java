@@ -197,5 +197,73 @@ public class ConsultarBD {
 		return valido;
 		
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static Cliente Consultarlogin(String dni, String password){
+		
+		boolean valido = true;
+		
+		Connection 	conexion = null;
+		PreparedStatement	sentencia = null;
+		ResultSet 	result = null;
+		String consulta = "select * from cliente where dni = "+"'"+dni+"'"+" and userpassword = "+"'"+password+"'"+";";
+		Cliente consultado = new Cliente();
+		
+		try {
+			
+			conexion = conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			//sentencia.setString(1,cadena);
+			result = sentencia.executeQuery();
+			
+			
+			if(result.next()){
+				
+				consultado.setDni(result.getString("DNI"));
+				consultado.setNomCliente(result.getString("nomcli"));
+				consultado.setApellidos(result.getString("ape"));
+				consultado.setEmail(result.getString("mail"));
+				
+			}
+			
+			else{
+				System.out.println("\nUsuario no encontrado");
+				consultado = null;
+			}
+			
+			
+			result.close();
+			sentencia.close();
+			conexion.close();
+			
+		}catch(Exception e) {
+			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			
+			e.printStackTrace();
+		}
+		
+		
+		return consultado;
+	}
+	
+	public static boolean InsertarNuevoUsuario() {
+		
+		boolean valid = true;
+		
+		
+		
+		return boolean;
+		
+	}
+	
+	
 
 }
