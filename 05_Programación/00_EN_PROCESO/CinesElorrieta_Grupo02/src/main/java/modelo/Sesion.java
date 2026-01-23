@@ -1,6 +1,6 @@
 package modelo;
 
-public class Sesion {
+public class Sesion { //realmente se necesitan aqui TODOS los atributos??
 
 	int			idSesion;
 	String		fecSesion;
