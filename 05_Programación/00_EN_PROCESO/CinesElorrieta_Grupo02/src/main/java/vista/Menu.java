@@ -1,7 +1,5 @@
 package vista;
 
-import java.util.ArrayList;
-
 import controlador.*;
 import modelo.*;
 
@@ -55,6 +53,7 @@ public class Menu {
 		return (seleccion - 1);
 	}
 	
+	//sirve para las decisiones de confirmacion
 	public static int siNo(String titulo) {
 			
 			int		seleccion = 0;
@@ -90,6 +89,7 @@ public class Menu {
 			return (seleccion - 1);
 		}
 	
+	//muestra una pelicula de la cartelera
 	public static void cartelera(int i, String tituloPeli, String genero, int duracion) {
 		
 		String		pelicula = null;
@@ -106,124 +106,29 @@ public class Menu {
 
 	}
 	
-	//recibe las fechas ya consultadas y la peli en cuestion, las muestra con formato, pide una saleccion, la valida y devuelve la fecha elegida validada
-	public static String fechas(ArrayList<String> fechas, Pelicula peliculaElegida) {
+	//muestra una fecha de una peli de la cartelera
+	public static void fecha(int i, String tituloPeli, String fechaOfertada) {
 		
 		String		fecha = null;
-		int			seleccionIndice = 0;
-		boolean		esCorrecto, volverAtras = false;
-		String		entrada;
-		String		fechasDisponibles = null;
 		
-		do {
-			esCorrecto = true;
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\t\tFECHAS DISPONIBLES\n\t\t[🎬] Película: "
-						+ peliculaElegida.getNombrePeli() + "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-			for(int i = 0; i < fechas.size(); i++) {
-				fechasDisponibles = """				
-					\n\tOpción nº %d:\t- Día %s/%s/%s.						
-				""".formatted(i + 1, fechas.get(i).substring(8, 10), fechas.get(i).substring(5, 7), fechas.get(i).substring(0, 4));
-				System.out.print(fechasDisponibles);
-			}
-			
-			fechasDisponibles = """				
-			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --
-			\tPARA VOLVER A LA CARTELERA introduzca:	-1.
-			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --			
-									""";
-			System.out.print(fechasDisponibles);
-			
-			System.out.println("\n\t·····> Seleccione una opción: ");
-			
-			entrada = Main.teclado.nextLine();
-			
-			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
-				seleccionIndice = Integer.parseInt(entrada);
-				
-				if ((seleccionIndice < 1 || seleccionIndice > fechas.size()) && (seleccionIndice != -1)) {
-					esCorrecto = false;
-					System.out.println("Error, opcion incorrecta, vuelvalo a intentar");//dar formato de msg de error
-				}	
-				else if (seleccionIndice == -1) {
-					System.out.println("\n\t...Regresando a la cartelera..." + "\n".repeat(15));
-					esCorrecto = true;
-					volverAtras = true;
-				}
-			}
-			else {
-				System.out.println("Error, debe ser un nº de los que se muestran como opcion, intentelo de nuevo");//dar formato de msg de error
-				esCorrecto = false;
-			}
-				
-		} while (!esCorrecto && !volverAtras);
-		
-		if (!volverAtras)
-			fecha = fechas.get(seleccionIndice - 1);
-		else if(volverAtras)
-			fecha = "1";		
-		
-		return (fecha);
+		fecha = """				
+			\n\tOpción nº %d:\t- Día %s/%s/%s.						
+			""".formatted(i + 1, fechaOfertada.substring(8, 10), fechaOfertada.substring(5, 7), fechaOfertada.substring(0, 4));
+			System.out.print(fecha);
 
 	}
 	
-	public static Sesion sesiones(ArrayList<Sesion> sesiones, String fechaElegida, Pelicula peliculaElegida) {
+	//muestra los datos de una sesion de una pelicula de un dia determinado
+	public static void sesion(int i, String peliculaElegida, String fechaElegida, String duracion, int sala, double precio) {
+
+		String		sesionDisponible = null;
 		
-		Sesion		sesionElegida = null;
-		int			seleccionIndice = 0;
-		boolean		esCorrecto;
-		String		entrada = null, sesionesDisponibles = null;
+		sesionDisponible = """				
+		\n\tOpción nº %d:\tHora %sh Sala %d - precio %.2f€.						
+		""".formatted(i, duracion.substring(0, 5), sala, precio);
 		
-		do {
-			esCorrecto = true;
-			if (sesiones != null) {
-				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\t\tSESIONES DISPONIBLES del día "
-						+ fechaElegida
-						+ "\n\t\t[🎬] Película: "
-						+ peliculaElegida.getNombrePeli() + "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-				for(int i = 0; i < sesiones.size(); i++) {
-					sesionesDisponibles = """				
-							\n\tOpción nº %d:\tHora %sh Sala %d - precio %.2f€.						
-							""".formatted(i + 1, sesiones.get(i).getHoraInicio().substring(0, 5), sesiones.get(i).getSalaSesion(), sesiones.get(i).getPrecio());
-					System.out.print(sesionesDisponibles);
-				}
-				sesionesDisponibles = """				
-						\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --
-						\tPARA VOLVER A LA CARTELERA introduzca:	-1.
-						\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --			
-												""";
-				System.out.printf("%s\n\t·····> Introduzca el nº de la sesión: ", sesionesDisponibles);
-				
-				entrada = Main.teclado.nextLine();
-				if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
-					seleccionIndice = Integer.parseInt(entrada);
-					if ((seleccionIndice < 1 || seleccionIndice > sesiones.size()) && (seleccionIndice != -1)) {
-						esCorrecto = false;
-						System.out.println("Error, opcion incorrecta, vuelvalo a intentar");//dar formato de msg de error
-					}
-					if (seleccionIndice == -1) {
-						System.out.println("...Volviendo atrás, a ver fechas..." + "\n".repeat(15));
-						esCorrecto = true;
-						return (null);
-					}
-					else {
-						
-					}
-						
-				}
-				else {
-					System.out.println("Error, dato incorrecto");//dar formato de msg de error
-					esCorrecto = false;
-				}
-					
-			}
-			else {
-				System.out.println("Error, no hay cartelera disponible ahora mismo, lo sentimos");//dar formato de msg de error
-				esCorrecto = false;
-			}
-				
-		} while (!esCorrecto);
-		sesionElegida = sesiones.get(seleccionIndice - 1);
-		return (sesionElegida);
+		System.out.print(sesionDisponible);
+
 	}
 	
 	public static int pedirNumPersonas(Sesion sesionElegida) {
@@ -256,4 +161,38 @@ public class Menu {
 		
 		return (numPersonas);
 	}
+	
+	public static void cabeceraMenu(int tipoMenu, String tituloPeli, String fecha) {
+		
+		String	lineaPeli = "\n\t\t[🎬] Película: ", fechaFormateada = null;
+
+		if (fecha != null) 
+			fechaFormateada = "%s/%s/%s".formatted(fecha.substring(8, 10), fecha.substring(5, 7), fecha.substring(0, 4));
+		
+			
+		System.out.print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\t\t");
+		switch (tipoMenu) {
+			case 1:
+				System.out.println("Cartelera disponible\n");
+				break;
+			case 2:
+				System.out.println("Fechas disponibles\n" + lineaPeli + tituloPeli);
+				break;
+			case 3:
+				System.out.println("Sesiones disponibles\n" + lineaPeli + tituloPeli + " - día " + fechaFormateada);
+				break;	
+		}
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	}
+	
+	public static void msgVolverAtras() {
+		String msg = """
+			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --
+			\tPARA VOLVER ATRÁS introduzca:	-1.
+			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --			
+											
+			""";
+		System.out.println(msg);
+	}
+	
 }
