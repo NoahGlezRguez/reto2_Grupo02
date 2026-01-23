@@ -10,6 +10,9 @@ import vista.*;
  */
 public class OperacionesCompra {
 
+	
+	public static ArrayList<Entrada> entradas = new ArrayList<>();
+	
 	/**
 	 * Este método gestiona el flujo del programa cuando el usuario selecciona en el menú previo "Comprar entradas".
 	 * Muestra los diferentes menús, recoge las selecciones realizadas por el usuario y si se cancela o se termina el proceso,
@@ -135,13 +138,14 @@ public class OperacionesCompra {
 		int					indiceSesionElegida = 0, idSesionElegida = 0;
 		Sesion				sesionElegida = null;
 		
-		idSesiones = ConsultarBD.consultarSesiones(peliculaElegida, fechaElegida);
+		idSesiones = ConsultarBD.consultarSesionesConAforoDisponible(peliculaElegida, fechaElegida);
 		
 		indiceSesionElegida = opcionCorrecta("\n\t·····> Introduzca el nº de la sesión que le interesa: ", idSesiones);
 		
-		idSesionElegida = idSesiones.indexOf(indiceSesionElegida);
-		
-		sesionElegida = ConsultarBD.consultarSesionElegida(idSesionElegida);
+		if (indiceSesionElegida != -1) {
+			idSesionElegida = idSesiones.indexOf(indiceSesionElegida);
+			sesionElegida = ConsultarBD.consultarSesionElegida(idSesionElegida);
+		}
 		
 		return (sesionElegida);
 	}
@@ -157,7 +161,7 @@ public class OperacionesCompra {
 		
 		do {
 			esCorrecto = true;
-			System.out.println();
+			System.out.println(peticion);
 			entrada = Main.teclado.nextLine();
 			
 			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
