@@ -179,20 +179,4 @@ public class ValidarTipoEntrada {
 		return s == null || s.length() == 0;
 	}
 
-	private static boolean checkNum(String entrada) {
-
-		boolean esCorrecto = true;
-		char c = ' ';
-
-		for (int i = 0; i < entrada.length(); i++) {
-			c = entrada.charAt(i);
-			if (!Character.isDigit(c)) {
-				esCorrecto = false;
-				System.out.println("Error, esto no es un numero...");// formatear con un msg de error
-			}
-		}
-
-		return (esCorrecto);
-	}
-
 }
