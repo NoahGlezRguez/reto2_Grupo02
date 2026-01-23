@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class Cliente {
 	
-	private Scanner teclado = new Scanner(System.in);
+	private static Scanner teclado = new Scanner(System.in);
 
 	String	dni;
 	String	email;
@@ -108,17 +108,17 @@ public class Cliente {
 	 * 
 	 * @return boolean true for right false for wrong 
 	 */
-	private boolean validarDni(String cadena) {
+	private static boolean validarDni(String cadena) {
 		
 		boolean valido = true;
 		
-		if(cadena.length() != 9 && Character.isLetter(cadena.charAt(8)) == false) {
+		if(cadena.length() != 9 || Character.isLetter(cadena.charAt(8)) == false) {
 			
 			valido = false;
 			System.out.println("\nError, formato no válido ");
 		}
 		
-		else if(ValidarTipoEntrada.checkNum(cadena.substring(7)) == false) {
+		else if(ValidarTipoEntrada.checkNum(cadena.substring(0, 7)) == false) {
 			
 			valido = false;
 			System.out.println("\nError, formato no válido ");
@@ -126,7 +126,7 @@ public class Cliente {
 		
 		try {
 			
-			int num = Integer.parseInt(cadena.substring(7));
+			int num = Integer.parseInt(cadena.substring(0, 7));
 			
 			if(num < 0) {
 				
@@ -149,7 +149,7 @@ public class Cliente {
 	 * @param cadena
 	 * @return
 	 */
-	private boolean validarExistencia(String cadena){
+	private static boolean validarExistencia(String cadena){
 		
 		boolean valido = true;
 		Connection 	conexion = null;
@@ -164,15 +164,13 @@ public class Cliente {
 			sentencia.setString(1,cadena);
 			result = sentencia.executeQuery();
 			
-			System.out.println("lolitas calientes");
+			
 			if(result.next()){
 				
 				valido = false;
 				System.out.println("\nError, El usuario ya existe");
 			}
-			else {
-				System.out.println("culo");
-			}
+			
 			
 			result.close();
 			sentencia.close();
@@ -185,7 +183,7 @@ public class Cliente {
 				System.out.println("la conexion es null");
 				
 			}
-			System.out.println("noah ");
+			
 			e.printStackTrace();
 		}
 		
@@ -197,7 +195,7 @@ public class Cliente {
 	 * 
 	 * @return
 	 */
-	public String pedirDni(){
+	public static String pedirDni(){
 		
 		String cadena = "";
 		do {
@@ -205,7 +203,7 @@ public class Cliente {
 			cadena = teclado.nextLine();
 			
 			
-		}while(validarDni(cadena) == false && validarExistencia(cadena) == false);
+		}while(validarDni(cadena) == false || validarExistencia(cadena) == false);
 		
 		return cadena;
 	}
@@ -215,7 +213,7 @@ public class Cliente {
 	 * 
 	 * @return String username
 	 */
-	public String pedirNombre(){
+	public  static String pedirNombre(){
 		
 		String cadena = "";
 		boolean valid = true;
@@ -239,7 +237,7 @@ public class Cliente {
 	 * 
 	 * @return
 	 */
-	public String pedirEmail(){
+	public static String pedirEmail(){
 		
 		String cadena = "";
 		boolean valid = true;
@@ -276,7 +274,7 @@ public class Cliente {
 	 * 
 	 * @return
 	 */
-	public String pedirApellido(){
+	public static String pedirApellido(){
 
 		String cadena = "";
 		boolean valid = true;
@@ -301,13 +299,17 @@ public class Cliente {
 	 * 
 	 * @return
 	 */
-	public String pedirContraseña(){
+	public static String  pedirContraseña(){
 
 		String cadena = "";
 		boolean valid = true;
 		
 		do {
+			
 			valid = true;
+			System.out.println("\nintroduzca la contraseña: ");
+			cadena = teclado.nextLine();
+			
 			if(cadena.isEmpty()) {
 				
 				valid = false;
@@ -320,15 +322,15 @@ public class Cliente {
 		
 	}
 	
-	public void main (String [] args) {
+	public static void main (String [] args) {
 		
 		String nombre = pedirNombre();
-		//String apellido = pedirApellido();
-		//String mail = pedirEmail();
-		//String pass = pedirContraseña();
-		//String dni = pedirDni();
+		String apellido = pedirApellido();
+		String mail = pedirEmail();
+		String pass = pedirContraseña();
+		String dni = pedirDni();
 		
-		//Cliente luis = new Cliente(dni, mail, nombre, apellido, pass);
+		Cliente luis = new Cliente(dni, mail, nombre, apellido, pass);
 	}
 	
 	

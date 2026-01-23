@@ -7,9 +7,9 @@ import modelo.*;
 
 public class ConsultarBD {
 
-	private static String	rutaBD = "jdbc:mysql://10.5.6.116:3307/cine_elorrieta";//ajustar a la ruta real 
-	private static String	user = "dam_v";
-	private static String	pw = "Elorrieta00-";
+	private static String	rutaBD = "jdbc:mysql://localhost:3306/cine_elorrieta";//ajustar a la ruta real 
+	private static String	user = "root";
+	private static String	pw = "10759148";
 	
 	
 	public static Connection conectarConBD() {
