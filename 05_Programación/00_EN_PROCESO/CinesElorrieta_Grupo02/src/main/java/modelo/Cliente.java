@@ -320,7 +320,12 @@ public class Cliente {
 			else if(cadena.length() > 254) {
 				
 				valid = false;
-				System.out.println("\nLa contraseña no ");
+				System.out.println("\nLa contraseña es demasiado larga");
+			}
+			
+			else if(cadena.length() < 8) {
+				valid = false;
+				System.out.println("\nLa contraseña debe contener al menos 8 caracteres");
 			}
 			
 		}while(!valid);
