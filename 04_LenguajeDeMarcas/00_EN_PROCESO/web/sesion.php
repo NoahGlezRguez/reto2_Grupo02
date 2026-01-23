@@ -32,7 +32,8 @@
                 while($rowf = $reslut->fetch_assoc()){
                     $numsa = $numsa + 1;
                     echo "<div class='sesdiv'>";
-                        echo "<p>" . $numsa . "</p><p> De ". $rowf['hora_ini']. " hasta " . $rowf['hora_fin'] ."</p> <p> Sala " . $rowf['NumSala'] . "</p> <p> Precio: " . $rowf['precio'] . "</p>";
+                        echo "<p>" . $numsa . "</p><p> De ". $rowf['hora_ini']. " hasta " . $rowf['hora_fin'] ."</p> <p> Sala " . $rowf['NumSala'] . "</p> <p> Precio: " . $rowf['precio'] . "€</p>";
+                        echo "<form><input type='submit' class='botonchachipiruli'/></form>";
                     echo "</div>";
                 }
             echo "</div>";

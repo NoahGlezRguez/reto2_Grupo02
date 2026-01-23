@@ -22,8 +22,8 @@
                 <label>Contraseña:</label>
                 <input type="password" name="newpass" class="inputcrear" required><br><br>
 
-                <input type="submit" name="registrarse" value="Crear cuenta" id="submitnewuser">
-                <input type="reset" id="resetnewuser">
+                <input type="submit" class="botonchachipiruli" name="registrarse" value="Crear cuenta" id="submitnewuser">
+                <input type="reset" class="botonchachipiruli" id="resetnewuser">
 
             </form>
         </div>

@@ -16,7 +16,7 @@
           <input type="email" name="user" id="usuario" placeholder="Correo electrónico" required /><br /><br />
           <label for="password">Contraseña:</label>
           <input type="password" name="pass" id="password" placeholder="Contraseña" required /><br /><br />
-          <input type="submit" value="Iniciar sesion" id="formISB" name="iniciar_sesion"/>
+          <input type="submit" value="Iniciar sesion" id="formISB" class="botonchachipiruli" name="iniciar_sesion"/>
           
           <div id="textoIS">
               <p>¿Aún no estás registrado?<br><a href="crearCuenta.php">Crear nueva cuenta</a><br></p>
