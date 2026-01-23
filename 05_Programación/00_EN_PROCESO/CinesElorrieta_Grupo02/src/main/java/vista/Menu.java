@@ -99,7 +99,7 @@ public class Menu {
 				\t[🎞️]Género:	%s
 				\t[⌛]Duración:	%d minutos
 			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
-							""".formatted(i + 1, tituloPeli, genero, duracion);
+							""".formatted(i, tituloPeli, genero, duracion);
 		
 		System.out.print(pelicula);
 	}
@@ -111,7 +111,7 @@ public class Menu {
 		
 		fecha = """				
 			\n\tOpción nº %d:\t- Día %s/%s/%s.						
-			""".formatted(i + 1, fechaOfertada.substring(8, 10), fechaOfertada.substring(5, 7), fechaOfertada.substring(0, 4));
+			""".formatted(i, fechaOfertada.substring(8, 10), fechaOfertada.substring(5, 7), fechaOfertada.substring(0, 4));
 			
 		System.out.print(fecha);
 	}
