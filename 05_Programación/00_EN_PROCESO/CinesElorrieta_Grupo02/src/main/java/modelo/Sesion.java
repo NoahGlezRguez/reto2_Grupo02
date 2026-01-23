@@ -1,6 +1,6 @@
 package modelo;
 
-public class Sesion {
+public class Sesion { //realmente se necesitan aqui TODOS los atributos??
 
 	int			idSesion;
 	String		fecSesion;
@@ -8,9 +8,10 @@ public class Sesion {
 	String		horaFin;
 	double		precio;	
 	int			aforoDisponible;
-	Sala		salaSesion;
-	Pelicula	peliculaSesion;
-
+	int			salaSesion;
+	int			peliculaSesion;
+	Sala 		sala;
+	Pelicula 	pelicula;
 	
 	
 	
@@ -19,12 +20,32 @@ public class Sesion {
 	
 	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
 	
+	public Sala getSala() {
+		return sala;
+	}
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
+	}
+
+	public Pelicula getPelicula() {
+		return pelicula;
+	}
+
+	public void setPelicula(Pelicula pelicula) {
+		this.pelicula = pelicula;
+	}
+
+	public Sesion() {
+		
+	}
+	
 	public Sesion(int idSesion, String fecSesion, String horaInicio, String horaFin, double precio, int aforoDisponible,
-			Sala salaSesion, Pelicula peliculaSesion) {
+			int salaSesion, int peliculaSesion) {
 		this.idSesion = idSesion;
 		this.fecSesion = fecSesion;
 		this.horaInicio = horaInicio;
-		this.horaFin = horaFin;
+		this.horaFin = horaFin;	//creo que sobra este atributo
 		this.precio = precio;
 		this.aforoDisponible = aforoDisponible;
 		this.salaSesion = salaSesion;
@@ -68,16 +89,16 @@ public class Sesion {
 	public void setAforoDisponible(int aforoDisponible) {
 		this.aforoDisponible = aforoDisponible;
 	}
-	public Sala getSalaSesion() {
+	public int getSalaSesion() {
 		return salaSesion;
 	}
-	public void setSalaSesion(Sala salaSesion) {
+	public void setSalaSesion(int salaSesion) {
 		this.salaSesion = salaSesion;
 	}
-	public Pelicula getPeliculaSesion() {
+	public int getPeliculaSesion() {
 		return peliculaSesion;
 	}
-	public void setPeliculaSesion(Pelicula peliculaSesion) {
+	public void setPeliculaSesion(int peliculaSesion) {
 		this.peliculaSesion = peliculaSesion;
 	}
 	

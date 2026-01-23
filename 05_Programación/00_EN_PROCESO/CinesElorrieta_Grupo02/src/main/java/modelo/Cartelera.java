@@ -1,10 +1,7 @@
 package modelo;
 
-import java.util.Date;
+public class Cartelera {//CREO QUE ESTA CLASE SOBRA Y HABRIA QUE BORRARLA
 
-public class Cartelera {
-
-	Date 		ahora;
-	int			listadoPeliculas[];
+	String 		ahora = "current_timestamp()";
 	Pelicula 	carteleraActualizada[];
 }
