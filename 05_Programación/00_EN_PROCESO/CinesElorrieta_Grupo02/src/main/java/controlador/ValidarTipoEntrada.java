@@ -132,6 +132,15 @@ public class ValidarTipoEntrada {
 			return (esCorrecto);
 		}
 		
+		/**
+		 * Evalua si una cadena ingresada es vacia. Retorna true si es asi, falso en caso contrario.
+		 * @param s valor de entrada
+		 * @return retorna true si la entrada es vacia o tiene 0 de longitud
+		 */
+		private static boolean esVacio(String s) {
+			return s == null || s.length() == 0;
+		}
+		
 	private static boolean checkNum(String entrada) {
 			
 			boolean esCorrecto = true;
