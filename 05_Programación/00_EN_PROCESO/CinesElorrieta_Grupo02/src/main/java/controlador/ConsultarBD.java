@@ -7,9 +7,9 @@ import modelo.*;
 
 public class ConsultarBD {
 
-	private static String	rutaBD = "jdbc:mysql://localhost:3306/cine_elorrieta";//ajustar a la ruta real 
-	private static String	user = "root";
-	private static String	pw = "10759148";
+	private static String	rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";//ajustar a la ruta real 
+	private static String	user = "dam_v";
+	private static String	pw = "Elorrieta00-";
 	
 	
 	public static Connection conectarConBD() {
@@ -147,6 +147,55 @@ public class ConsultarBD {
 		}
 
 		return (sesionesPelicula);
+	}
+	
+	/**
+	 * <b>validador con la DB</b>
+	 * @param String cadena a validar, String tipo de dato
+	 * <p>Este método se conecta con la base de datos y valida que el dato introducido
+	 * no exista para evitar errores en los campos "unique"</p>
+	 * @return boolean true = válido, false = inválido
+	 */
+	public static boolean validarExistencia(String cadena, String atributo){
+		
+		boolean valido = true;
+		Connection 	conexion = null;
+		PreparedStatement	sentencia = null;
+		ResultSet 	result = null;
+		String consulta = "select "+atributo+" from cliente where "+atributo+" = ?";
+		
+		try {
+			
+			conexion = conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			sentencia.setString(1,cadena);
+			result = sentencia.executeQuery();
+			
+			
+			if(result.next()){
+				
+				valido = false;
+				System.out.println("\nError, El usuario ya existe");
+			}
+			
+			
+			result.close();
+			sentencia.close();
+			conexion.close();
+			
+		}catch(Exception e) {
+			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			
+			e.printStackTrace();
+		}
+		
+		return valido;
+		
 	}
 
 }

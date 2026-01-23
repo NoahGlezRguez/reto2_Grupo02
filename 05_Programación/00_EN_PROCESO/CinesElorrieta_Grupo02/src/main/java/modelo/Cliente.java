@@ -1,7 +1,7 @@
 package modelo;
 import controlador.*;
 import java.util.Scanner;
-import java.sql.*;
+
 
 public class Cliente {
 	
@@ -15,16 +15,36 @@ public class Cliente {
 	int		comprasRealizadas;//esto se borraria? o es trampita? ocupa memoria de forma inutil? resultado de una consulta?
 	
 	
+	
+	
 	/**
-	 * constructor vacío
+	 * <b>Constructor vacío<b>
+	 * 
 	 */
 	public Cliente() {
+		
+	}
+
+
+	/** <b>Constructor pidiento datos<b>
+	 * <br>
+	 * <p>este método recibe un boolean de parámetro para diferenciarlo del constructor vacío,
+	 * llama a todos los métodos que piden datos y te los settea en el objeto en cuestión.</p>
+	 * 
+	 */
+	public Cliente(boolean pedirDatos) {
+	
+		this.dni = pedirDni();
+		this.email = pedirEmail();
+		this.nomCliente = pedirNombre();
+		this.apellidos = pedirApellido();
+		this.contraseña = pedirContraseña();
 		
 	}
 	
 
 	/**
-	 * Contructor
+	 * <b>Constructor con parámetros</b> <br>
 	 * @param dni
 	 * @param email
 	 * @param nomCliente
@@ -44,6 +64,8 @@ public class Cliente {
 	
 	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
 	
+
+
 	public String getDni() {
 		return dni;
 	}
@@ -108,7 +130,7 @@ public class Cliente {
 	 * 
 	 * @return boolean true for right false for wrong 
 	 */
-	private static boolean validarDni(String cadena) {
+	private boolean validarDni(String cadena) {
 		
 		boolean valido = true;
 		
@@ -144,58 +166,14 @@ public class Cliente {
 	}
 	
 	
-	/**
-	 * 
-	 * @param cadena
-	 * @return
-	 */
-	private static boolean validarExistencia(String cadena){
-		
-		boolean valido = true;
-		Connection 	conexion = null;
-		PreparedStatement	sentencia = null;
-		ResultSet 	result = null;
-		String consulta = "select dni from cliente where dni = ?";
-		
-		try {
-			
-			conexion = ConsultarBD.conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-			sentencia.setString(1,cadena);
-			result = sentencia.executeQuery();
-			
-			
-			if(result.next()){
-				
-				valido = false;
-				System.out.println("\nError, El usuario ya existe");
-			}
-			
-			
-			result.close();
-			sentencia.close();
-			conexion.close();
-			
-		}catch(Exception e) {
-			
-			if(conexion == null) {
-				
-				System.out.println("la conexion es null");
-				
-			}
-			
-			e.printStackTrace();
-		}
-		
-		return valido;
-		
-	}
+	
 	
 	/**
+	 * este método pide el DNI del cliente y valida el formato <br>
 	 * 
-	 * @return
+	 * @return String DNI
 	 */
-	public static String pedirDni(){
+	public String pedirDni(){
 		
 		String cadena = "";
 		do {
@@ -203,17 +181,17 @@ public class Cliente {
 			cadena = teclado.nextLine();
 			
 			
-		}while(validarDni(cadena) == false || validarExistencia(cadena) == false);
+		}while(validarDni(cadena) == false || ConsultarBD.validarExistencia(cadena, "dni") == false);
 		
 		return cadena;
 	}
 	
 	/**
-	 * this method ask for a name to be set in the future
+	 * este método pide el nombre y valida que sean solo letras
 	 * 
-	 * @return String username
+	 * @return String nombre de cliente
 	 */
-	public  static String pedirNombre(){
+	public String pedirNombre(){
 		
 		String cadena = "";
 		boolean valid = true;
@@ -228,16 +206,21 @@ public class Cliente {
 				System.out.println("\n Error, introduzca un nombre válido");
 			}
 			
+			else if(cadena.length()>20) {
+				valid = false;
+				System.out.println("\nError, el nombre no puede contener más de 20 caracteres.");
+			}
+			
 		}while(!valid);
 		
 		return cadena;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Este método pide el Email y valida el formato
+	 * @return String Email
 	 */
-	public static String pedirEmail(){
+	public String pedirEmail(){
 		
 		String cadena = "";
 		boolean valid = true;
@@ -261,6 +244,16 @@ public class Cliente {
 				
 			}
 			
+			else if(ConsultarBD.validarExistencia(cadena, "mail")==false) {
+				
+				valid = false;
+			}
+			
+			else if(cadena.length()>100) {
+				valid = false;
+				System.out.println("el correo electrónico no puede tener más de 100 caracteres");
+			}
+			
 			
 		}while(!valid);
 		
@@ -271,10 +264,10 @@ public class Cliente {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Este método pide aún apellido y lo valida
+	 * @return String apellido validado
 	 */
-	public static String pedirApellido(){
+	public String pedirApellido(){
 
 		String cadena = "";
 		boolean valid = true;
@@ -289,6 +282,12 @@ public class Cliente {
 				System.out.println("\n Error, introduzca un nombre válido");
 			}
 			
+			else if(cadena.length()>20) {
+				
+				valid = false;
+				System.out.println("\n El apellido no puede tener más de 20 caracteres");
+			}
+			
 		}while(!valid);
 		
 		return cadena;
@@ -296,11 +295,12 @@ public class Cliente {
 	
 	
 	/**
-	 * 
-	 * @return
+	 * Este método pide la contraseña al usuario y la valida
+	 * @return String contraseña
 	 */
-	public static String  pedirContraseña(){
+	public String  pedirContraseña(){
 
+		//falta validar que sea de un largo en específico
 		String cadena = "";
 		boolean valid = true;
 		
@@ -313,29 +313,21 @@ public class Cliente {
 			if(cadena.isEmpty()) {
 				
 				valid = false;
-				System.out.println("\nLa contraseña no puede estar vacía");
+				System.out.println("\nFormáto no válido");
 
 			}
+			
+			else if(cadena.length() > 254) {
+				
+				valid = false;
+				System.out.println("\nLa contraseña no ");
+			}
+			
 		}while(!valid);
 
 		return cadena;
 		
 	}
-	
-	public static void main (String [] args) {
-		
-		String nombre = pedirNombre();
-		String apellido = pedirApellido();
-		String mail = pedirEmail();
-		String pass = pedirContraseña();
-		String dni = pedirDni();
-		
-		Cliente luis = new Cliente(dni, mail, nombre, apellido, pass);
-	}
-	
-	
-	
-	
 	
 	
 	/*------------------------------------------------------------------------------*/
