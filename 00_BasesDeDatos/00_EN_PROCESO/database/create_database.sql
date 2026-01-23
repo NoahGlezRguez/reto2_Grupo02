@@ -1,4 +1,4 @@
-/*drop database cine_elorrieta; */
+/*drop database if exists cine_elorrieta; */
 create database cine_elorrieta;
 
 use cine_elorrieta;
@@ -161,6 +161,69 @@ insert into sesion values(33, '2026-01-22', '18:30', '20:25', 8.00, 1, 3, 6); /*
 insert into sesion values(34, '2026-01-22', '19:00', '21:20', 8.50, 1, 2, 5); /* 'Sweet dreams', 140 */
 insert into sesion values(35, '2026-01-22', '20:00', '22:05', 9.00, 1, 4, 8); /* 'The F*k end of the world', 125 */
 insert into sesion values(36, '2026-01-22', '21:30', '23:10', 8.00, 1, 6, 7); /* 'Mi madre y yo', 100 */
+
+
+/*propuesta de inserts para aumentar volumen de datos*/
+insert into sesion values(37, '2026-02-10', '15:30', '17:30', 7.20, 1, 1, 1);
+insert into sesion values(38, '2026-02-10', '16:00', '18:10', 6.00, 1, 2, 4);
+insert into sesion values(39, '2026-02-10', '17:00', '19:20', 8.50, 1, 3, 5);
+insert into sesion values(40, '2026-02-10', '18:30', '20:05', 6.80, 1, 4, 7);
+insert into sesion values(41, '2026-02-10', '19:00', '21:15', 7.50, 1, 5, 9);
+insert into sesion values(42, '2026-02-10', '21:30', '23:35', 9.00, 1, 6, 8);
+
+insert into sesion values(43, '2026-02-11', '15:30', '17:00', 6.20, 1, 1, 3);
+insert into sesion values(44, '2026-02-11', '16:00', '18:10', 7.90, 1, 2, 2);
+insert into sesion values(45, '2026-02-11', '18:00', '20:20', 8.70, 1, 3, 5);
+insert into sesion values(46, '2026-02-11', '18:30', '20:05', 6.50, 1, 4, 7);
+insert into sesion values(47, '2026-02-11', '20:00', '22:05', 8.90, 1, 5, 8);
+insert into sesion values(48, '2026-02-11', '21:30', '23:25', 8.00, 1, 6, 6);
+
+insert into sesion values(49, '2026-02-12', '15:30', '17:30', 7.20, 1, 1, 1);
+insert into sesion values(50, '2026-02-12', '16:00', '18:15', 7.80, 1, 2, 9);
+insert into sesion values(51, '2026-02-12', '18:00', '19:30', 6.10, 1, 3, 3);
+insert into sesion values(52, '2026-02-12', '18:30', '20:20', 6.50, 1, 4, 4);
+insert into sesion values(53, '2026-02-12', '20:00', '22:20', 8.50, 1, 5, 5);
+insert into sesion values(54, '2026-02-12', '21:30', '23:10', 7.90, 1, 6, 7);
+
+insert into sesion values(55, '2026-02-13', '15:30', '17:45', 7.40, 1, 1, 8);
+insert into sesion values(56, '2026-02-13', '16:00', '17:55', 6.30, 1, 2, 6);
+insert into sesion values(57, '2026-02-13', '18:00', '20:10', 8.20, 1, 3, 2);
+insert into sesion values(58, '2026-02-13', '18:30', '20:05', 6.70, 1, 4, 7);
+insert into sesion values(59, '2026-02-13', '20:00', '22:20', 9.10, 1, 5, 5);
+insert into sesion values(60, '2026-02-13', '21:30', '23:45', 8.80, 1, 6, 9);
+
+insert into sesion values(61, '2026-02-14', '15:30', '17:00', 6.00, 1, 1, 3);
+insert into sesion values(62, '2026-02-14', '16:00', '18:10', 7.60, 1, 2, 2);
+insert into sesion values(63, '2026-02-14', '18:00', '20:20', 8.50, 1, 3, 5);
+insert into sesion values(64, '2026-02-14', '18:30', '20:05', 6.90, 1, 4, 7);
+insert into sesion values(65, '2026-02-14', '20:00', '22:05', 8.90, 1, 5, 8);
+insert into sesion values(66, '2026-02-14', '21:30', '23:10', 7.80, 1, 6, 6);
+
+insert into sesion values(67, '2026-02-15', '15:30', '17:30', 7.20, 1, 1, 1);
+insert into sesion values(68, '2026-02-15', '16:00', '18:15', 7.80, 1, 2, 9);
+insert into sesion values(69, '2026-02-15', '18:00', '19:30', 6.10, 1, 3, 3);
+insert into sesion values(70, '2026-02-15', '18:30', '20:20', 6.50, 1, 4, 4);
+insert into sesion values(71, '2026-02-15', '20:00', '22:20', 8.50, 1, 5, 5);
+insert into sesion values(72, '2026-02-15', '21:30', '23:35', 9.00, 1, 6, 8);
+
+insert into sesion values(73, '2026-02-16', '15:30', '17:00', 6.20, 1, 1, 3);
+insert into sesion values(74, '2026-02-16', '16:00', '18:10', 7.90, 1, 2, 2);
+insert into sesion values(75, '2026-02-16', '18:00', '20:20', 8.70, 1, 3, 5);
+insert into sesion values(76, '2026-02-16', '18:30', '20:05', 6.50, 1, 4, 7);
+insert into sesion values(77, '2026-02-16', '20:00', '22:05', 8.90, 1, 5, 8);
+insert into sesion values(78, '2026-02-16', '21:30', '23:25', 8.00, 1, 6, 6);
+
+insert into sesion values(79, '2026-02-17', '15:30', '17:30', 7.20, 1, 1, 1);
+insert into sesion values(80, '2026-02-17', '16:00', '18:15', 7.80, 1, 2, 9);
+insert into sesion values(81, '2026-02-17', '18:00', '19:30', 6.10, 1, 3, 3);
+insert into sesion values(82, '2026-02-17', '18:30', '20:20', 6.50, 1, 4, 4);
+insert into sesion values(83, '2026-02-17', '20:00', '22:20', 8.50, 1, 5, 5);
+insert into sesion values(84, '2026-02-17', '21:30', '23:10', 7.90, 1, 6, 7);
+
+insert into sesion values(85, '2026-02-18', '18:30', '20:45', 7.65, 1, 6, 9);
+insert into sesion values(86, '2026-02-18', '20:00', '22:05', 9.00, 1, 4, 8);
+
+
 /*------------------- fin de insert de sesion -----------------*/
 
 /*------------------- insert de cliente -----------------*/
@@ -350,6 +413,7 @@ use cine_elorrieta;
 
 /* *************************************** FIN DE CONSULTAS DEL RETO ***************************************** */
 /* ======================================================================================================== */
+
 
 
 

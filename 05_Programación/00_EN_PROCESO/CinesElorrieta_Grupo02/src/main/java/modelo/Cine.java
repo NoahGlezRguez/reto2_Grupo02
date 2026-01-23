@@ -1,6 +1,6 @@
 package modelo;
 
-public class Cine {
+public class Cine {//creo que esta clase sobra, no se me ocurre donde puede ser necesaria...
 
 	String	nomCine;
 	int		idCine;

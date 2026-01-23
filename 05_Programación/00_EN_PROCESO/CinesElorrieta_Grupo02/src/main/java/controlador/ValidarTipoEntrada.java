@@ -102,7 +102,13 @@ public class ValidarTipoEntrada {
 			return (esCorrecto);
 		}
 	
-
+		
+		/**
+		 * Analiza un string que recibe por parámetro e indica si este solo contiene un número entero (positivo o negativo) o no.
+		 * Además, verificará si este número entra dentro de los parámetros de un int o no, dando por incorrecto cuando se desborda.
+		 * @param entrada - String a validar
+		 * @return true si es un número entero, false en caso contrario
+		 */
 		public static boolean checkSoloNumeroEntero(String entrada) {
 			
 			boolean esCorrecto = false;
@@ -132,7 +138,13 @@ public class ValidarTipoEntrada {
 			return (esCorrecto);
 		}
 		
-	private static boolean checkNum(String entrada) {
+		/**
+		 * Analiza un string que recibe por parámetro e indica si este solo contiene dígitos y nada más.
+		 * 
+		 * @param entrada - String a validar
+		 * @return true si es son solo dígitos, false en caso contrario
+		 */
+		private static boolean checkNum(String entrada) {
 			
 			boolean esCorrecto = true;
 			char	c = ' ';
