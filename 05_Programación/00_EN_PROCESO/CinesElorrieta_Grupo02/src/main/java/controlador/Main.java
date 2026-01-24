@@ -23,7 +23,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		int		opc = 0;
-		String	operaciones[] = {"Comprar entradas", "Salir y apagar esta máquina"};
+		String	operaciones[] = {"Comenzar compra", "Salir y apagar esta máquina"};
 		boolean	apagar = false,	reiniciar = true;;
 		
 		while (!apagar) {
