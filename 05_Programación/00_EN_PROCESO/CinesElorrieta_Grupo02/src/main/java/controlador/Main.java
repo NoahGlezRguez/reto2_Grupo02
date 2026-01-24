@@ -2,8 +2,8 @@ package controlador;
 
 import java.util.Scanner;
 
-import vista.Menu;
-import vista.MostrarMsg;
+import modelo.*;
+import vista.*;
 
 /**
  * Clase principal del programa que gestiona el flujo más básico de la venta de entradas del cine.
@@ -11,7 +11,7 @@ import vista.MostrarMsg;
 public class Main {
 
 	public static Scanner 	teclado = new Scanner(System.in);
-	public static boolean	reiniciar = true;
+	public static Compra		compra = null;
 
 	/**
 	 * Método base, que maneja el bucle y reinicia o cierra el programa cuando se indica.
@@ -24,7 +24,7 @@ public class Main {
 		
 		int		opc = 0;
 		String	operaciones[] = {"Comprar entradas", "Salir y apagar esta máquina"};
-		boolean	apagar = false;
+		boolean	apagar = false,	reiniciar = true;;
 		
 		while (!apagar) {
 			if (reiniciar) {
@@ -34,14 +34,17 @@ public class Main {
 			}
 			opc = Menu.opciones("Operaciones disponibles", operaciones, "Seleccione la operación que desea realizar");
 			if (opc == 0) {
-				reiniciar = OperacionesCompra.comprarEntradas();
-				
+				compra = new Compra();
+				compra = OperacionesCompra.realizarCompra();
+				if (compra == null)
+					reiniciar = true;
+				//else //(no se si esto sera realmente necesario...)
+				//	OperacionesCompra.cerrarCompra(compra);//reset del programa y sus variables que guardaban valores, genera un registro y da opcion a generar factura + despedida personalizada
 			}
 			else {
 				if (Menu.siNo("¿Está segurx de que quiere apagar esta máquina?") == 0)
 					apagar = true;
 			}
-				
 		}
 		MostrarMsg.despedida();
 	}
