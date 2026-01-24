@@ -10,8 +10,51 @@ import vista.*;
  */
 public class OperacionesCompra {
 
+	public static ArrayList<Entrada>	entradas = new ArrayList<>();
 	
-	public static ArrayList<Entrada> entradas = new ArrayList<>();
+	public static Compra realizarCompra() {
+		
+		int					opc = 0;
+		String				operaciones1[] = {"Comprar entradas", "Cancelar compra y salir"};
+		String				operaciones2[] = {"Seguir comprando más entradas", "Consultar la cesta de compra"/*que de opcion de borrar entrada??*/, "Terminar compra y pasar a pantalla de pago", "Cancelar compra y salir"};
+		Compra 				compra = new Compra();
+
+		Entrada				nuevaEntrada = null;
+		boolean				primeraVez = true, cancelarCompra = false, finalizarCompra = false;
+		
+		do {
+			if (entradas.size() == 0 && !primeraVez) {
+				opc = Menu.opciones("Operaciones disponibles", operaciones1, "Seleccione la operación que desea realizar");
+				if (opc == 1) {
+					finalizarCompra = true;
+					cancelarCompra = true;
+				}
+			}
+			else if (!primeraVez){
+				opc = Menu.opciones("Operaciones disponibles", operaciones2, "Seleccione la operación que desea realizar");
+				
+				if (opc == 1)
+					finalizarCompra = false; //ver cesta con posibilidad de comprar mas aun
+				else if (opc == 2)
+					finalizarCompra = false; //pasarela de pago
+				else if (opc == 3) {
+					finalizarCompra = true;
+					cancelarCompra = true;
+				}
+			}
+			if (opc == 0) {
+				nuevaEntrada = new Entrada();
+				nuevaEntrada = comprarEntradas();
+				if (nuevaEntrada != null)
+					entradas.add(nuevaEntrada);
+			}
+		
+		} while (!finalizarCompra);
+
+		if (cancelarCompra)
+			compra = null;
+		return (compra);
+	}
 	
 	/**
 	 * Este método gestiona el flujo del programa cuando el usuario selecciona en el menú previo "Comprar entradas".
@@ -20,36 +63,34 @@ public class OperacionesCompra {
 	 * 
 	 * @return false en caso de que haya terminado adecuadamente, y true si se ha cancelado el proceso de compra en algún punto.
 	 */
-	public static boolean comprarEntradas() {
-		
+	public static Entrada comprarEntradas() {
 		
 		String		fechaElegida = null;
-		Pelicula		peliculaElegida = null;
+		Entrada		nuevaEntrada = null;
+		Pelicula		peliculaElegida = new Pelicula();;
 		Sesion		sesionElegida = null;
 		boolean		seCancelaLaCompra = false, volverALaCartelera = false, volverAFechas = false, volverASesiones = false;
 		int			numPersonas = 0;
-		//entrada 	cestacompra[] = null;
 		
-		
-		do {
-			peliculaElegida = elegirPelicula();
-			
+		do {	
+			peliculaElegida = elegirPelicula();	
 			if (peliculaElegida == null) //si cliente pulsa "volver atrás"
 				seCancelaLaCompra = true;
 		 	else {
 		 		do{
 			 		fechaElegida = elegirFecha(peliculaElegida);
 			 		
-			 		if (fechaElegida.equals("1")) //si cliente pulsa "volver atrás"
+			 		if (fechaElegida == null) //si cliente pulsa "volver atrás"
 			 			volverALaCartelera = true;
 			 		else {
 				 		do {
 				 			sesionElegida = elegirSesion(peliculaElegida, fechaElegida);	
-					 		
+	
 				 			if (sesionElegida == null)//si cliente pulsa "volver atrás"
 				 				volverAFechas = true;
 				 			else {
 				 				do {
+				 					System.out.println("\nwow".repeat(15));
 				 					numPersonas = Menu.pedirNumPersonas(sesionElegida);
 				 					if (numPersonas < 0)//si cliente pulsa "volver atrás"
 				 						volverASesiones = true;
@@ -90,7 +131,7 @@ public class OperacionesCompra {
 		 	}
 		} while (!seCancelaLaCompra);
 		
-		return (seCancelaLaCompra);
+		return (nuevaEntrada);
 	}
 	
 	//el proceso de ver cartelera, elegir y peli y guardar los datos de la seleccion en un objeto pelicula
@@ -143,7 +184,7 @@ public class OperacionesCompra {
 		indiceSesionElegida = opcionCorrecta("\n\t·····> Introduzca el nº de la sesión que le interesa: ", idSesiones);
 		
 		if (indiceSesionElegida != -1) {
-			idSesionElegida = idSesiones.indexOf(indiceSesionElegida);
+			idSesionElegida = idSesiones.get(indiceSesionElegida);
 			sesionElegida = ConsultarBD.consultarSesionElegida(idSesionElegida);
 		}
 		

@@ -14,7 +14,9 @@ public class Entrada {
 		this.sesionEntrada = sesionEntrada;
 	}
 
-	
+	public Entrada() {
+		
+	}
 	
 	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
 	
