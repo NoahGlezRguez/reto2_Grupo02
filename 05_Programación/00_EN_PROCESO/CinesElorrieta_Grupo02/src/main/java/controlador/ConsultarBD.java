@@ -8,13 +8,13 @@ import vista.Menu;
 
 public class ConsultarBD {
 
-	private static String	rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
-
-	private static String	user = "dam_v";
-	private static String	pw = "Elorrieta00-";
-//	private static String	rutaBD = "jdbc:mysql://127.0.0.1:3306/cine_elorrieta";
-//	private static String	user = "DAM_v";
-//	private static String	pw = "";
+//	private static String	rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
+//
+//	private static String	user = "dam_v";
+//	private static String	pw = "Elorrieta00-";
+	private static String	rutaBD = "jdbc:mysql://127.0.0.1:3306/cine_elorrieta";
+	private static String	user = "DAM_v";
+	private static String	pw = "";
 	
 	public static Connection conectarConBD() {
 		Connection	conexion = null;
@@ -179,39 +179,26 @@ public class ConsultarBD {
 	public static ArrayList<Integer> consultarSesiones(Pelicula peliculaElegida, String fechaElegida){//esto tiene tela... hay que volcar datos en objeto
 
 		ArrayList<Integer>	sesionesPelicula = new ArrayList<>();
-		int					idSesion = 0;
 			
 		String	consulta = """
-							select fec, hora_ini, precio, numsala, idpeli 
+							select idsesion, fec, hora_ini, precio, numsala, idpeli 
 							from sesion 
-							where idsesion = ?""";
-
+							where idpeli = ? and fec = ?""";
+		
 		Connection 			conexion = null;
 		PreparedStatement	sentencia = null;
 		ResultSet 			result = null;
 		
-		sesionesPelicula = consultarSesionesConAforoDisponible(peliculaElegida, fechaElegida);
-		
 		try {
 			conexion = ConsultarBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
+			sentencia.setInt(1, peliculaElegida.getIdPeli());
+			sentencia.setString(2, fechaElegida);
+			result = sentencia.executeQuery();
 			
-			Menu.cabeceraMenu(3, peliculaElegida.getNombrePeli(), fechaElegida);
+			while (result.next()) 		
+				sesionesPelicula.add(result.getInt("idsesion"));				
 			
-			for(int i = 0; i < sesionesPelicula.size(); i++) {
-				idSesion = sesionesPelicula.get(i);
-				
-				sentencia.setInt(1, idSesion);
-				
-				result = sentencia.executeQuery();
-				
-				result.next();
-				
-				Menu.sesion(i + 1, peliculaElegida.getNombrePeli(), fechaElegida,
-						result.getString("duracion"), result.getInt("numsala"), result.getDouble("precio"));
-			}
-			Menu.msgVolverAtras();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -235,16 +222,64 @@ public class ConsultarBD {
 	
 	public static ArrayList<Integer> consultarSesionesConAforoDisponible(Pelicula peliculaElegida, String fechaElegida){
 		
-		ArrayList<Integer>	sesionesPelicula = new ArrayList<>();
-		ArrayList<Integer>	sesionesConAforo = new ArrayList<>();
+		ArrayList<Integer>	sesionesPelicula = new ArrayList<>(), sesionesConAforo = new ArrayList<>();
+		String				consulta = """
+									select fec, hora_ini, precio, numsala, idpeli 
+									from sesion 
+									where idsesion = ?""";
+
+		Connection 			conexion = null;
+		PreparedStatement	sentencia = null;
+		ResultSet 			result = null;
 		
-		sesionesPelicula = consultarSesiones(peliculaElegida, fechaElegida);
-
+		//con aforo o sin aforo:
+		sesionesPelicula = consultarSesiones(peliculaElegida, fechaElegida);		
+		
 		for (int i = 0; i < sesionesPelicula.size(); i++) {
-			if (consultarAforo(sesionesPelicula.get(i)) > 0)
+			if (consultarAforo(sesionesPelicula.get(i)) > 0) {
 				sesionesConAforo.add(sesionesPelicula.get(i));
+			}
 		}
-
+		
+		if (sesionesConAforo.size() > 0) {
+			Menu.cabeceraMenu(3, peliculaElegida.getNombrePeli(), fechaElegida);
+			
+			try {
+				conexion = ConsultarBD.conectarConBD();
+				sentencia = conexion.prepareStatement(consulta);		
+				
+				for(int i = 0; i < sesionesConAforo.size(); i++) {
+										
+					sentencia.setInt(1, sesionesConAforo.get(i));
+					result = sentencia.executeQuery();
+					result.next();
+					
+					Menu.sesion(i + 1, peliculaElegida.getNombrePeli(), fechaElegida,
+								result.getString("hora_ini"), result.getInt("numsala"), result.getDouble("precio"));
+				}
+				Menu.msgVolverAtras();	
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				
+				try {
+					if (result != null)
+							result.close();
+					if (sentencia != null)
+						sentencia.close();
+					if (conexion != null)
+						conexion.close();
+				
+				} catch (SQLException e){
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		else
+			System.out.println("Lo sentimos, no quedan sesiones con aforo libre para la película que has seleccionado... quizá otro día ;) que estamos muy solicitados");
+		
 		return (sesionesConAforo);
 	}
 	
@@ -305,13 +340,14 @@ public class ConsultarBD {
 		return (aforoOcupado);
 	}
 	
-	public static int	conocerAforoSala(int numSala) {
+	public static int	conocerAforoSala(int idSesion) {
 
 		int		aforoSala = -1;
 		String	consulta = """
-				select aforo 
-				from sala 
-				where numsala = ?""";
+				select sa.aforo 
+				from sala sa
+				join sesion se on sa.numsala = se.numsala
+				where idsesion = ?""";
 		Connection 			conexion = null;
 		PreparedStatement	sentencia = null;
 		ResultSet 			result = null;
@@ -320,7 +356,7 @@ public class ConsultarBD {
 			conexion = ConsultarBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 			
-			sentencia.setInt(1, numSala);
+			sentencia.setInt(1, idSesion);
 			
 			result = sentencia.executeQuery();
 
