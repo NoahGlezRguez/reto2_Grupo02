@@ -50,7 +50,7 @@ public class ConsultarBD {
 			sentencia = conexion.createStatement();
 			result = sentencia.executeQuery(consulta);
 
-			Menu.cabeceraMenu(1, null, null);
+			Menu.cabeceraMenu(1, null, null, null);
 			while (result.next()) {
 				idPelis.add(result.getInt("IDPeli"));
 				Menu.cartelera(numOpcion, result.getString("NomPeli"), result.getString("NomGen"), result.getInt("Duracion"));
@@ -85,7 +85,7 @@ public class ConsultarBD {
 		
 		String		consulta = """
 								select p.NomPeli, p.duracion, g.nomgen 
-								from pelicula p join genero g on p.idgen = p.idgen
+								from pelicula p join genero g on p.idgen = g.idgen
 								where p.IDPeli = ?""";
 		Pelicula		peliculaElegida = new Pelicula();
 
@@ -147,7 +147,7 @@ public class ConsultarBD {
 			
 			result = sentencia.executeQuery();
 			
-			Menu.cabeceraMenu(2, peliculaElegida.getNombrePeli(), null);
+			Menu.cabeceraMenu(2, peliculaElegida.getNombrePeli(), null, null);
 			
 			while (result.next()) {
 				fechas.add(result.getString("fec"));
@@ -183,7 +183,8 @@ public class ConsultarBD {
 		String	consulta = """
 							select idsesion, fec, hora_ini, precio, numsala, idpeli 
 							from sesion 
-							where idpeli = ? and fec = ?""";
+							where idpeli = ? and fec = ? 
+							order by hora_ini""";
 		
 		Connection 			conexion = null;
 		PreparedStatement	sentencia = null;
@@ -242,7 +243,7 @@ public class ConsultarBD {
 		}
 		
 		if (sesionesConAforo.size() > 0) {
-			Menu.cabeceraMenu(3, peliculaElegida.getNombrePeli(), fechaElegida);
+			Menu.cabeceraMenu(3, peliculaElegida.getNombrePeli(), fechaElegida, null);
 			
 			try {
 				conexion = ConsultarBD.conectarConBD();
@@ -301,9 +302,10 @@ public class ConsultarBD {
 		int	aforoOcupado = 0;
 
 		String	consulta = """
-				select cantPersonas 
-				from entrada 
-				where idsesion = ?""";
+				select sum(cantPersonas) 
+				from entrada e
+				join sesion s on e.IDSesion = s.IDSesion
+				where s.idsesion = ?""";
 		Connection 			conexion = null;
 		PreparedStatement	sentencia = null;
 		ResultSet 			result = null;
@@ -316,9 +318,9 @@ public class ConsultarBD {
 			
 			result = sentencia.executeQuery();
 
-			while (result.next()) {
-				aforoOcupado +=	result.getInt("cantpersonas");
-			}
+			result.next();
+			
+			aforoOcupado +=	result.getInt("sum(cantPersonas)");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -344,9 +346,9 @@ public class ConsultarBD {
 
 		int		aforoSala = -1;
 		String	consulta = """
-				select sa.aforo 
-				from sala sa
-				join sesion se on sa.numsala = se.numsala
+				select sa.aforo  
+				from sala sa 
+				join sesion se on sa.numsala = se.numsala 
 				where idsesion = ?""";
 		Connection 			conexion = null;
 		PreparedStatement	sentencia = null;
@@ -361,7 +363,7 @@ public class ConsultarBD {
 			result = sentencia.executeQuery();
 
 			result.next();
-				aforoSala = result.getInt("aforo");		
+			aforoSala = result.getInt("aforo");		
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -418,7 +420,6 @@ public class ConsultarBD {
 			sesionElegida.setHoraInicio(result.getString("hora_ini"));
 			sesionElegida.setHoraFin(result.getString("hora_fin"));
 			sesionElegida.setPrecio(result.getDouble("precio"));
-				//sesionElegida.setAforoDisponible(result.getInt("")); //calcular aforo...
 			sesionElegida.setSalaSesion(result.getInt("NumSala"));
 			sesionElegida.setPeliculaSesion(result.getInt("IDPeli"));
 			
@@ -441,6 +442,51 @@ public class ConsultarBD {
 		
 		}	
 		return (sesionElegida);
+	}
+	
+	public static Sala consultarSala(int IdSesion) {
+		Sala sala = new Sala();
+		String		consulta = 	"""
+				select sa.* 
+				from sala sa join sesion se on sa.numsala = se.numsala 
+				where IDSesion = ?""";
+		
+		Connection			conexion = null;
+		PreparedStatement	sentencia = null;
+		ResultSet			result = null;
+		try {
+			conexion = ConsultarBD.conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			
+			sentencia.setInt(1, IdSesion);
+			result = sentencia.executeQuery();
+			
+			result.next();
+			
+			sala.setNumSala(result.getInt("numSala"));
+			sala.setIdCinePadre(result.getInt("IDCine"));
+			sala.setAforoSala(result.getInt("aforo"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		} finally {
+		
+			try {
+				if (result != null)
+						result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+				
+			} catch (SQLException e){
+				e.printStackTrace();
+			}
+		
+		}	
+		
+		return (sala);
 	}
 	
 }
