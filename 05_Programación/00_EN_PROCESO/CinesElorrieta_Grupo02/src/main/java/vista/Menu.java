@@ -186,9 +186,7 @@ public class Menu {
 		String msg = """
 			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --
 			\tPARA VOLVER ATRÁS introduzca:	-1.
-			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --			
-											
-			""";
+			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --	""";
 		System.out.println(msg);
 	}
 	
