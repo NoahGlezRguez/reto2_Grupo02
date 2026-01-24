@@ -5,7 +5,7 @@ public class Entrada {
 	int		idEntrada;
 	int		numPersonas;
 	double	importe;
-	Sesion	sesionEntrada;
+	Sesion	sesionEntrada = new Sesion();
 
 	public Entrada(int idEntrada, int numPersonas, Sesion sesionEntrada) {
 		this.idEntrada = idEntrada;

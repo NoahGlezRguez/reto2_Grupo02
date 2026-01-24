@@ -11,7 +11,7 @@ public class Compra {
 	double				descuento;
 	double				importeTotal;
 	ArrayList<Entrada>	entradas = new ArrayList<>();
-	Cliente				comprador;
+	Cliente				comprador = new Cliente();
 	
 	public Compra() {
 		

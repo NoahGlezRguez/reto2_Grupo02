@@ -9,6 +9,9 @@ public class Cliente {
 	String	contraseña;
 	int		comprasRealizadas;//esto se borraria? o es trampita? ocupa memoria de forma inutil? resultado de una consulta?
 	
+	public Cliente() {
+		
+	}
 
 	public Cliente(String dni, String email, String nomCliente, String apellidos, String contraseña) {
 		this.dni = dni;
