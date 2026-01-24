@@ -91,19 +91,21 @@ public class OperacionesCompra {
 					sesionElegida = elegirSesion(peliculaElegida, fechaElegida);
 					if (sesionElegida == null)
 						faseDeCompra--;
-					else
+					else 
 						faseDeCompra++;
 					break;
 				case 4:
-					numPersonas = Menu.pedirNumPersonas(sesionElegida);
+					numPersonas = elegirNumPersonas(sesionElegida);
 					if (numPersonas < 1) 
 						faseDeCompra--;
 					else {
-						sesionElegida.setPelicula(peliculaElegida);
-						//sesionElegida.setSala(ConsultarBD.consultarSala(sesionElegida.getIdSesion()));
+						nuevaEntrada.setNumPersonas(numPersonas);
+						//aqui hay que hacer mas cosas
 						System.out.println("\nwow".repeat(15));
 						if (Menu.siNo("¿Confirma añadir esta entrada?\n\t\t...Al elegir 'No', se perderán los datos seleccionados...") == 1)
 							nuevaEntrada = null;	
+						else
+							entradas.add(nuevaEntrada);
 						faseDeCompra++;
 					}
 					break;
@@ -164,6 +166,9 @@ public class OperacionesCompra {
 		if (indiceSesionElegida != -1) {
 			idSesionElegida = idSesiones.get(indiceSesionElegida);
 			sesionElegida = ConsultarBD.consultarSesionElegida(idSesionElegida);
+			sesionElegida.setPelicula(peliculaElegida);
+			sesionElegida.setSala(ConsultarBD.consultarSala(sesionElegida.getIdSesion()));
+			sesionElegida.setAforoDisponible(ConsultarBD.consultarAforo(idSesionElegida));
 		}
 		
 		return (sesionElegida);
@@ -202,15 +207,33 @@ public class OperacionesCompra {
 		return (seleccionIndice);
 	}
 	
-//	private static Sesion elegirSesion(Pelicula peliculaElegida) {
-//		
-//		Sesion	sesionElegida = null;
-//		Sesion	sesionesDisponibles[] = null;
-//		
-//		sesionesDisponibles = ConsultarBD.consultarSesiones(peliculaElegida);
-//		MostrarDatos.
-//		
-//		
-//	}
+	private static int elegirNumPersonas(Sesion sesionElegida) {
+		
+		int		numPersonas = 0;
+		boolean esCorrecto;
+		String 	entrada = "";
+		
+		Menu.cabeceraMenu(4, sesionElegida.getPelicula().getNombrePeli(), sesionElegida.getFecSesion(), sesionElegida.getHoraInicio().substring(0, 5));
+		
+		do {
+			esCorrecto = true;
+			Menu.pedirNumPersonas(sesionElegida);
+			entrada = Main.teclado.nextLine();
+			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+				numPersonas = Integer.parseInt(entrada);
+				if (numPersonas < 1 && numPersonas != -1 ) {
+					System.out.println("Error, debe ser mínimo una persona, por favor");
+					esCorrecto = false;
+				}
+				else if (numPersonas > sesionElegida.getAforoDisponible()) {
+					System.out.println("Error, ha seleccionado más personas que asientos disponibles tiene esta sesión...");
+					esCorrecto = false;
+				}
+			}
+			
+		} while (!esCorrecto);
+			
+		return (numPersonas);
+	}
 	
 }
