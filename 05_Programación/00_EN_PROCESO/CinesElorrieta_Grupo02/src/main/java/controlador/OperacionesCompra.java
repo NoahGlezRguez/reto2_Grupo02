@@ -14,45 +14,42 @@ public class OperacionesCompra {
 	
 	public static Compra realizarCompra() {
 		
-		int					opc = 0;
-		String				operaciones1[] = {"Comprar entradas", "Cancelar compra y salir"};
-		String				operaciones2[] = {"Seguir comprando más entradas", "Consultar la cesta de compra"/*que de opcion de borrar entrada??*/, "Terminar compra y pasar a pantalla de pago", "Cancelar compra y salir"};
-		Compra 				compra = new Compra();
-
-		Entrada				nuevaEntrada = null;
-		boolean				primeraVez = true, cancelarCompra = false, finalizarCompra = false;
+		Compra 		compra = new Compra();
+		Entrada		nuevaEntrada = new Entrada();
 		
-		do {
-			if (entradas.size() == 0 && !primeraVez) {
-				opc = Menu.opciones("Operaciones disponibles", operaciones1, "Seleccione la operación que desea realizar");
-				if (opc == 1) {
-					finalizarCompra = true;
-					cancelarCompra = true;
-				}
-			}
-			else if (!primeraVez){
-				opc = Menu.opciones("Operaciones disponibles", operaciones2, "Seleccione la operación que desea realizar");
+		String		operaciones[] = {"Comprar entrada", "Consultar carrito", "Terminar compra y pagar", "Cancelar compra y salir"};
+		boolean		finalizarCompra = false;
+		int			opc = 0;
+		
+		while (!finalizarCompra) {
+			
+			opc = Menu.opciones("Operaciones disponibles", operaciones, "Seleccione la operación que desea realizar");
 				
-				if (opc == 1)
-					finalizarCompra = false; //ver cesta con posibilidad de comprar mas aun
-				else if (opc == 2)
-					finalizarCompra = false; //pasarela de pago
-				else if (opc == 3) {
-					finalizarCompra = true;
-					cancelarCompra = true;
-				}
-			}
-			if (opc == 0) {
-				nuevaEntrada = new Entrada();
+			switch (opc) {
+					
+			case 0:
 				nuevaEntrada = comprarEntradas();
 				if (nuevaEntrada != null)
 					entradas.add(nuevaEntrada);
+				break;
+			case 1:
+				//metodoscestacompra
+				System.out.println("Aqui se llaman a metodos del carrito de compra. Y podria ir directamente a pago");
+				 //opcion de querer pagar tras ver el carrito(?)
+				break;
+			case 2:	
+				//pasarela de pago
+				System.out.println("aqui pago");
+				break;
+			case 3:
+				entradas.clear();
+				compra = null;
+				finalizarCompra = true;
+				MostrarMsg.despedida();
+				System.out.println("\n".repeat(10));
+				break;
 			}
-		
-		} while (!finalizarCompra);
-
-		if (cancelarCompra)
-			compra = null;
+		}
 		return (compra);
 	}
 	
@@ -65,72 +62,53 @@ public class OperacionesCompra {
 	 */
 	public static Entrada comprarEntradas() {
 		
+		Entrada		nuevaEntrada = new Entrada();
+		
+		Pelicula		peliculaElegida = new Pelicula();
 		String		fechaElegida = null;
-		Entrada		nuevaEntrada = null;
-		Pelicula		peliculaElegida = new Pelicula();;
-		Sesion		sesionElegida = null;
-		boolean		seCancelaLaCompra = false, volverALaCartelera = false, volverAFechas = false, volverASesiones = false;
+		Sesion		sesionElegida =  new Sesion();
 		int			numPersonas = 0;
 		
-		do {	
-			peliculaElegida = elegirPelicula();	
-			if (peliculaElegida == null) //si cliente pulsa "volver atrás"
-				seCancelaLaCompra = true;
-		 	else {
-		 		do{
-			 		fechaElegida = elegirFecha(peliculaElegida);
-			 		
-			 		if (fechaElegida == null) //si cliente pulsa "volver atrás"
-			 			volverALaCartelera = true;
-			 		else {
-				 		do {
-				 			sesionElegida = elegirSesion(peliculaElegida, fechaElegida);	
-	
-				 			if (sesionElegida == null)//si cliente pulsa "volver atrás"
-				 				volverAFechas = true;
-				 			else {
-				 				do {
-				 					System.out.println("\nwow".repeat(15));
-				 					numPersonas = Menu.pedirNumPersonas(sesionElegida);
-				 					if (numPersonas < 0)//si cliente pulsa "volver atrás"
-				 						volverASesiones = true;
-				 					else {
-				 						/*
-				 						 * pedir confirmacion de añadir entrada
-				 						 * 	- confirma: 
-				 						 * 		- iniciar sesion de usuario
-				 						 * 		- usuario correcto:
-				 						 * 			- añadir entrada
-				 						 * 			- menu de que mas hacer etc
-				 						 * 		- usuario incorrecto: intentar de nuevo.
-				 						 * 		- usuario incorrecto de nuevo, agota intentos: cancelar la compra del todo y reiniciar programa desde cero
-				 						 *  - no confirma = volver atras
-				 						 *  
-				 						 * */
-				 					}
-				 						
-				 				} while (!volverASesiones);
-				 				volverASesiones = false;
-				 				numPersonas = 0;
-			 				
-				 			}
-				 			//else
-				 				
-			//		 		if (!seCancelaLaCompra) {
-			//		 			sesiones = ConsultarBD.consultarSesiones(peliculaElegida, fechaElegida);
-			//		 			sesionElegida = Menu.sesiones(sesiones, peliculaElegida, fechaElegida);
-			//		 		}
-				 		} while(!volverAFechas);
-				 		
-				 		volverAFechas = false;
-			 		}
-			 			
-		 		} while(!volverALaCartelera);
-		 		
-		 		volverALaCartelera = false;
-		 	}
-		} while (!seCancelaLaCompra);
+		int			faseDeCompra = 1;
 		
+		while (faseDeCompra > 0 && faseDeCompra < 5) {
+			switch (faseDeCompra) {
+				case 1:
+					peliculaElegida = elegirPelicula();
+					if (peliculaElegida == null)
+						faseDeCompra--;
+					else
+						faseDeCompra++;
+					break;
+				case 2:
+					fechaElegida = elegirFecha(peliculaElegida);
+					if (fechaElegida == null)
+						faseDeCompra--;
+					else
+						faseDeCompra++;
+					break;
+				case 3:
+					sesionElegida = elegirSesion(peliculaElegida, fechaElegida);
+					if (sesionElegida == null)
+						faseDeCompra--;
+					else
+						faseDeCompra++;
+					break;
+				case 4:
+					numPersonas = Menu.pedirNumPersonas(sesionElegida);
+					if (numPersonas < 1) 
+						faseDeCompra--;
+					else {
+						sesionElegida.setPelicula(peliculaElegida);
+						//sesionElegida.setSala(ConsultarBD.consultarSala(sesionElegida.getIdSesion()));
+						System.out.println("\nwow".repeat(15));
+						if (Menu.siNo("¿Confirma añadir esta entrada?\n\t\t...Al elegir 'No', se perderán los datos seleccionados...") == 1)
+							nuevaEntrada = null;	
+						faseDeCompra++;
+					}
+					break;
+			}
+		}
 		return (nuevaEntrada);
 	}
 	
