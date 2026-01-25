@@ -123,6 +123,26 @@ public class ValidarTipoEntrada {
 			return c >= '0' && c <= '9';
 		}
 
+		/**
+		 * Comprueba si una cadena solo contiene digitos
+		 * 
+		 * @param s valor de entrada
+		 * @return true si es digito, falso caso contrario
+		 */
+
+		public static boolean esDigito(String s) {
+			boolean r = true;
+			for (int i = 0; i < s.length(); i++) {
+				char c = s.charAt(i);
+				if (!esDigito(c)) {
+					r = false;
+					break;
+				}
+			}
+
+			return r;
+		}
+
 		
 		/**
 		 * Analiza un string que recibe por parámetro e indica si este solo contiene un número entero (positivo o negativo) o no.
