@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class ValidarLogin {
 
 	public static boolean validar(String usuario, String password) {
-		Connection conexion = ConsultarBD.getConect();
+		Connection conexion = ConsultarBD.conectarConBD();
 		Statement sentencia = null;
 		ResultSet r = null;
 		boolean valido = false;
