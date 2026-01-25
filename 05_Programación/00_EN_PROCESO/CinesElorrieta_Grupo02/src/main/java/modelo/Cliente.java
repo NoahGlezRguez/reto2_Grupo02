@@ -250,8 +250,15 @@ public class Cliente {
 			}
 			
 			else if(cadena.length()>100) {
+				
 				valid = false;
 				System.out.println("el correo electrónico no puede tener más de 100 caracteres");
+			}
+			
+			else if(cadena.substring(cadena.indexOf('@')).indexOf('.') == cadena.substring(cadena.indexOf('@')).lastIndexOf('.')){
+				
+				System.out.println("\nPor favor introduzca un correo electrónico válido");
+				
 			}
 			
 			

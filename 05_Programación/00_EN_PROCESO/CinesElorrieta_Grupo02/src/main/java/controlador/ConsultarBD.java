@@ -254,15 +254,62 @@ public class ConsultarBD {
 		return consultado;
 	}
 	
-	public static boolean InsertarNuevoUsuario() {
+	public static boolean InsertarNuevoUsuario(Cliente consultado) {
 		
 		boolean valid = true;
+		Connection 	conexion = null;
+		PreparedStatement	sentencia = null;
+		ResultSet 	result = null;
+		String dni = consultado.getDni();
+		String nom = consultado.getNomCliente();
+		String ape = consultado.getApellidos();
+		String mail = consultado.getEmail();
+		String pass = consultado.getContraseña();
+		
+											//verificar si funciona así el md5
+		String consulta = "INSERT INTO cliente VALUES("+dni+", "+nom+", "+ape+", "+mail+", "+"md5("+pass+"));"; 
 		
 		
+		try {
+			
+			conexion = conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			//sentencia.setString(1,cadena);
+			result = sentencia.executeQuery();
+			
+			//verificar 
+			if(result.rowInserted()){
+				
+				System.out.println("	--> Nuevo usuario guardado correctamente ^_^ ");
+				
+			}
+			
+			else{
+				System.out.println("Error en los datos");
+				consultado = null;
+			}
+			
+			
+			result.close();
+			sentencia.close();
+			conexion.close();
+			
+		}catch(Exception e) {
+			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			
+			e.printStackTrace();
+		}
 		
-		return boolean;
 		
+		return valid;
 	}
+		
+	
 	
 	
 

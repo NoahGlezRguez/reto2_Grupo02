@@ -70,7 +70,7 @@ public class ValidarLogin {
 		
 		Cliente nuevo = new Cliente(action);
 		
-		
+		ConsultarBD.InsertarNuevoUsuario(nuevo);
 		
 		
 		
