@@ -113,7 +113,16 @@ public class ValidarTipoEntrada {
 			return s == null || s.length() == 0;
 		}
 
-	
+		/**
+		 * Comprueba si un caracter es digito
+		 * 
+		 * @param c valor de entrada
+		 * @return return true si es digito, falso caso contrario
+		 */
+		public static boolean esDigito(char c) {
+			return c >= '0' && c <= '9';
+		}
+
 		
 		/**
 		 * Analiza un string que recibe por parámetro e indica si este solo contiene un número entero (positivo o negativo) o no.
