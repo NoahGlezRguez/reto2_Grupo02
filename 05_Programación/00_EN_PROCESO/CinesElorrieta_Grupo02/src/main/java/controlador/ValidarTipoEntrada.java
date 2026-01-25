@@ -145,60 +145,41 @@ public class ValidarTipoEntrada {
 
 		
 		/**
-		 * Analiza un string que recibe por parámetro e indica si este solo contiene un número entero (positivo o negativo) o no.
-		 * Además, verificará si este número entra dentro de los parámetros de un int o no, dando por incorrecto cuando se desborda.
-		 * @param entrada - String a validar
-		 * @return true si es un número entero, false en caso contrario
+		 * Evalua si es numero entero. Si es asi, devuelve true, falso en caso
+		 * contrario. Tambien se encarga de verificar si el numero esta dentro
+		 * de los limites. Ver @link{java.lang.Integer.MIN_VALUE} y @link{java.lang.Integer.MAX_VALUE}
+		 * 
+		 * @param s valor de entrada
+		 * @return true si es numero entero, falso caso contrario
 		 */
-		public static boolean checkSoloNumeroEntero(String entrada) {
-			
-			boolean esCorrecto = false;
-			
-			if (entrada != null && !entrada.isBlank()) {
-				entrada = entrada.trim();
-				esCorrecto = true;
-				
-				if (entrada.charAt(0) == '-' || entrada.charAt(0) == '+') 
-					entrada = entrada.substring(1);
-				
-				if (!checkNum(entrada)) 
-					esCorrecto = false;
-				else {
-					try {
-						Integer.parseInt(entrada);
-					} catch (NumberFormatException e) {
-						e.printStackTrace();
-						System.out.println("Error, el nº es muy grande...");//dar formato con msg de error
-						esCorrecto = false;
+		public static boolean checkSoloNumeroEntero(String s) {
+			boolean r = false;
+			if (!esVacio(s)) {
+				final String MIN = "2147483648", MAX = "2147483647";
+				boolean negativo = s.charAt(0) == '-';
+				boolean signo = negativo || s.charAt(0) == '+';
+				int i = signo ? 1 : 0;
+				if (!(signo && s.length() == 1)) {
+					boolean digit = esDigito(s.substring(i));
+
+					if (digit) {
+						String absoluto = signo ? s.substring(1) : s;
+						int l = absoluto.length();
+
+						if (l < 10) {
+							r = true;
+						} else if (l == 10) {
+							// compara caracter por caracter por sus valores unicode
+							r = absoluto.compareTo(negativo ? MIN : MAX) <= 0;
+						}
+
 					}
 				}
-			
+
 			}
-			else
-				System.out.println("Error, entrada vacia");//formatear con un msg de error
-			return (esCorrecto);
+
+			return r;
+
 		}
-		
-		/**
-		 * Analiza un string que recibe por parámetro e indica si este solo contiene dígitos y nada más.
-		 * 
-		 * @param entrada - String a validar
-		 * @return true si es son solo dígitos, false en caso contrario
-		 */
-		private static boolean checkNum(String entrada) {
-			
-			boolean esCorrecto = true;
-			char	c = ' ';
-			
-			for (int i = 0; i < entrada.length(); i++) {
-				c = entrada.charAt(i);
-				if (!Character.isDigit(c)){
-					esCorrecto = false;
-					System.out.println("Error, esto no es un numero...");//formatear con un msg de error
-				}
-			}
-			
-			return (esCorrecto);
-	}
 		
 }
