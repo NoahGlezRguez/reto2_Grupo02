@@ -1,3 +1,4 @@
+<?php $tit="FAQ";?>
 <?php require('./include/header.php'); ?>
 <main>  
     <!-- this area is the one the you will work with -->

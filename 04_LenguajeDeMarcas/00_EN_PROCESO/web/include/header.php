@@ -13,7 +13,9 @@ session_start();
   <meta name="rating" content="general" />
   <meta name="keywords"
     content="cine, entradas, venta, sesiones, cartelera, peliculas, terror, acción, españa, entretenimiento, ocio" />
-  <title>Iniciar sesión</title>
+  <?php
+    echo "<title>" . $tit . "</title>";
+  ?>
   <!-- luego crear una funcion que cambie dinamicamente el titulo ... -->
   <link rel="icon" type="image/jpeg" href="img/logo1.jpeg" />
   <link rel="stylesheet" href="css/css.css" />

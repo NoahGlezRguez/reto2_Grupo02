@@ -1,5 +1,6 @@
 <!-- header -->
 <!-- https://www.php.net/manual/en/function.require.php-->
+<?php $tit="Hogar";?>
 <?php require('./include/header.php');?>
 
     <main>

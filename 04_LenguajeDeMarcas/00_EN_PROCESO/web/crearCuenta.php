@@ -1,3 +1,4 @@
+<?php $tit="Crear Cuenta";?>
 <?php require('./include/header.php');?>
 
     <main>  

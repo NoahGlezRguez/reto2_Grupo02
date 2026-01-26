@@ -1,10 +1,8 @@
 <!-- header -->
 <!-- https://www.php.net/manual/en/function.require.php -->
-<?php $tit="Mi Carrito";?>
+<?php $tit="Promociones";?>
 <?php require('./include/header.php'); ?>
 <?php include('./include/dbconnect.php'); ?>
-
-culo
 
 <!-- footer -->
 <?php require('./include/footer.php'); ?>

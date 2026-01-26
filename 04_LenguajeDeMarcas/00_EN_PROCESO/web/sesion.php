@@ -1,5 +1,6 @@
 <!-- header -->
 <!-- https://www.php.net/manual/en/function.require.php -->
+<?php $tit="Sesiones";?>
 <?php require('./include/header.php'); ?>
 <?php include('./include/dbconnect.php'); ?>
 
@@ -33,7 +34,7 @@
                     $numsa = $numsa + 1;
                     echo "<div class='sesdiv'>";
                         echo "<p>" . $numsa . "</p><p> De ". $rowf['hora_ini']. " hasta " . $rowf['hora_fin'] ."</p> <p> Sala " . $rowf['NumSala'] . "</p> <p> Precio: " . $rowf['precio'] . "€</p>";
-                        echo "<form><input type='submit' class='botonchachipiruli' value='Reservar'/></form>";
+                        echo "<form action='carrito.php' method='post'><input type='submit' class='botonchachipiruli' value='Reservar'/></form>";
                     echo "</div>";
                 }
             echo "</div>";

@@ -369,8 +369,10 @@ img, video{
     transition: 250ms ease-out;
 }
 
-img:hover, video:hover {
-    transform: translateY(-.5em) rotate(-.25deg);
+/* Funcion de accesibilidad, para que puedas ver mejor la imagen */
+.contenido img:hover, video:hover {
+    transform: scale(2);
+    cursor:zoom-in;
 }
 
 #usuario, #password, .inputcrear{
