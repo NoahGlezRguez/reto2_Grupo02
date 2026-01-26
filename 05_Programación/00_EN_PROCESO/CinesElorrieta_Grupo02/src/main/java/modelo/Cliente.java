@@ -296,7 +296,7 @@ public class Cliente {
 			
 			if(!ValidarTipoEntrada.checkSoloLetras(cadena)) {
 				valid = false;
-				System.out.println("\n Error, introduzca un nombre válido");
+				System.out.println("\n Error, introduzca un apellido válido");
 			}
 			
 			else if(cadena.length()>20) {

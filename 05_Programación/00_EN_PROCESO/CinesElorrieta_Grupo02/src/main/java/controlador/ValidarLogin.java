@@ -33,7 +33,7 @@ public class ValidarLogin {
 	 *  
 	 * @return <ul> <li>objeto cliente con datos</li> <li><b>null</b> si no existe</li> </ul>
 	 */
-	private static void iniciarSesion(){
+	private static Cliente iniciarSesion(){
 		
 		String dni = "";
 		String contraseña = "";
@@ -61,6 +61,8 @@ public class ValidarLogin {
 			
 			System.out.println("\tEl usuario no existe");
 		}
+		
+		return iniciado;
 		
 	}
 	
