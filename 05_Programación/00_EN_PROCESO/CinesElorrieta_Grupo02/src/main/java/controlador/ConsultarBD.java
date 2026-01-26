@@ -361,6 +361,151 @@ public class ConsultarBD {
 			sentencia.setInt(1, idSesion);
 			
 			result = sentencia.executeQuery();
+<<<<<<< HEAD
+=======
+			
+			
+			if(result.next()){
+				
+				valido = false;
+				System.out.println("\nError, El usuario ya existe");
+			}
+			
+			
+			result.close();
+			sentencia.close();
+			conexion.close();
+			
+		}catch(Exception e) {
+			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			
+			e.printStackTrace();
+		}
+		
+		return valido;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static Cliente Consultarlogin(String dni, String password){
+		
+		boolean valido = true;
+		
+		Connection 	conexion = null;
+		PreparedStatement	sentencia = null;
+		ResultSet 	result = null;
+		String consulta = "select * from cliente where dni = "+"'"+dni+"'"+" and userpassword = "+"'"+password+"'"+";";
+		Cliente consultado = new Cliente();
+		
+		try {
+			
+			conexion = conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			//sentencia.setString(1,cadena);
+			result = sentencia.executeQuery();
+			
+			
+			if(result.next()){
+				
+				consultado.setDni(result.getString("DNI"));
+				consultado.setNomCliente(result.getString("nomcli"));
+				consultado.setApellidos(result.getString("ape"));
+				consultado.setEmail(result.getString("mail"));
+				
+			}
+			
+			else{
+				System.out.println("\nUsuario no encontrado");
+				consultado = null;
+			}
+			
+			
+			result.close();
+			sentencia.close();
+			conexion.close();
+			
+		}catch(Exception e) {
+			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			
+			e.printStackTrace();
+		}
+		
+		
+		return consultado;
+	}
+	
+	public static boolean InsertarNuevoUsuario(Cliente consultado) {
+		
+		boolean valid = true;
+		Connection 	conexion = null;
+		PreparedStatement	sentencia = null;
+		ResultSet 	result = null;
+		String dni = consultado.getDni();
+		String nom = consultado.getNomCliente();
+		String ape = consultado.getApellidos();
+		String mail = consultado.getEmail();
+		String pass = consultado.getContraseña();
+		
+											//verificar si funciona así el md5
+		String consulta = "INSERT INTO cliente VALUES("+dni+", "+nom+", "+ape+", "+mail+", "+"md5("+pass+"));"; 
+		
+		
+		try {
+			
+			conexion = conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			//sentencia.setString(1,cadena);
+			result = sentencia.executeQuery();
+			
+			//verificar 
+			if(result.rowInserted()){
+				
+				System.out.println("	--> Nuevo usuario guardado correctamente ^_^ ");
+				
+			}
+			
+			else{
+				System.out.println("Error en los datos");
+				consultado = null;
+			}
+			
+			
+			result.close();
+			sentencia.close();
+			conexion.close();
+			
+		}catch(Exception e) {
+			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			
+			e.printStackTrace();
+		}
+		
+		
+		return valid;
+	}
+		
+	
+	
+	
+>>>>>>> parent of f11ed7d (added java doc)
 
 			result.next();
 			aforoSala = result.getInt("aforo");		
