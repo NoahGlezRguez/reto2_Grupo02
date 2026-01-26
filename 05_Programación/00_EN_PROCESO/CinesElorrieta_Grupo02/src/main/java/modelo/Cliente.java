@@ -1,5 +1,6 @@
 package modelo;
 import controlador.*;
+import vista.MostrarMsg;
 
 import java.util.Scanner;
 
@@ -138,13 +139,13 @@ public class Cliente {
 		if(cadena.length() != 9 || Character.isLetter(cadena.charAt(8)) == false) {
 			
 			valido = false;
-			System.out.println("\nError, formato no válido ");
+			System.out.println(MostrarMsg.errores(0));
 		}
 		
 		else if(ValidarTipoEntrada.checkNum(cadena.substring(0, 7)) == false) {
 			
 			valido = false;
-			System.out.println("\nError, formato no válido ");
+			System.out.println(MostrarMsg.errores(0));
 		}
 		
 		try {
@@ -154,13 +155,13 @@ public class Cliente {
 			if(num < 0) {
 				
 				valido = false;
-				System.out.println("\nError, formato no válido ");
+				System.out.println(MostrarMsg.errores(0));
 			}
 			
 		}catch(Exception e) {
 			
 			valido = false;
-			System.out.println("\nError, formato no válido ");
+			System.out.println(MostrarMsg.errores(0));
 		}
 		
 		return valido;
@@ -204,7 +205,7 @@ public class Cliente {
 			
 			if(!ValidarTipoEntrada.checkSoloLetras(cadena)) {
 				valid = false;
-				System.out.println("\n Error, introduzca un nombre válido");
+				System.out.println(MostrarMsg.errores(0));
 			}
 			
 			else if(cadena.length()>20) {
@@ -234,13 +235,13 @@ public class Cliente {
 			
 			if(cadena.indexOf('@') != cadena.lastIndexOf('@') || cadena.charAt(0) == '@' || cadena.contains("@") == false || cadena.contains(".") == false) {
 				
-				System.out.println("\nPor favor introduzca un correo electrónico válido");
+				System.out.println(MostrarMsg.errores(0));
 				valid = false;
 			}
 			
 			else if(cadena.isBlank()) {
 				
-				System.out.println("/nEl correo electrónico no puede estar en blanco");
+				System.out.println(MostrarMsg.errores(0));
 				valid = false;
 				
 			}
@@ -259,7 +260,7 @@ public class Cliente {
 			else if(cadena.substring(cadena.indexOf('@'), cadena.length()).indexOf('.') != cadena.substring(cadena.indexOf('@'), cadena.length()).lastIndexOf('.')){
 				
 				valid = false;
-				System.out.println("\nPor favor introduzca un correo electrónico válido");
+				System.out.println(MostrarMsg.errores(0));
 				
 			}
 			
@@ -296,7 +297,7 @@ public class Cliente {
 			
 			if(!ValidarTipoEntrada.checkSoloLetras(cadena)) {
 				valid = false;
-				System.out.println("\n Error, introduzca un apellido válido");
+				System.out.println(MostrarMsg.errores(0));
 			}
 			
 			else if(cadena.length()>20) {

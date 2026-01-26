@@ -46,35 +46,98 @@ public class MostrarMsg {
         
 	}
 	
+	/**
+	 * contiene un array de Strings con los siguientes mensajes: </br>
+	 * <ol start = "0">
+	 * <li>Error, formato no válido</li>
+	 * <li>Error, el usuario no existe</li>
+	 * <li>Error, el usuario ya existe</li>
+	 * <li>Error en la conexión</li>
+	 * <li>Usuario y/o contraseña incorrectos, por favor inténtelo de nuevo</li>
+	 * <li>Error, debe introducir al menos 8 caracteres</li>
+	 * <li>Por favor seleccione un opción válida</li>
+	 * <li>Por favor introduzca un valor positivo</li>
+	 * <li>Error, el formato introducido es muy largo</li>
+	 * <li></li>
+	 * </ol>
+	 * 
+	 * @param num ID del error
+	 * @return String mensaje  
+	 */
 	public static String errores(int num) {
 		/*
 		 * codigos de error y su significado:
-		 *
 		    0 Ningún dato introducido, por favor inténtelo de nuevo
 			1 Solo se permiten hasta 8 caracteres, por favor inténtelo de nuevo
 			2 Inserte solamente letras, por favor
 			3 Inserte un número entero positivo, por favor
 			4 Inserte solamente caracteres alfanuméricos, por favor
 			5 Inserte un nº decimal positivo, por favor
-			
 			7 Usuario y/o contraseña incorrectos, por favor inténtelo de nuevo
 			8 Opción incorrecta, por favor inténtelo de nuevo
-			
-		
 			13 El nombre que intenta asignar no tiene letras, pruebe con otro, por favor
 			
-			
-			
+			dejé esto aquí por si lo quereís modificar en el futuro pero personalmente
+			creo que "formato no válido" incluye varias opciones
 		 * 
 		 * */
 		
+		String linea = "=============================\n";
+		
 		String [] error = {
-				"Error, formato no válido", "Error, el usuario no existe", "Error, el usuario ya existe",
-				"Error en la conexión", "Usuario y/o contraseña incorrectos, por favor inténtelo de nuevo"	
+				
+				linea+"\tError, formato no válido\n"+linea,
+				linea+"\tError, el usuario no existe\n"+linea,
+				linea+"\tError, el usuario ya existe\n"+linea,
+				linea+"\tError en la conexión\n"+linea,
+				linea+"\tUsuario y/o contraseña incorrectos, por favor inténtelo de nuevo\n"+linea,
+				linea+"\tError, debe introducir al menos 8 caracteres\n"+linea,
+				linea+"\tPor favor seleccione un opción válida\n"+linea,
+				linea+"\tPor favor introduzca un valor positivo\n"+linea,
+				linea+"\tError, el formato introducido es muy largo\n"+linea
+				
 				};
 		
 		return error[num];
 		
+	}
+	
+	public static void mensajeSignIn() {
+		
+		String msg = 
+				"===================================\n\tInicio de sesion\n===================================";
+		System.out.println(msg);
+	}
+	
+	public static void mensajeSignUp() {
+		
+		String msg = 
+				"===================================\n\tCrear nueva cuenta\n===================================";
+		System.out.println(msg);
+	}
+	
+	/**
+	 * este método devuleve un mensaje tipo String 
+	 * <ol start = "0">
+	 * <li>Error en la conexión</li>
+	 * <li>Error en los datos</li>
+	 * <li>Nuevo usuario guardado correctamente</li>
+	 * <li>No hay sesiones disponibles para hoy</li>
+	 * <li></li>
+	 * </ol>
+	 * @param num ID del mensaje 
+	 * @return String mensaje 
+	 */
+	public static String msgBD(int num){
+		
+		String [] msg = {
+			"\t--> Error en la conexión\n",
+			"\t-->Error en los datos\n",
+			"\t-->Nuevo usuario guardado correctamente",
+			"\t-->No hay sesiones disponibles el día de para hoy"
+		};
+		
+		return msg[num];
 	}
 	
 	

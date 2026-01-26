@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import modelo.*;
-import vista.Menu;
+import vista.*;
 
 public class ConsultarBD {
 
@@ -279,7 +279,7 @@ public class ConsultarBD {
 			}
 		}
 		else
-			System.out.println("Lo sentimos, no quedan sesiones con aforo libre para la película que has seleccionado... quizá otro día ;) que estamos muy solicitados");
+			System.out.println(MostrarMsg.msgBD(3));
 		
 		return (sesionesConAforo);
 	}
@@ -413,7 +413,7 @@ public class ConsultarBD {
 			
 			conexion = conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
-			//sentencia.setString(1,cadena);
+			
 			result = sentencia.executeQuery();
 			
 			
@@ -427,7 +427,7 @@ public class ConsultarBD {
 			}
 			
 			else{
-				System.out.println("\nUsuario no encontrado");
+				System.out.println(MostrarMsg.errores(1));
 				consultado = null;
 			}
 			
@@ -454,7 +454,7 @@ public class ConsultarBD {
 	/**
 	 * este método inserta un nuevo cliente en la BD
 	 * @param Objeto Cliente
-	 * @return boolean <br> <b>true</b> insersion correcta <br> <b>false </b>
+	 * @return boolean <br> <b>true</b> inserción correcta <br> <b>false </b>
 	 * error de comunicación
 	 */
 	public static boolean InsertarNuevoUsuario(Cliente consultado) {
@@ -485,12 +485,12 @@ public class ConsultarBD {
 			// por lo tanto al ser un int aquí se pone > 0 
 			if(result > 0 ){
 				
-				System.out.println("	--> Nuevo usuario guardado correctamente ^_^ ");
+				System.out.println(MostrarMsg.msgBD(2));
 				
 			}
 			
 			else{
-				System.out.println("Error en los datos");
+				System.out.println(MostrarMsg.msgBD(1));
 				consultado = null;
 			}
 			
@@ -503,7 +503,7 @@ public class ConsultarBD {
 			
 			if(conexion == null) {
 				
-				System.out.println("la conexion es null");
+				System.out.println(MostrarMsg.msgBD(0));
 				
 			}
 			
@@ -540,7 +540,7 @@ public class ConsultarBD {
 			if(result.next()){
 				
 				valido = false;
-				System.out.println("\nError, El usuario ya existe");
+				System.out.println(MostrarMsg.errores(2));
 			}
 			
 			
@@ -552,7 +552,7 @@ public class ConsultarBD {
 			
 			if(conexion == null) {
 				
-				System.out.println("la conexion es null");
+				System.out.println(MostrarMsg.msgBD(0));
 				
 			}
 			

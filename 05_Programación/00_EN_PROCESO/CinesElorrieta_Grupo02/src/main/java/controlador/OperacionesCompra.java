@@ -207,6 +207,11 @@ public class OperacionesCompra {
 		return (seleccionIndice);
 	}
 	
+	/**
+	 * 
+	 * @param sesionElegida
+	 * @return
+	 */
 	private static int elegirNumPersonas(Sesion sesionElegida) {
 		
 		int		numPersonas = 0;
