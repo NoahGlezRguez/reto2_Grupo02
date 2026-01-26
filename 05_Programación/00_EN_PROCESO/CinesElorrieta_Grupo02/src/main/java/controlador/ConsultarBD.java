@@ -343,7 +343,8 @@ public class ConsultarBD {
 	}
 	
 	public static int	conocerAforoSala(int idSesion) {
-
+		
+		
 		int		aforoSala = -1;
 		String	consulta = """
 				select sa.aforo  
@@ -361,43 +362,46 @@ public class ConsultarBD {
 			sentencia.setInt(1, idSesion);
 			
 			result = sentencia.executeQuery();
-<<<<<<< HEAD
-=======
-			
+
 			
 			if(result.next()){
 				
-				valido = false;
-				System.out.println("\nError, El usuario ya existe");
-			}
+			aforoSala = result.getInt("aforo");	
 			
-			
-			result.close();
-			sentencia.close();
-			conexion.close();
-			
-		}catch(Exception e) {
-			
-			if(conexion == null) {
-				
-				System.out.println("la conexion es null");
-				
-			}
+			}	
+		
+		} catch (SQLException e) {
 			
 			e.printStackTrace();
+			
+		} finally {
+			
+			try {
+				if (result != null)
+						result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+			
+			} catch (SQLException e){
+				e.printStackTrace();
+			}
 		}
-		
-		return valido;
-		
+		return (aforoSala);
 	}
 	
 	/**
 	 * 
 	 * @return
+	 * este método consulta el login
+	 * @param credenciales del usuario
+	 * @return <b>Objeto cliente</b> <br> <b>not null</b> el cliente existe y 
+	 * te devuelve el objeto con sus datos <br> <b>null </b>
+	 * settea el objeto a null
 	 */
 	public static Cliente Consultarlogin(String dni, String password){
 		
-		boolean valido = true;
 		
 		Connection 	conexion = null;
 		PreparedStatement	sentencia = null;
@@ -447,6 +451,12 @@ public class ConsultarBD {
 		return consultado;
 	}
 	
+	/**
+	 * este método inserta un nuevo cliente en la BD
+	 * @param Objeto Cliente
+	 * @return boolean <br> <b>true</b> insersion correcta <br> <b>false </b>
+	 * error de comunicación
+	 */
 	public static boolean InsertarNuevoUsuario(Cliente consultado) {
 		
 		boolean valid = true;
@@ -504,32 +514,56 @@ public class ConsultarBD {
 		return valid;
 	}
 		
-	
-	
-	
->>>>>>> parent of f11ed7d (added java doc)
-
-			result.next();
-			aforoSala = result.getInt("aforo");		
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+	/**
+	 * <b>validador con la DB</b>
+	 * @param String cadena a validar, String tipo de dato
+	 * <p>Este método se conecta con la base de datos y valida que el dato introducido
+	 * no exista para evitar errores en los campos "unique"</p>
+	 * @return boolean true = válido, false = inválido
+	 */
+	public static boolean validarExistencia(String cadena, String atributo){
+		
+		boolean valido = true;
+		Connection 	conexion = null;
+		PreparedStatement	sentencia = null;
+		ResultSet 	result = null;
+		String consulta = "select "+atributo+" from cliente where "+atributo+" = ?";
+		
+		try {
 			
-			try {
-				if (result != null)
-						result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
+			conexion = conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			sentencia.setString(1,cadena);
+			result = sentencia.executeQuery();
 			
-			} catch (SQLException e){
-				e.printStackTrace();
+			
+			if(result.next()){
+				
+				valido = false;
+				System.out.println("\nError, El usuario ya existe");
 			}
+			
+			
+			result.close();
+			sentencia.close();
+			conexion.close();
+			
+		}catch(Exception e) {
+			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			
+			e.printStackTrace();
 		}
-		return (aforoSala);
+		
+		return valido;
+		
 	}
+
+			
 	
 	public static int	conocerAforoCesta(int idSesion) {
 		int	aforoCesta = 0;

@@ -1,10 +1,8 @@
 package controlador;
-
-import java.sql.*;
-
+import java.util.Scanner;
+import modelo.*;
 public class ValidarLogin {
-<<<<<<< HEAD
-=======
+
 	
 	private static Scanner teclado = new Scanner(System.in);
 	
@@ -29,7 +27,12 @@ public class ValidarLogin {
 		System.out.println(msg);
 	}
 	
-	
+	/**
+	 * este método valida la existencia del usuario en la 
+	 * DB y de ser correcto devuelve un objeto cliente con los datos rellenados
+	 *  
+	 * @return <ul> <li>objeto cliente con datos</li> <li><b>null</b> si no existe</li> </ul>
+	 */
 	private static void iniciarSesion(){
 		
 		String dni = "";
@@ -61,6 +64,11 @@ public class ValidarLogin {
 		
 	}
 	
+	/**
+	 * 
+	 * este método llama a otro para crear un usuario nuevo y una vez 
+	 * validado lo envía a la base de datos
+	 */
 	private static void crearCuenta(){
 		
 		String cadena = "";
@@ -111,38 +119,37 @@ public class ValidarLogin {
 		
 		
 	}
->>>>>>> parent of f11ed7d (added java doc)
 
-	public static boolean validar(String usuario, String password) {
-		Connection conexion = ConsultarBD.conectarConBD();
-		Statement sentencia = null;
-		ResultSet r = null;
-		boolean valido = false;
-
-		try {
-			sentencia = conexion.createStatement();
-			r = sentencia.executeQuery("select NomCli, userpassword from cliente;");
-
-			while (r.next()) {
-				String u = r.getString("NomCli");
-				String p = r.getString("userpassword");
-
-				if (u.equals(usuario) && p.equals(password)) {
-					valido = true;
-					break;
-				}
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			conexion.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return valido;
-	}
+//	public static boolean validar(String usuario, String password) {
+//		Connection conexion = ConsultarBD.conectarConBD();
+//		Statement sentencia = null;
+//		ResultSet r = null;
+//		boolean valido = false;
+//
+//		try {
+//			sentencia = conexion.createStatement();
+//			r = sentencia.executeQuery("select NomCli, userpassword from cliente;");
+//
+//			while (r.next()) {
+//				String u = r.getString("NomCli");
+//				String p = r.getString("userpassword");
+//
+//				if (u.equals(usuario) && p.equals(password)) {
+//					valido = true;
+//					break;
+//				}
+//			}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//		try {
+//			conexion.close();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return valido;
+//	}
 }
