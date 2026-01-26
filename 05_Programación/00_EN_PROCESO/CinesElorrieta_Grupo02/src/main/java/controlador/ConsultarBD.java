@@ -12,9 +12,9 @@ public class ConsultarBD {
 //
 //	private static String	user = "dam_v";
 //	private static String	pw = "Elorrieta00-";
-	private static String	rutaBD = "jdbc:mysql://127.0.0.1:3306/cine_elorrieta";
-	private static String	user = "DAM_v";
-	private static String	pw = "";
+	private static String	rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
+	private static String	user = "dam_v";
+	private static String	pw = "Elorrieta00-";
 	
 	public static Connection conectarConBD() {
 		Connection	conexion = null;
@@ -470,7 +470,7 @@ public class ConsultarBD {
 		String pass = consultado.getContraseña();
 		
 											//verificar si funciona así el md5
-		String consulta = "INSERT INTO Cliente VALUES("+"'"+dni+"'"+", "+"'"+nom+"'"+", "+"'"+ape+"'"+", "+"'"+mail+"'"+", "+"'"+pass+"'"+");"; 
+		String consulta = "INSERT INTO Cliente VALUES("+"'"+dni+"'"+", "+"'"+nom+"'"+", "+"'"+ape+"'"+", "+"'"+mail+"'"+", "+"MD5("+"'"+pass+"'"+")"+");"; 
 		
 		
 		try {
