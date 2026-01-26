@@ -1,5 +1,7 @@
 package controlador;
 
-public class NuevoUsuario {
+public class NuevoUsuario{
+	
+	
+	}
 
-}

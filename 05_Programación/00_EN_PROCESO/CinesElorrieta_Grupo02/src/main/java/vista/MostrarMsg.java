@@ -46,7 +46,7 @@ public class MostrarMsg {
         
 	}
 	
-	public static void errores(int error) {
+	public static String errores(int num) {
 		/*
 		 * codigos de error y su significado:
 		 *
@@ -67,6 +67,14 @@ public class MostrarMsg {
 			
 		 * 
 		 * */
+		
+		String [] error = {
+				"Error, formato no válido", "Error, el usuario no existe", "Error, el usuario ya existe",
+				"Error en la conexión", "Usuario y/o contraseña incorrectos, por favor inténtelo de nuevo"	
+				};
+		
+		return error[num];
+		
 	}
 	
 	

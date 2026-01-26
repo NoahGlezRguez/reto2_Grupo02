@@ -343,7 +343,8 @@ public class ConsultarBD {
 	}
 	
 	public static int	conocerAforoSala(int idSesion) {
-
+		
+		
 		int		aforoSala = -1;
 		String	consulta = """
 				select sa.aforo  
@@ -362,11 +363,17 @@ public class ConsultarBD {
 			
 			result = sentencia.executeQuery();
 
-			result.next();
-			aforoSala = result.getInt("aforo");		
-
+			
+			if(result.next()){
+				
+			aforoSala = result.getInt("aforo");	
+			
+			}	
+		
 		} catch (SQLException e) {
+			
 			e.printStackTrace();
+			
 		} finally {
 			
 			try {
@@ -383,6 +390,180 @@ public class ConsultarBD {
 		}
 		return (aforoSala);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * este método consulta el login
+	 * @param credenciales del usuario
+	 * @return <b>Objeto cliente</b> <br> <b>not null</b> el cliente existe y 
+	 * te devuelve el objeto con sus datos <br> <b>null </b>
+	 * settea el objeto a null
+	 */
+	public static Cliente Consultarlogin(String dni, String password){
+		
+		
+		Connection 	conexion = null;
+		PreparedStatement	sentencia = null;
+		ResultSet 	result = null;
+		String consulta = "select * from cliente where dni = "+"'"+dni+"'"+" and userpassword = "+"'"+password+"'"+";";
+		Cliente consultado = new Cliente();
+		
+		try {
+			
+			conexion = conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			//sentencia.setString(1,cadena);
+			result = sentencia.executeQuery();
+			
+			
+			if(result.next()){
+				
+				consultado.setDni(result.getString("DNI"));
+				consultado.setNomCliente(result.getString("nomcli"));
+				consultado.setApellidos(result.getString("ape"));
+				consultado.setEmail(result.getString("mail"));
+				
+			}
+			
+			else{
+				System.out.println("\nUsuario no encontrado");
+				consultado = null;
+			}
+			
+			
+			result.close();
+			sentencia.close();
+			conexion.close();
+			
+		}catch(Exception e) {
+			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			
+			e.printStackTrace();
+		}
+		
+		
+		return consultado;
+	}
+	
+	/**
+	 * este método inserta un nuevo cliente en la BD
+	 * @param Objeto Cliente
+	 * @return boolean <br> <b>true</b> insersion correcta <br> <b>false </b>
+	 * error de comunicación
+	 */
+	public static boolean InsertarNuevoUsuario(Cliente consultado) {
+		
+		boolean valid = true;
+		Connection 	conexion = null;
+		PreparedStatement	sentencia = null;
+		int	result = 0;// en la insercion de datos el result es el numero de rows affected 
+		String dni = consultado.getDni();
+		String nom = consultado.getNomCliente();
+		String ape = consultado.getApellidos();
+		String mail = consultado.getEmail();
+		String pass = consultado.getContraseña();
+		
+											//verificar si funciona así el md5
+		String consulta = "INSERT INTO Cliente VALUES("+"'"+dni+"'"+", "+"'"+nom+"'"+", "+"'"+ape+"'"+", "+"'"+mail+"'"+", "+"'"+pass+"'"+");"; 
+		
+		
+		try {
+			
+			conexion = conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			
+			result = sentencia.executeUpdate();
+			
+			
+			
+			// por lo tanto al ser un int aquí se pone > 0 
+			if(result > 0 ){
+				
+				System.out.println("	--> Nuevo usuario guardado correctamente ^_^ ");
+				
+			}
+			
+			else{
+				System.out.println("Error en los datos");
+				consultado = null;
+			}
+			
+			
+			
+			sentencia.close();
+			conexion.close();
+			
+		}catch(Exception e) {
+			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			
+			e.printStackTrace();
+		}
+		
+		
+		return valid;
+	}
+		
+	/**
+	 * <b>validador con la DB</b>
+	 * @param String cadena a validar, String tipo de dato
+	 * <p>Este método se conecta con la base de datos y valida que el dato introducido
+	 * no exista para evitar errores en los campos "unique"</p>
+	 * @return boolean true = válido, false = inválido
+	 */
+	public static boolean validarExistencia(String cadena, String atributo){
+		
+		boolean valido = true;
+		Connection 	conexion = null;
+		PreparedStatement	sentencia = null;
+		ResultSet 	result = null;
+		String consulta = "select "+atributo+" from cliente where "+atributo+" = ?";
+		
+		try {
+			
+			conexion = conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			sentencia.setString(1,cadena);
+			result = sentencia.executeQuery();
+			
+			
+			if(result.next()){
+				
+				valido = false;
+				System.out.println("\nError, El usuario ya existe");
+			}
+			
+			
+			result.close();
+			sentencia.close();
+			conexion.close();
+			
+		}catch(Exception e) {
+			
+			if(conexion == null) {
+				
+				System.out.println("la conexion es null");
+				
+			}
+			
+			e.printStackTrace();
+		}
+		
+		return valido;
+		
+	}
+
+			
 	
 	public static int	conocerAforoCesta(int idSesion) {
 		int	aforoCesta = 0;
