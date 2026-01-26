@@ -1,6 +1,7 @@
 package controlador;
 
 import java.util.Scanner;
+
 import modelo.*;
 
 public class ValidarLogin {
@@ -64,13 +65,49 @@ public class ValidarLogin {
 		
 		String dni = "";
 		String contraseña = "";
+		String cadena = "";
 		boolean action = true;
+		int opc = 0;
 		
 		mensajeSignUp();
 		
 		Cliente nuevo = new Cliente(action);
 		
-		ConsultarBD.InsertarNuevoUsuario(nuevo);
+		do {
+			System.out.println("Está seguro de añadir el usuario con los siguientes datos: \n");
+			nuevo.toString();
+			System.out.println("1.Si\n2.No");
+			cadena = teclado.nextLine();
+			
+			if(ValidarTipoEntrada.checkNum(cadena)){
+				
+				opc = Integer.parseInt(cadena);
+				
+				if(opc == 1) {
+					
+					ConsultarBD.InsertarNuevoUsuario(nuevo);
+					
+				}
+				
+				else if(opc == 2){
+					
+					System.out.println("operación cancelada");
+				}
+				
+				else {
+					
+					action = false;
+				}
+				
+			}
+			
+			else {
+				
+				action = false;
+				System.out.println("formato no válido ");
+			}
+		
+		}while(!action);
 		
 		
 		

@@ -1,5 +1,6 @@
 package modelo;
 import controlador.*;
+
 import java.util.Scanner;
 
 
@@ -270,6 +271,14 @@ public class Cliente {
 		
 	}
 	
+	@Override
+	public String toString() {
+		
+		return "DNI: " + dni + "\n Email: " + email + "\n Nombre: " + nomCliente + "\n apellido: " + apellidos
+				+ "\n contraseña: " + contraseña;
+	}
+
+
 	/**
 	 * Este método pide aún apellido y lo valida
 	 * @return String apellido validado
