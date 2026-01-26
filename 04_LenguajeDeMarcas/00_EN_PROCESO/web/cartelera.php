@@ -32,7 +32,7 @@
 
                     <div>
                         <p class="detallepelicula"><b>Género:</b> ' . $genero . '<br/>
-                        <b>Duración:</b> ' . $duracion . '
+                        <b>Duración:</b> ' . $duracion . ' minutos.
                         </p>
                     </div>
 
