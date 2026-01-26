@@ -55,6 +55,7 @@ session_start();
       } else {
         echo "<li> 🙋 " . $_SESSION["nombre"] . "</li>";
       }
+      echo "<li><a href='carrito.php'>🛒(0)</a></li>";
       echo "<li><a href=\"logout.php\" class=\"CerSes\"> Cerrar sesion </a></li>";
     } else {
       echo "<li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
