@@ -452,7 +452,7 @@ public class ConsultarBD {
 		boolean valid = true;
 		Connection 	conexion = null;
 		PreparedStatement	sentencia = null;
-		ResultSet 	result = null;
+		int	result = 0;// en la insercion de datos el result es el numero de rows affected 
 		String dni = consultado.getDni();
 		String nom = consultado.getNomCliente();
 		String ape = consultado.getApellidos();
@@ -460,18 +460,20 @@ public class ConsultarBD {
 		String pass = consultado.getContraseña();
 		
 											//verificar si funciona así el md5
-		String consulta = "INSERT INTO cliente VALUES("+dni+", "+nom+", "+ape+", "+mail+", "+"md5("+pass+"));"; 
+		String consulta = "INSERT INTO Cliente VALUES("+"'"+dni+"'"+", "+"'"+nom+"'"+", "+"'"+ape+"'"+", "+"'"+mail+"'"+", "+"'"+pass+"'"+");"; 
 		
 		
 		try {
 			
 			conexion = conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
-			//sentencia.setString(1,cadena);
-			result = sentencia.executeQuery();
 			
-			//verificar 
-			if(result.rowInserted()){
+			result = sentencia.executeUpdate();
+			
+			
+			
+			// por lo tanto al ser un int aquí se pone > 0 
+			if(result > 0 ){
 				
 				System.out.println("	--> Nuevo usuario guardado correctamente ^_^ ");
 				
@@ -483,7 +485,7 @@ public class ConsultarBD {
 			}
 			
 			
-			result.close();
+			
 			sentencia.close();
 			conexion.close();
 			

@@ -63,8 +63,6 @@ public class ValidarLogin {
 	
 	private static void crearCuenta(){
 		
-		String dni = "";
-		String contraseña = "";
 		String cadena = "";
 		boolean action = true;
 		int opc = 0;
