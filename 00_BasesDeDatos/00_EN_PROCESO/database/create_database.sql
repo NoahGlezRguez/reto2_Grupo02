@@ -1,4 +1,4 @@
-/*drop database cine_elorrieta; */
+/*drop database if exists cine_elorrieta; */
 create database cine_elorrieta;
 
 use cine_elorrieta;
