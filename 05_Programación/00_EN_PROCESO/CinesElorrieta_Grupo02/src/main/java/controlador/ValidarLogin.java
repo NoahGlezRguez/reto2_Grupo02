@@ -1,14 +1,11 @@
 package controlador;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class ValidarLogin {
 
 	public static boolean validar(String usuario, String password) {
-		Connection conexion = ConsultarBD.getConect();
+		Connection conexion = ConsultarBD.conectarConBD();
 		Statement sentencia = null;
 		ResultSet r = null;
 		boolean valido = false;
@@ -34,7 +31,6 @@ public class ValidarLogin {
 		try {
 			conexion.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
