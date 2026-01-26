@@ -1,6 +1,6 @@
 package modelo;
 
-public class Sesion {
+public class Sesion { //realmente se necesitan aqui TODOS los atributos??
 
 	int			idSesion;
 	String		fecSesion;
@@ -10,9 +10,8 @@ public class Sesion {
 	int			aforoDisponible;
 	int			salaSesion;
 	int			peliculaSesion;
-	//objetos:
-		//sala 		sala
-		//pelicula 	pelicula
+	Sala 		sala;
+	Pelicula 	pelicula;
 	
 	
 	
@@ -21,6 +20,22 @@ public class Sesion {
 	
 	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
 	
+	public Sala getSala() {
+		return sala;
+	}
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
+	}
+
+	public Pelicula getPelicula() {
+		return pelicula;
+	}
+
+	public void setPelicula(Pelicula pelicula) {
+		this.pelicula = pelicula;
+	}
+
 	public Sesion() {
 		
 	}

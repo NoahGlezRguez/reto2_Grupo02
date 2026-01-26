@@ -1,6 +1,6 @@
 package modelo;
 
-public class Genero {
+public class Genero { //esta clase creo que sobra, se puede conseguir la informacion consultando directamente y puede ser un atributo de pelicula (?)
 
 	
 	
