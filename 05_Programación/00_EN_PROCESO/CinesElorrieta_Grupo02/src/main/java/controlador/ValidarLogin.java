@@ -29,8 +29,13 @@ public class ValidarLogin {
 		System.out.println(msg);
 	}
 	
-	
-	private static void iniciarSesion(){
+	/**
+	 * este método valida la existencia del usuario en la 
+	 * DB y de ser correcto devuelve un objeto cliente con los datos rellenados
+	 *  
+	 * @return <ul> <li>objeto cliente con datos</li> <li><b>null</b> si no existe</li> </ul>
+	 */
+	private static Cliente iniciarSesion(){
 		
 		String dni = "";
 		String contraseña = "";
@@ -59,8 +64,15 @@ public class ValidarLogin {
 			System.out.println("\tEl usuario no existe");
 		}
 		
+		return iniciado;
+		
 	}
 	
+	/**
+	 * 
+	 * este método llama a otro para crear un usuario nuevo y una vez 
+	 * validado lo envía a la base de datos
+	 */
 	private static void crearCuenta(){
 		
 		String dni = "";

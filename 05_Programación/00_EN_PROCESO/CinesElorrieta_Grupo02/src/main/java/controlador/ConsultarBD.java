@@ -200,11 +200,15 @@ public class ConsultarBD {
 	
 	/**
 	 * 
-	 * @return
+	 * este método consulta el login
+	 * @param credenciales del usuario
+	 * @return <b>Objeto cliente</b> <br> <b>not null</b> el cliente existe y 
+	 * te devuelve el objeto con sus datos <br> <b>null </b>
+	 * settea el objeto a null
 	 */
 	public static Cliente Consultarlogin(String dni, String password){
 		
-		boolean valido = true;
+	
 		
 		Connection 	conexion = null;
 		PreparedStatement	sentencia = null;
@@ -254,6 +258,12 @@ public class ConsultarBD {
 		return consultado;
 	}
 	
+	/**
+	 * este método inserta un nuevo cliente en la BD
+	 * @param Objeto Cliente
+	 * @return boolean <br> <b>true</b> insersion correcta <br> <b>false </b>
+	 * error de comunicación
+	 */
 	public static boolean InsertarNuevoUsuario(Cliente consultado) {
 		
 		boolean valid = true;
