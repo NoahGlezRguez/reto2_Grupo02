@@ -99,7 +99,7 @@ public class Menu {
 				\t[🎞️]Género:	%s
 				\t[⌛]Duración:	%d minutos
 			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
-							""".formatted(i + 1, tituloPeli, genero, duracion);
+							""".formatted(i, tituloPeli, genero, duracion);
 		
 		System.out.print(pelicula);
 	}
@@ -111,7 +111,7 @@ public class Menu {
 		
 		fecha = """				
 			\n\tOpción nº %d:\t- Día %s/%s/%s.						
-			""".formatted(i + 1, fechaOfertada.substring(8, 10), fechaOfertada.substring(5, 7), fechaOfertada.substring(0, 4));
+			""".formatted(i, fechaOfertada.substring(8, 10), fechaOfertada.substring(5, 7), fechaOfertada.substring(0, 4));
 			
 		System.out.print(fecha);
 	}
@@ -128,38 +128,20 @@ public class Menu {
 		System.out.print(sesionDisponible);
 	}
 	
-	public static int pedirNumPersonas(Sesion sesionElegida) { //esto es un frankestein sin dar forma
+	public static void pedirNumPersonas(Sesion sesionElegida) { 
 		
-		int		numPersonas = 0;
-		boolean esCorrecto;
-		String 	entrada = "";
 		String	peticion = """
-				\t\t- ¿Para cuántas personas desea comprar esta entrada?
 				\t\t- Aforo actual disponible para esta sesión: %s asientos libres de %s.
 				\t\t\t<<<<Para volver atrás, introduzca -1 >>>>
 				\t\t- Introduzca su respuesta: """.formatted(sesionElegida.getAforoDisponible(), sesionElegida.getSala().getAforoSala());
-		do {
-			esCorrecto = true;
-			
-			System.out.print(peticion);
-			entrada = Main.teclado.nextLine();
-			if (!ValidarTipoEntrada.checkSoloNumeroEntero(entrada))//si no es un nº entero
-				esCorrecto = false;
-			else {
-				numPersonas = Integer.parseInt(entrada);
-				if (numPersonas < 1 && numPersonas != -1) {
-					esCorrecto = false;
-					System.out.println("Error, debe ser mínimo para una persona");
-					numPersonas = 0;
-				}
-			}
-			
-		} while(!esCorrecto); //mientras sea incorrecto o no le de a "volver atrás"
 		
-		return (numPersonas);
+		sesionElegida.setAforoDisponible(ConsultarBD.consultarAforo(sesionElegida.getIdSesion()));
+		
+		System.out.print(peticion);
+			
 	}
 	
-	public static void cabeceraMenu(int tipoMenu, String tituloPeli, String fecha) {
+	public static void cabeceraMenu(int tipoMenu, String tituloPeli, String fecha, String horaSesion) {
 		
 		String	lineaPeli = "\n\t\t[🎬] Película: ", fechaFormateada = null;
 
@@ -177,7 +159,14 @@ public class Menu {
 				break;
 			case 3:
 				System.out.println("Sesiones disponibles\n" + lineaPeli + tituloPeli + " - día " + fechaFormateada);
-				break;	
+				break;
+			case 4:
+				System.out.println("""
+						Cantidad de personas para su entrada
+						%s %s
+						\t\tDía %s a las %sh
+						""".formatted(lineaPeli, tituloPeli, fechaFormateada, horaSesion));
+				break;
 		}
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	}
@@ -186,9 +175,7 @@ public class Menu {
 		String msg = """
 			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --
 			\tPARA VOLVER ATRÁS introduzca:	-1.
-			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --			
-											
-			""";
+			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --	""";
 		System.out.println(msg);
 	}
 	
