@@ -10,8 +10,8 @@ public class Sesion { //realmente se necesitan aqui TODOS los atributos??
 	int			aforoDisponible;
 	int			salaSesion;
 	int			peliculaSesion;
-	Sala 		sala;
-	Pelicula 	pelicula;
+	Sala 		sala = new Sala();
+	Pelicula 	pelicula = new Pelicula();
 	
 	
 	
