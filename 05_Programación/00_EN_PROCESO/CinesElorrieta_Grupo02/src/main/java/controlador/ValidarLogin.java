@@ -10,8 +10,8 @@ public class ValidarLogin {
 	public static void main (String [] args) {
 		
 		
-		//iniciarSesion();
-		crearCuenta();
+		iniciarSesion();
+		//crearCuenta();
 	}
 	
 	
@@ -48,10 +48,7 @@ public class ValidarLogin {
 			System.out.println("===================================");
 		}
 		
-		else{
-			
-			System.out.println(MostrarMsg.errores(1));
-		}
+		
 		
 		return iniciado;
 		

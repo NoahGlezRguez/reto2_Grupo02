@@ -3,6 +3,8 @@ import java.io.*;
 
 public class Config {
 	
+
+	
 	/**
 	 * <p>este método lee los datos de el fichero <b>ipConfig.txt</b>
 	 * y los guarda en un array de la siguiente forma:</p></br>
@@ -23,7 +25,7 @@ public class Config {
 		String confi[] = new String[3];
 		FileReader reader = null;
 		BufferedReader buffer = null;
-		String ruta = "src/files/ipConfig.txt";
+		String ruta = "src/main/java/files/ipConfig.txt";
 		int cont = 0;
 		
 		try {
