@@ -12,14 +12,15 @@ public class ConsultarBD {
 //
 //	private static String	user = "dam_v";
 //	private static String	pw = "Elorrieta00-";
-	private static String rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
-	private static String user = "dam_v";
-	private static String pw = "Elorrieta00-";
-
+	private static String data[] = Config.datos();
+	private static String	rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
+	private static String	user = "dam_v";
+	private static String	pw = "Elorrieta00-";
+	
 	public static Connection conectarConBD() {
-		Connection conexion = null;
-
-		try {
+		Connection	conexion = null;
+		
+		try {									// aquí se pondía (data[0], data[1], data[2]);
 			conexion = DriverManager.getConnection(rutaBD, user, pw);
 		} catch (SQLException excpsql) {
 			System.out.println("Error, no se pudo realizar la conexión con la base de datos.\n");
