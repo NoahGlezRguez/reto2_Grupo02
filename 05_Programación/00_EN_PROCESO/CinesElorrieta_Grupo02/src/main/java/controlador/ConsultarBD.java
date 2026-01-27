@@ -21,7 +21,7 @@ public class ConsultarBD {
 		Connection	conexion = null;
 		
 		try {									// aquí se pondía (data[0], data[1], data[2]);
-			conexion = DriverManager.getConnection(rutaBD, user, pw);
+			conexion = DriverManager.getConnection(data[0], data[1], data[2]);
 		} catch (SQLException excpsql) {
 			System.out.println("Error, no se pudo realizar la conexión con la base de datos.\n");
 			System.out.println("SQLException: " + excpsql.getMessage());
@@ -422,8 +422,8 @@ public class ConsultarBD {
 		Connection conexion = null;
 		PreparedStatement sentencia = null;
 		ResultSet result = null;
-		String consulta = "select * from cliente where dni = " + "'" + dni + "'" + " and userpassword = " + "'"
-				+ password + "'" + ";";
+		String consulta = "select * from cliente where dni = " + "'" + dni + "'" + " and userpassword = "+"md5(" + "'"
+				+ password + "'" +")"+ ";";
 		Cliente consultado = new Cliente();
 
 		try {
