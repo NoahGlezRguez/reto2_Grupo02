@@ -144,17 +144,18 @@ public class ValidarTipoEntrada {
 		 * @param entrada - String a validar
 		 * @return true si es son solo dígitos, false en caso contrario
 		 */
-		private static boolean checkNum(String entrada) {
+		public static boolean checkNum(String entrada) {
 			
 			boolean esCorrecto = true;
-			char	c = ' ';
 			
-			for (int i = 0; i < entrada.length(); i++) {
-				c = entrada.charAt(i);
-				if (!Character.isDigit(c)){
-					esCorrecto = false;
-					System.out.println("Error, esto no es un numero...");//formatear con un msg de error
-				}
+			try {
+				
+				Integer.parseInt(entrada);
+				
+			}catch(Exception e) {
+				
+				esCorrecto = false;
+				
 			}
 			
 			return (esCorrecto);

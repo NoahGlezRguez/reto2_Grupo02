@@ -9,6 +9,7 @@ session_start();
 // incluir datos para la conexion de la bd
 include('./include/dbconnect.php');
 
+// recoger datos del formulario de login aplicando la condición de que se ha pulsado el botón de iniciar sesión
 if (isset($_POST['iniciar_sesion'])) {
     // Recuperar datos del formulario
     $usuario = $_POST['user'];
@@ -37,22 +38,25 @@ if (isset($_POST['iniciar_sesion'])) {
     }
 }
 
+
+// recoger datos del formulario de ceunta nueva aplicando la condición de que se ha pulsado el botón de crear cuenta
 if(isset($_POST['registrarse'])){
 
     $nombre = $_POST['newname'];
     $apellido = $_POST['newape'];
     $mail = $_POST['newmail'];
-    $pass = md5($_POST['newpass'], false);
+    $pass = md5($_POST['newpass'], false); //password encriptada con hash con md5, el false es para especificar que no es un valor binario
     $dni = $_POST['dni'];
 
     $sql = "INSERT INTO cliente VALUES('$dni', '$nombre', '$apellido', '$mail', '$pass');";
 
+    //condición de que si la consulta se ejecuta correctamente
     if($conn->query($sql) === true){
         echo "<script> alert('Usuario nuevo guardado correctamente');window.location='crearCuenta.php';</script>";
     }
 
     else{
-
+    // mensaje de error con la base de datos
         echo "<script> alert('Error');window.location='crearCuenta.php';</script>";
     }
 }

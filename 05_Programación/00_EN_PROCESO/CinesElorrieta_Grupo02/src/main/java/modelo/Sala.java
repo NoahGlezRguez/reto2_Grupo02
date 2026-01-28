@@ -13,7 +13,9 @@ public class Sala {
 		this.aforoSala = aforoSala;
 	}
 
-
+	public Sala() {
+		
+	}
 	
 	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
 	
