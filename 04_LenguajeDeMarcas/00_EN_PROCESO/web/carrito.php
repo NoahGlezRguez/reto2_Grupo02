@@ -5,6 +5,12 @@
 <?php include('./include/dbconnect.php'); ?>
 
 culo
+<?php
+    if (isset($_POST['versesbot'])){
+        $idpe = $_POST['idpeli'];
+    }
+    
+?>
 
 <!-- footer -->
 <?php require('./include/footer.php'); ?>

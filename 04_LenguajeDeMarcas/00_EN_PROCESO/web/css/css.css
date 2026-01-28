@@ -1,16 +1,15 @@
 .menu {
-
     display: flex;
     list-style: none;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
 
     height: 60px;
     background-color: #f8f8f8;
-   /*padding: 10px;*/
-    padding-left: 2rem;
-    border-radius: 1rem;
-    
+    width: 100%;
+    margin: 0px;
+    padding: 0;
+    border-radius: 0 0 1em 1em;
 }
 
 .menu li .CerSes {
@@ -40,7 +39,7 @@
     color: white;
 } 
 
-.cartelera, .promo, .contacto, .inicio, .sesion{
+.menlisel{
     background-color: rgba(0, 153, 135, 0.082);
     border-radius: 5px;  
     border-bottom: 1px solid rgba(24, 134, 121 );
@@ -129,13 +128,12 @@ footer {
 
 header{
     background-color: #f0f0f0;
-    padding: 10px 20px;
     display: flex;
-    justify-content: space-between;
+    width: 100%;
     align-items: center;
-    margin-bottom: 20px;
-    border-radius: 1rem;
-    
+    margin-bottom: 0px;
+    justify-content: space-between;
+    border-radius: 1rem 1rem 0px 0px;
 }
 
 .socialMedia img {
@@ -149,14 +147,19 @@ header{
 }
 
 .socialMedia{
-    display: flex;
-    align-items:start;
-    justify-content: left;
-    margin: 1rem;
+    justify-self: end;
+    align-items: start;
+    margin: 1em;
 }
 
 #titulo, #title {
-    color: #0c4600;
+    color: #0c4600; font-style: italic; font-size: 4em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0%;
+}
+
+header div{
+    padding: 2rem;
 }
 
 #preguntas{
@@ -498,7 +501,7 @@ img, video{
     flex-direction: column;
     box-shadow: #0000003f 0em 2em 2em;
     background-color: rgb(255, 255, 255);
-    border-radius: 15em;
+    border-radius: 5em;
     width: 15em;
     height: auto;
     padding: 1em;

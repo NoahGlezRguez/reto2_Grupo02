@@ -23,7 +23,6 @@ session_start();
 </head>
 
 <body>
-
   <!-- page header -->
   <header>
     <div>
@@ -40,28 +39,28 @@ session_start();
       <a href="https://www.twitter.com" target="_blank"><img src="img/xlogo.png" alt="logo de x" /></a>
       <a href="https://www.tiktok.com" target="_blank"><img src="img/tiktoklogo.png" alt="logo de tiktok" /></a>
     </div>
+
   </header>
 
-  <ul class="menu">
-    <li><a href="index.php">Inicio</a></li>
-    <li><a href="cartelera.php">Cartelera</a></li>
-    <li><a href="promociones.html">Promociones</a></li>
-    <li><a href="contacto.php">Contacto</a></li>
+<ul class="menu">
+  <li><a href="index.php">Inicio</a></li>
+  <li><a href="cartelera.php">Cartelera</a></li>
+  <li><a href="promociones.php">Promociones</a></li>
+  <li><a href="contacto.php">Contacto</a></li>
 
-    <!-- nombre de usuario cargado de la sesion, si existe-->
-    <!-- https://www.php.net/manual/en/reserved.variables.session.php-->
-    <?php
+  <!-- nombre de usuario cargado de la sesion, si existe-->
+  <!-- https://www.php.net/manual/en/reserved.variables.session.php-->
+  <?php
     if (isset($_SESSION["nombre"])) {
       if ($_SESSION["nombre"] == "J"){
         echo "<li><img src='img/anovapetpet.gif'/ width='50em' height='50em'></li>";
       } else {
         echo "<li> 🙋 " . $_SESSION["nombre"] . "</li>";
       }
-      echo "<li><a href='carrito.php'>🛒(0)</a></li>";
-      echo "<li><a href=\"logout.php\" class=\"CerSes\"> Cerrar sesion </a></li>";
+        echo "<li><a href='carrito.php'>🛒(0)</a></li>";
+        echo "<li><a href=\"logout.php\" class=\"CerSes\"> Cerrar sesion </a></li>";
     } else {
       echo "<li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
     }
-    ?>
-
-  </ul>
+  ?>
+</ul>

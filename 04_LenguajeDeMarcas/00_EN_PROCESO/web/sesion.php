@@ -25,7 +25,9 @@
         }
         while($row = $resluet->fetch_assoc()){
             echo "<hr/> <h1>". $row['fec'] ."</h1> <hr/>";
-            echo "<div id='sesmaindiv'>";
+            echo "<details>
+                <summary>Ver</summary>
+                <div id='sesmaindiv'>";
                 $fecsel = $row['fec'];
                 $sqlses = "SELECT * FROM sesion where fec='$fecsel';";
                 $reslut = $conn->query($sqlses);
@@ -34,10 +36,12 @@
                     $numsa = $numsa + 1;
                     echo "<div class='sesdiv'>";
                         echo "<p>" . $numsa . "</p><p> De ". $rowf['hora_ini']. " hasta " . $rowf['hora_fin'] ."</p> <p> Sala " . $rowf['NumSala'] . "</p> <p> Precio: " . $rowf['precio'] . "€</p>";
-                        echo "<form action='carrito.php' method='post'><input type='submit' class='botonchachipiruli' value='Reservar'/></form>";
+                        echo "<form action='carrito.php' method='post'>
+                        <input type='hidden' name='' value=''/>
+                        <input type='submit' class='botonchachipiruli' value='Reservar' name='resbot'/></form>";
                     echo "</div>";
                 }
-            echo "</div>";
+            echo "</details></div>";
         }
         echo "<img src='img/skrunkly.jpg' width='150em' height='150em' />";
     ?>
