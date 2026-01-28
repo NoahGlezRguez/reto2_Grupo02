@@ -1,6 +1,7 @@
 package controlador;
 import java.util.Scanner;
 import modelo.*;
+import vista.*;
 public class ValidarLogin {
 
 	
@@ -9,23 +10,13 @@ public class ValidarLogin {
 	public static void main (String [] args) {
 		
 		
-		//iniciarSesion();
-		crearCuenta();
+		iniciarSesion();
+		//crearCuenta();
 	}
 	
-	private static void mensajeSignIn() {
-		
-		String msg = 
-				"===================================\n\tInicio de sesion\n===================================";
-		System.out.println(msg);
-	}
 	
-	private static void mensajeSignUp() {
-		
-		String msg = 
-				"===================================\n\tCrear nueva cuenta\n===================================";
-		System.out.println(msg);
-	}
+	
+	
 	
 	/**
 	 * este método valida la existencia del usuario en la 
@@ -38,7 +29,7 @@ public class ValidarLogin {
 		String dni = "";
 		String contraseña = "";
 		
-		mensajeSignIn();
+		MostrarMsg.mensajeSignIn();
 		
 		System.out.println("\tIntroduzca DNI:");
 		dni = teclado.nextLine();
@@ -57,10 +48,7 @@ public class ValidarLogin {
 			System.out.println("===================================");
 		}
 		
-		else{
-			
-			System.out.println("\tEl usuario no existe");
-		}
+		
 		
 		return iniciado;
 		
@@ -77,7 +65,7 @@ public class ValidarLogin {
 		boolean action = true;
 		int opc = 0;
 		
-		mensajeSignUp();
+		MostrarMsg.mensajeSignUp();
 		
 		Cliente nuevo = new Cliente(action);
 		
@@ -112,7 +100,7 @@ public class ValidarLogin {
 			else {
 				
 				action = false;
-				System.out.println("formato no válido ");
+				System.out.println(MostrarMsg.errores(0));
 			}
 		
 		}while(!action);
