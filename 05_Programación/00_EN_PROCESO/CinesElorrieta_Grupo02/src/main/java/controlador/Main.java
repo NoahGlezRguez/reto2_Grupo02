@@ -2,7 +2,6 @@ package controlador;
 
 import java.util.Scanner;
 
-import modelo.*;
 import vista.*;
 
 /**
@@ -11,7 +10,6 @@ import vista.*;
 public class Main {
 
 	public static Scanner 	teclado = new Scanner(System.in);
-	public static Compra		compra = null;
 
 	/**
 	 * Método base, que maneja el bucle y reinicia o cierra el programa cuando se indica.
@@ -34,10 +32,7 @@ public class Main {
 			}
 			opc = Menu.opciones("Operaciones disponibles", operaciones, "Seleccione la operación que desea realizar");
 			if (opc == 0) {
-				compra = new Compra();
-				compra = OperacionesCompra.realizarCompra();
-				if (compra == null)
-					reiniciar = true;
+				OperacionesCompra.realizarCompra();
 				//else //(no se si esto sera realmente necesario...)
 				//	OperacionesCompra.cerrarCompra(compra);//reset del programa y sus variables que guardaban valores, genera un registro y da opcion a generar factura + despedida personalizada
 			}

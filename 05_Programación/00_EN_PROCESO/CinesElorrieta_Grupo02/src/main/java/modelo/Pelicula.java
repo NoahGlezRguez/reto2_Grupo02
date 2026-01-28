@@ -58,6 +58,16 @@ public class Pelicula {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("Pelicula [idPeli=%s, nombrePeli=%s, duracion=%s, genero=%s]", idPeli, nombrePeli,
+				duracion, genero);
+	}
+	
+	
+	
+	
 	
 	
 	/*¿¿QUE METODOS HACEN FALTA AQUI??*/

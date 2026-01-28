@@ -23,8 +23,7 @@ public class MostrarMsg {
 			***********************************************************************
 				        		""";
         
-        System.out.print(a);
-        
+        System.out.print(a);        
 	}
 	
 	
@@ -42,8 +41,8 @@ public class MostrarMsg {
 			***********************************************************************
 				        		""";
         
-        System.out.print(a);
-        
+        System.out.print(a + "\n".repeat(10));
+
 	}
 	
 	/**

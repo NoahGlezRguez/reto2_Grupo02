@@ -18,6 +18,25 @@ public class Entrada {
 		
 	}
 	
+	public void mostrarEntrada() {
+		String entrada = """
+				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+					~~~ CIE (Código de identificación de entrada):
+						- %d
+					~~~ Película: %s
+					~~~ Día: %s
+					~~~ Hora: %s
+					~~~ Sala: %s
+					
+					~~~ Nº de personas______________________%d
+					~~~ Precio de la sesión_________________%.2f€
+					~~~ Importe total de entrada____________%.2f€
+				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+				""".formatted();
+		System.out.println(entrada);
+	}
+	
+	
 	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
 	
 	/*-----------------------GETTERS Y SETTERS--------------------------------------*/

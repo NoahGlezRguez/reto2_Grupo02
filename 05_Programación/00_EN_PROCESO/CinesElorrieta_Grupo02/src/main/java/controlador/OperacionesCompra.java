@@ -9,10 +9,8 @@ import vista.*;
  * Esta clase contiene las distintas operaciones dentro del proceso de compra. Es el corazón del programa.
  */
 public class OperacionesCompra {
-
-	public static ArrayList<Entrada>	entradas = new ArrayList<>();
 	
-	public static Compra realizarCompra() {
+	public static void realizarCompra() {
 		
 		Compra 		compra = new Compra();
 		Entrada		nuevaEntrada = new Entrada();
@@ -30,7 +28,7 @@ public class OperacionesCompra {
 			case 0:
 				nuevaEntrada = comprarEntradas();
 				if (nuevaEntrada != null)
-					entradas.add(nuevaEntrada);
+					compra.agregarEntrada(nuevaEntrada);
 				break;
 			case 1:
 				//metodoscestacompra
@@ -40,17 +38,15 @@ public class OperacionesCompra {
 			case 2:	
 				//pasarela de pago
 				System.out.println("aqui pago");
+				//cliente.comprasRealizadas++ en bd
 				break;
 			case 3:
-				entradas.clear();
-				compra = null;
+				compra.cancelarCompra();
 				finalizarCompra = true;
 				MostrarMsg.despedida();
-				System.out.println("\n".repeat(10));
 				break;
 			}
 		}
-		return (compra);
 	}
 	
 	/**
