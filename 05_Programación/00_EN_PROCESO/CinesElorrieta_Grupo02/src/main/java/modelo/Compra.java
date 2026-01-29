@@ -34,7 +34,15 @@ public class Compra {
 	}
 	
 
-	
+	public int conocerAforoCesta(int idSesion) {
+		int aforoCesta = 0;
+
+		for (int i = 0; i < entradas.size(); i++) {
+			if (entradas.get(i).getSesionEntrada().getIdSesion() == idSesion)
+				aforoCesta += entradas.get(i).getNumPersonas();
+		}
+		return (aforoCesta);
+	}
 
 	
 	
@@ -49,33 +57,35 @@ public class Compra {
 	
 	public void mostrarCesta() {
 		
-		String	cabecera = """
+		String cabecera, precioCompra, descuento, importeFinal;
+		
+		cabecera = """
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				~~~~~~~~~~~~~	Cesta de compra actual       ~~~~~~~~~~~~~
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				""";
 		
-		String	entradasCesta = "";
-		
-		String	precioCompra = """
+		precioCompra = """
 					~ Precio total de las entradas (I.V.A. incluido): %.2f€
 				""".formatted(calcularPrecioDeCompra());
 		
-		for (int i = 0; i < entradas.size(); i++) {
-			entradasCesta += entradas.mostrarEntrada();
-		}
-		
-		String	descuento = """
+		descuento = """
 					~ Descuento aplicado: %d%%
 				""".formatted(calcularDescuento());
 		
-		String importeFinal = """
+		importeFinal = """
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-					~ Precio final (descuento aplicado + I.V.A. incluido): %.2f€
+					~ Precio final con descuento aplicado: %.2f€
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				""".formatted(calcularImporteFinal());
 		
-		System.out.println(cabecera + entradasCesta + precioCompra + descuento + importeFinal);
+		
+		System.out.println(cabecera);
+		
+		for (int i = 0; i < entradas.size(); i++) 
+			 entradas.get(i).mostrarEntrada();
+		
+		System.out.println(precioCompra + descuento + importeFinal);
 	}
 
 	private double calcularImporteFinal() {

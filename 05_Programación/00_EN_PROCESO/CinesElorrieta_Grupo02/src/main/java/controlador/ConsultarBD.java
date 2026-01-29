@@ -234,7 +234,7 @@ public class ConsultarBD {
 	}
 
 	public static ArrayList<Integer> consultarSesionesConAforoDisponible(Pelicula peliculaElegida,
-			String fechaElegida) {
+			String fechaElegida, Compra compra) {
 
 		ArrayList<Integer> sesionesPelicula = new ArrayList<>(), sesionesConAforo = new ArrayList<>();
 		String consulta = """
@@ -250,7 +250,7 @@ public class ConsultarBD {
 		sesionesPelicula = consultarSesiones(peliculaElegida, fechaElegida);
 
 		for (int i = 0; i < sesionesPelicula.size(); i++) {
-			if (consultarAforo(sesionesPelicula.get(i)) > 0) {
+			if (consultarAforo(sesionesPelicula.get(i), compra) > 0) {
 				sesionesConAforo.add(sesionesPelicula.get(i));
 			}
 		}
@@ -298,13 +298,13 @@ public class ConsultarBD {
 		return (sesionesConAforo);
 	}
 
-	public static int consultarAforo(int idSesion) {
+	public static int consultarAforo(int idSesion, Compra compra) {
 
 		int aforoSala, aforoCompras, aforoCesta, aforoDisponible;
 
 		aforoSala = conocerAforoSala(idSesion);
 		aforoCompras = conocerAforoCompras(idSesion);
-		aforoCesta = conocerAforoCesta(idSesion);
+		aforoCesta = compra.conocerAforoCesta(idSesion);
 
 		aforoDisponible = aforoSala - aforoCompras - aforoCesta;
 
@@ -575,15 +575,7 @@ public class ConsultarBD {
 
 	}
 
-	public static int conocerAforoCesta(int idSesion) {
-		int aforoCesta = 0;
-
-		for (int i = 0; i < OperacionesCompra.entradas.size(); i++) {
-			if (OperacionesCompra.entradas.get(i).getSesionEntrada().getIdSesion() == idSesion)
-				aforoCesta += OperacionesCompra.entradas.get(i).getNumPersonas();
-		}
-		return (aforoCesta);
-	}
+	
 
 	// consultar y volcar datos de una sesion en concreto
 	public static Sesion consultarSesionElegida(int idSesionElegida) {

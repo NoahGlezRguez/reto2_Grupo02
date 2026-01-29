@@ -19,20 +19,33 @@ public class Entrada {
 	}
 	
 	public void mostrarEntrada() {
+		
+		String	tituloPeli, fecha, hora;
+		int		sala;
+		double	precio;
+		
+		tituloPeli = sesionEntrada.getPelicula().getNombrePeli();
+		fecha = sesionEntrada.getFecSesion();
+		hora = sesionEntrada.getHoraInicio();
+		sala = sesionEntrada.getSala().getNumSala();
+		precio = sesionEntrada.getPrecio();
+		
 		String entrada = """
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					~~~ CIE (Código de identificación de entrada):
-						- %d
-					~~~ Película: %s
-					~~~ Día: %s
-					~~~ Hora: %s
-					~~~ Sala: %s
+						-->			%d
+					~~~ Película: 	%s
+					~~~ Día:		%s
+					~~~ Hora: 		%s
+					~~~ Sala: 		%d
 					
 					~~~ Nº de personas______________________%d
 					~~~ Precio de la sesión_________________%.2f€
+					
+					~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					~~~ Importe total de entrada____________%.2f€
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				""".formatted();
+				""".formatted(idEntrada, tituloPeli, fecha, hora, sala, numPersonas, precio, importe);
 		System.out.println(entrada);
 	}
 	

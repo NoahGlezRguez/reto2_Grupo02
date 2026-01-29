@@ -26,7 +26,7 @@ public class OperacionesCompra {
 			switch (opc) {
 					
 			case 0:
-				nuevaEntrada = comprarEntradas();
+				nuevaEntrada = comprarEntradas(compra);
 				if (nuevaEntrada != null)
 					compra.agregarEntrada(nuevaEntrada);
 				break;
@@ -56,7 +56,7 @@ public class OperacionesCompra {
 	 * 
 	 * @return false en caso de que haya terminado adecuadamente, y true si se ha cancelado el proceso de compra en algún punto.
 	 */
-	public static Entrada comprarEntradas() {
+	public static Entrada comprarEntradas(Compra compra) {
 		
 		Entrada		nuevaEntrada = new Entrada();
 		
@@ -84,14 +84,14 @@ public class OperacionesCompra {
 						faseDeCompra++;
 					break;
 				case 3:
-					sesionElegida = elegirSesion(peliculaElegida, fechaElegida);
+					sesionElegida = elegirSesion(peliculaElegida, fechaElegida, compra);
 					if (sesionElegida == null)
 						faseDeCompra--;
 					else 
 						faseDeCompra++;
 					break;
 				case 4:
-					numPersonas = elegirNumPersonas(sesionElegida);
+					numPersonas = elegirNumPersonas(sesionElegida, compra);
 					if (numPersonas < 1) 
 						faseDeCompra--;
 					else {
@@ -100,8 +100,6 @@ public class OperacionesCompra {
 						System.out.println("\nwow".repeat(15));
 						if (Menu.siNo("¿Confirma añadir esta entrada?\n\t\t...Al elegir 'No', se perderán los datos seleccionados...") == 1)
 							nuevaEntrada = null;	
-						else
-							entradas.add(nuevaEntrada);
 						faseDeCompra++;
 					}
 					break;
@@ -149,13 +147,13 @@ public class OperacionesCompra {
 		return (fechaElegida); //sera null si desea volver atras
 	}
 	
-	private static Sesion elegirSesion(Pelicula peliculaElegida, String fechaElegida) {
+	private static Sesion elegirSesion(Pelicula peliculaElegida, String fechaElegida, Compra compra) {
 		
 		ArrayList<Integer>	idSesiones = new ArrayList<>();
 		int					indiceSesionElegida = 0, idSesionElegida = 0;
 		Sesion				sesionElegida = null;
 		
-		idSesiones = ConsultarBD.consultarSesionesConAforoDisponible(peliculaElegida, fechaElegida);
+		idSesiones = ConsultarBD.consultarSesionesConAforoDisponible(peliculaElegida, fechaElegida, compra);
 		
 		indiceSesionElegida = opcionCorrecta("\n\t·····> Introduzca el nº de la sesión que le interesa: ", idSesiones);
 		
@@ -164,7 +162,7 @@ public class OperacionesCompra {
 			sesionElegida = ConsultarBD.consultarSesionElegida(idSesionElegida);
 			sesionElegida.setPelicula(peliculaElegida);
 			sesionElegida.setSala(ConsultarBD.consultarSala(sesionElegida.getIdSesion()));
-			sesionElegida.setAforoDisponible(ConsultarBD.consultarAforo(idSesionElegida));
+			sesionElegida.setAforoDisponible(ConsultarBD.consultarAforo(idSesionElegida, compra));
 		}
 		
 		return (sesionElegida);
@@ -208,7 +206,7 @@ public class OperacionesCompra {
 	 * @param sesionElegida
 	 * @return
 	 */
-	private static int elegirNumPersonas(Sesion sesionElegida) {
+	private static int elegirNumPersonas(Sesion sesionElegida, Compra compra) {
 		
 		int		numPersonas = 0;
 		boolean esCorrecto;
@@ -218,7 +216,7 @@ public class OperacionesCompra {
 		
 		do {
 			esCorrecto = true;
-			Menu.pedirNumPersonas(sesionElegida);
+			Menu.pedirNumPersonas(sesionElegida, compra);
 			entrada = Main.teclado.nextLine();
 			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
 				numPersonas = Integer.parseInt(entrada);
