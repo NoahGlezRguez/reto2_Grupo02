@@ -47,8 +47,13 @@ public class OperacionesCompra {
 					System.out.println("\n\t - - - >>> Ahora mismo su cesta está vacía");
 				break;
 				
-			case 3:				
-				
+			case 3:
+				if (compra.getEntradas().size() > 0) {
+					pago(compra, comprador);
+					finalizarCompra = true;
+				}
+				else
+					System.out.println("\n\t - - - >>> Ahora mismo su cesta está vacía");
 				break;
 			case 4:
 				compra.cancelarCompra();
@@ -91,38 +96,36 @@ public class OperacionesCompra {
 	}
 	
 	
-	private static int pago(Compra compra, Cliente comprador) {
+	private static void pago(Compra compra, Cliente comprador) {
 		
-		int		faseCompra = 0;
+
 		boolean	pagoRealizado = false;
 		
-		if (compra.getEntradas().size() > 0) {
-			//pasarela de pago
-			comprador = ValidarLogin.iniciarSesion();
-			if (comprador == null) {
-				if (Menu.siNo("¿Desea crearse una cuenta de usuario?") == 0) {
-					ValidarLogin.crearCuenta();
-					if (Menu.siNo("¿Desea pagar (solo mediante ContactLess)?") == 0)		
-						System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
-					else
-						faseCompra = 4;
+		comprador = ValidarLogin.iniciarSesion();
+		
+		if (comprador == null) {
+			if (Menu.siNo("¿Desea crearse una cuenta de usuario?") == 0) {
+				comprador = ValidarLogin.crearCuenta();
+				if (comprador != null) {
+					if (Menu.siNo("¿Desea pagar (solo mediante ContactLess)?") == 0) 
+						pagoRealizado = true;
 				}
-				else
-					faseCompra = 4;
 			}
-			else {
-				if (Menu.siNo("¿Desea pagar (solo mediante ContactLess)?") == 0) {
-					//guardar compra y entradas en la bd
-					//guardar cliente.comprasRealizadas++ en bd
-					System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
-				}
-				else
-					faseCompra = 4;
-			}
-
+		}
+		else {
+			if (Menu.siNo("¿Desea pagar (solo mediante ContactLess)?") == 0) 
+				pagoRealizado = true;
+		}	
+		if (pagoRealizado) {
+			System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
+			//guardar compra y datos con inserts en la bd
 		}
 		else
-			System.out.println("\n\t - - - >>> Ahora mismo su cesta está vacía");
+			System.out.println("\n\t~~~ Compra cancelada, reiniciando sistema... :) ~~~\n");
+		
+		if (Menu.siNo("¿Desea obtener la factura de su compra?") == 0) {
+			//generarFactura de la compra 
+		}
 	}
 	
 	/**
