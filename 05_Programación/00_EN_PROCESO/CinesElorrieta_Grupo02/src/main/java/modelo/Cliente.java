@@ -2,13 +2,9 @@ package modelo;
 import controlador.*;
 import vista.MostrarMsg;
 
-import java.util.Scanner;
-
 
 public class Cliente {
 	
-	private static Scanner teclado = new Scanner(System.in);
-
 	String	dni;
 	String	email;
 	String	nomCliente;
@@ -180,7 +176,7 @@ public class Cliente {
 		String cadena = "";
 		do {
 			System.out.println("Introduzca DNI: ");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			
 		}while(validarDni(cadena) == false || ConsultarBD.validarExistencia(cadena, "dni") == false);
@@ -201,7 +197,7 @@ public class Cliente {
 		do {
 			valid = true;
 			System.out.println("Introduzca el nombre: ");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			if(!ValidarTipoEntrada.checkSoloLetras(cadena)) {
 				valid = false;
@@ -231,7 +227,7 @@ public class Cliente {
 			
 			valid = true;
 			System.out.println("\nIntroduzca el correo electrónico");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			if(cadena.indexOf('@') != cadena.lastIndexOf('@') || cadena.charAt(0) == '@' || cadena.contains("@") == false || cadena.contains(".") == false) {
 				
@@ -276,8 +272,8 @@ public class Cliente {
 	@Override
 	public String toString() {
 		
-		return "DNI: " + dni + "\n Email: " + email + "\n Nombre: " + nomCliente + "\n apellido: " + apellidos
-				+ "\n contraseña: " + contraseña;
+		return "\t- DNI: " + dni + "\n\t- Email: " + email + "\n\t- Nombre: "
+				+ nomCliente + "\n\t- Apellido(s): " + apellidos + "\n\t- Contraseña: ********\n";
 	}
 
 
@@ -293,7 +289,7 @@ public class Cliente {
 		do {
 			valid = true;
 			System.out.println("Introduzca el Apellido: ");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			if(!ValidarTipoEntrada.checkSoloLetras(cadena)) {
 				valid = false;
@@ -326,7 +322,7 @@ public class Cliente {
 			
 			valid = true;
 			System.out.println("\nintroduzca la contraseña: ");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			if(cadena.isEmpty()) {
 				
