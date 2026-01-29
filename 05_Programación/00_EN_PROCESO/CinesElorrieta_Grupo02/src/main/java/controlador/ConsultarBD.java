@@ -1,5 +1,7 @@
 package controlador;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -12,15 +14,78 @@ public class ConsultarBD {
 //
 //	private static String	user = "dam_v";
 //	private static String	pw = "Elorrieta00-";
-	private static String rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
-	private static String user = "dam_v";
-	private static String pw = "Elorrieta00-";
 
-	public static Connection conectarConBD() {
-		Connection conexion = null;
-
+//	private static String	rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
+//	private static String	user = "dam_v";
+//	private static String	pw = "Elorrieta00-";
+	
+	/**
+	 * <p>este método lee los datos de el fichero <b>ipConfig.txt</b>
+	 * y los guarda en un array de la siguiente forma:</p></br>
+	 * <ol start="0">
+	 * <li>jdbc:mysql://ip:puerto/DatabaseName</li>
+	 * <li>user</li>
+	 * <li>password</li>
+	 * </ol>
+	 * 
+	 * para modificar los datos se debe actualizar solo el contenido que está
+	 * después de '='</br>
+	 *  
+	 * @return <b>String array </b></br>se utilizarán los index del array tal como
+	 * se indica en la lista
+	 */
+	private static String [] datos(){
+		
+		String confi[] = new String[3];
+		FileReader reader = null;
+		BufferedReader buffer = null;
+		String ruta = "src/main/java/files/ipConfig.txt";
+		int cont = 0;
+		
 		try {
-			conexion = DriverManager.getConnection(rutaBD, user, pw);
+			
+			reader = new FileReader(ruta);
+			buffer = new BufferedReader(reader);
+			String datos = "";
+			
+			while((datos = buffer.readLine()) != null) {
+				
+				confi[cont] = datos.substring(datos.indexOf('=')+1);
+				cont++;
+				
+			}
+			
+			
+			
+		}catch(Exception e) {
+			
+			//rellenar
+			
+		}finally {
+			
+			try {
+				
+				buffer.close();
+				
+			}catch(Exception e) {
+				
+				//rellenar
+			}
+		}
+		
+		
+		return confi;
+		
+	}
+
+
+	
+	public static Connection conectarConBD() {
+		Connection	conexion = null;
+		String data[] = datos();
+		
+		try {									// aquí se pondía (data[0], data[1], data[2]);
+			conexion = DriverManager.getConnection(data[0], data[1], data[2]);
 		} catch (SQLException excpsql) {
 			System.out.println("Error, no se pudo realizar la conexión con la base de datos.\n");
 			System.out.println("SQLException: " + excpsql.getMessage());
@@ -421,8 +486,8 @@ public class ConsultarBD {
 		Connection conexion = null;
 		PreparedStatement sentencia = null;
 		ResultSet result = null;
-		String consulta = "select * from cliente where dni = " + "'" + dni + "'" + " and userpassword = " + "'"
-				+ password + "'" + ";";
+		String consulta = "select * from cliente where dni = " + "'" + dni + "'" + " and userpassword = "+"md5(" + "'"
+				+ password + "'" +")"+ ";";
 		Cliente consultado = new Cliente();
 
 		try {
