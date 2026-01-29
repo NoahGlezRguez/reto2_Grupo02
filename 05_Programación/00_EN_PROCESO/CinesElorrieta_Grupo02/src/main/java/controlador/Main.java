@@ -36,6 +36,7 @@ public class Main {
 					apagar = true;
 			}
 		}
+		teclado.close();
 		MostrarMsg.despedida();
 	}
 }
