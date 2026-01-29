@@ -520,6 +520,55 @@ public class ConsultarBD {
 		return consultado;
 	}
 
+	public static void insertarEntradasEnBD(ArrayList<Entrada> entradas) {
+		
+	}
+	
+	public static void insertarCompraEnBD(String plataforma, double descuento,
+									double total, String dni) {
+		Connection conexion = null;
+		Statement sentencia = null;
+		int filasAfectadas = 0;
+		
+		double importeDescontado = (1 - descuento) * total;
+		
+		String consulta = """
+				insert into compra (plataforma, descuento, total, dni)
+				values('%s', '%.2f', '%.2f', '%s')
+				""".formatted(plataforma, importeDescontado, total, dni);
+		try {
+			conexion = conectarConBD();
+			sentencia = conexion.createStatement();
+			filasAfectadas = sentencia.executeUpdate(consulta);
+
+			if (filasAfectadas > 0) 
+				System.out.println(MostrarMsg.msgBD(4));
+
+			else 
+				System.out.println(MostrarMsg.msgBD(1));
+
+
+		}  catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		} finally {
+
+			try {
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+
+	}
+	
+	
+	
 	/**
 	 * este método inserta un nuevo cliente en la BD
 	 * 
@@ -528,9 +577,8 @@ public class ConsultarBD {
 	 *         <b>true</b> inserción correcta <br>
 	 *         <b>false </b> error de comunicación
 	 */
-	public static boolean InsertarNuevoUsuario(Cliente consultado) {
+	public static void InsertarNuevoUsuario(Cliente consultado) {
 
-		boolean valid = true;
 		Connection conexion = null;
 		PreparedStatement sentencia = null;
 		int result = 0;// en la insercion de datos el result es el numero de rows affected
@@ -577,9 +625,10 @@ public class ConsultarBD {
 			e.printStackTrace();
 		}
 
-		return valid;
 	}
 
+	
+	
 	/**
 	 * <b>validador con la DB</b>
 	 * 

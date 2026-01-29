@@ -2,11 +2,14 @@ package modelo;
 
 import java.util.ArrayList;
 
+import controlador.ConsultarBD;
+
+
 public class Compra {
 
 	private int					idCompra;
 	private String				fechaCompra;
-	private boolean				compraEnApp = true;
+	private String				tipoCompra = "app";
 	private double				precioCompra;
 	private double				descuento;
 	private double				importeTotal;
@@ -45,15 +48,12 @@ public class Compra {
 		return (aforoCesta);
 	}
 
-	
-	
-	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
-	
-	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
-	
-	//revisar cuáles sobran para borrarlos
-	
-	
+	public void guardarCompraEnBD() {
+		ConsultarBD.insertarCompraEnBD(tipoCompra, descuento, importeTotal, comprador.getDni());
+		//setIDcompra = ConsultarBD.consultarCompraRealizada();
+		//ConsultarBD.insertarEntradasEnBD(entradas);
+	}
+
 
 	
 	public void mostrarCesta() {
@@ -177,11 +177,11 @@ public class Compra {
 	public void setFechaCompra(String fechaCompra) {
 		this.fechaCompra = fechaCompra;
 	}
-	public boolean isCompraEnApp() {
-		return compraEnApp;
+	public String getTipoCompra() {
+		return tipoCompra;
 	}
-	public void setCompraEnApp(boolean compraEnApp) {
-		this.compraEnApp = compraEnApp;
+	public void setTipoCompra(String tipoCompra) {
+		this.tipoCompra = tipoCompra;
 	}
 	public double getPrecioCompra() {
 		return precioCompra;
@@ -214,5 +214,5 @@ public class Compra {
 		this.comprador = comprador;
 	}
 	
-	/*------------------------------------------------------------------------------*/
+
 }
