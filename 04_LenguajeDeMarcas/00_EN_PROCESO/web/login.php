@@ -1,6 +1,7 @@
 <!-- header -->
 <!-- https://www.php.net/manual/en/function.require.php-->
 <?php $tit="Iniciar Sesion";?>
+<?php include('./include/dbconnect.php');?>
 <?php require('./include/header.php');?>
 
   <main>
@@ -8,6 +9,7 @@
 
   
     <h2 class="subtitulo">Mi cuenta</h2>
+    <h6> Mi perfil no parece alguien tocandose </h6>
     
     
     <div class="Loginform">
@@ -33,4 +35,5 @@
 
 
 <!-- footer
-<?php require('./include/footer.php'); ?>
+<?php require('./include/footer.php');
+$conn->close();?>

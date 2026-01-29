@@ -1,8 +1,8 @@
 <!-- header -->
 <!-- https://www.php.net/manual/en/function.require.php -->
 <?php $tit="Sesiones";?>
+<?php include('./include/dbconnect.php');?>
 <?php require('./include/header.php'); ?>
-<?php include('./include/dbconnect.php'); ?>
 
 <main>
 
@@ -29,7 +29,7 @@
                 <summary>Ver</summary>
                 <div id='sesmaindiv'>";
                 $fecsel = $row['fec'];
-                $sqlses = "SELECT * FROM sesion where fec='$fecsel';";
+                $sqlses = "SELECT * FROM sesion where fec='$fecsel' and IDPeli='$idpe';";
                 $reslut = $conn->query($sqlses);
                 $numsa = 0;
                 while($rowf = $reslut->fetch_assoc()){
@@ -37,7 +37,7 @@
                     echo "<div class='sesdiv'>";
                         echo "<p>" . $numsa . "</p><p> De ". $rowf['hora_ini']. " hasta " . $rowf['hora_fin'] ."</p> <p> Sala " . $rowf['NumSala'] . "</p> <p> Precio: " . $rowf['precio'] . "€</p>";
                         echo "<form action='carrito.php' method='post'>
-                        <input type='hidden' name='' value=''/>
+                        <input type='hidden' name='idses' value='". $rowf['IDsesion'] ."'/>
                         <input type='submit' class='botonchachipiruli' value='Reservar' name='resbot'/></form>";
                     echo "</div>";
                 }
@@ -49,4 +49,4 @@
 
 <!-- footer -->
 <?php require('./include/footer.php'); ?>
-<?php $conn->close(); ?>
+<?php $conn->close();?>

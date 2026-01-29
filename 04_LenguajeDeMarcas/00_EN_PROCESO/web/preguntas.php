@@ -1,4 +1,5 @@
 <?php $tit="FAQ";?>
+<?php include('./include/dbconnect.php');?>
 <?php require('./include/header.php'); ?>
 <main>  
     <!-- this area is the one the you will work with -->
@@ -29,4 +30,5 @@
   
     <!-- end of the area -->
 </main>
-<?php require('./include/footer.php'); ?>
+<?php require('./include/footer.php');
+$conn->close();?>

@@ -1,4 +1,5 @@
 <?php $tit="Crear Cuenta";?>
+<?php include('./include/dbconnect.php');?>
 <?php require('./include/header.php');?>
 
     <main>  
@@ -32,4 +33,5 @@
     </main>
     
     <!-- please do not modify this part 👇-->
-<?php require('./include/footer.php');?>
+<?php require('./include/footer.php');
+$conn->close();?>

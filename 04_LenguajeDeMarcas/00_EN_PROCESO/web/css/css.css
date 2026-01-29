@@ -50,6 +50,12 @@
 
 /* Responsive Design for mobiles phones */
 @media (max-width: 600px) {
+      #logoMobile a{
+        justify-self: center;
+        align-self: center;
+    }
+
+
     .menu {
         flex-direction: column;
         height: auto;
@@ -70,9 +76,9 @@
     }
 
     header{
-        
+        justify-self: center;
         align-items: center;
-        justify-content: right;
+        justify-content: center;
         flex-direction: column-reverse;
         background-color: aqua;
     }

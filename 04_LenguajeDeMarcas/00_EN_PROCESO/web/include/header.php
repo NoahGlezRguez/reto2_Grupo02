@@ -1,5 +1,11 @@
 <?php
-session_start();
+  if(isset($_SESSION['carrito'])){
+    $carrito = $_SESSION['carrito'];
+  }
+  else{
+      $carrito = array();
+      $_SESSION['carrito'] = $carrito;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -13,19 +19,21 @@ session_start();
   <meta name="rating" content="general" />
   <meta name="keywords"
     content="cine, entradas, venta, sesiones, cartelera, peliculas, terror, acción, españa, entretenimiento, ocio" />
-  <?php
-    echo "<title>" . $tit . "</title>";
-  ?>
   <!-- luego crear una funcion que cambie dinamicamente el titulo ... -->
   <link rel="icon" type="image/jpeg" href="img/logo1.jpeg" />
   <link rel="stylesheet" href="css/css.css" />
   <script src="js/js.js"></script>
+
+  <!-- variables importantes, mas o menos -->
+  <?php
+    echo "<title>" . $tit . "</title>";
+  ?>
 </head>
 
 <body>
   <!-- page header -->
   <header>
-    <div>
+    <div id="logoMobile">
       <a href="index.php"><img src="img/logo.png" alt="Cines Elorrieta Logo" class="logoheader" /></a>
       <h1 id="title">
         Elorrieta <br />
@@ -57,7 +65,7 @@ session_start();
       } else {
         echo "<li> 🙋 " . $_SESSION["nombre"] . "</li>";
       }
-        echo "<li><a href='carrito.php'>🛒(0)</a></li>";
+        echo "<li><a href='carrito.php'>🛒(" . count($carrito) . ")</a></li>";
         echo "<li><a href=\"logout.php\" class=\"CerSes\"> Cerrar sesion </a></li>";
     } else {
       echo "<li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";

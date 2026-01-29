@@ -1,4 +1,5 @@
 <?php
+session_start();
 # cambiar: servidor, puerto, password
 $db_server = '10.5.6.44';
 $db_port = 3307;

@@ -1,13 +1,15 @@
 <?php
+include('./include/dbconnect.php');
 
 // https://www.php.net/manual/en/function.error-reporting.php
 ini_set('error_reporting', E_ALL);
 
 // Para trabajar con $_SESSION
-session_start();
-
+//session_start();
 // incluir datos para la conexion de la bd
-include('./include/dbconnect.php');
+//include('./include/dbconnect.php');
+
+//Los dos de arriba son ahora innecesarios
 
 // recoger datos del formulario de login aplicando la condición de que se ha pulsado el botón de iniciar sesión
 if (isset($_POST['iniciar_sesion'])) {

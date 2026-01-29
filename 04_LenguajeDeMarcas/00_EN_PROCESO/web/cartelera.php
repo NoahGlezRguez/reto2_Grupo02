@@ -1,13 +1,12 @@
 <!-- header -->
 <!-- https://www.php.net/manual/en/function.require.php-->
 <?php $tit="Cartelera";?>
+<?php include('./include/dbconnect.php');?>
 <?php require('./include/header.php'); ?>
 
 <main id="cartelera">
 
     <?php
-    include('./include/dbconnect.php');
-
     $result = $conn->query("SELECT * FROM pelicula natural join genero order by IDPeli asc");
     $rows = $result->fetch_all(MYSQLI_ASSOC);
     //https://www.php.net/manual/en/mysqli-result.fetch-all.php
