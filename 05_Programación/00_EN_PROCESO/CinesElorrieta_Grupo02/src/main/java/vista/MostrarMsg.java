@@ -133,7 +133,8 @@ public class MostrarMsg {
 			"\t--> Error en la conexión\n",
 			"\t--> Error en los datos\n",
 			"\t--> Nuevo usuario guardado correctamente",
-			"\t--> No quedan sesiones con aforo el día seleccionado"
+			"\t--> No quedan sesiones con aforo el día seleccionado",
+			"\t--> Se ha realizado la compra satisfactoriamente"
 		};
 		
 		return msg[num];
