@@ -21,10 +21,11 @@ public class Compra {
 		entradas.add(nuevaEntrada);
 	}
 	
-	public void eliminarEntrada(int idEntrada) {
+	public void eliminarEntrada(int indiceEntrada) {
 		for (int i = 0; i < entradas.size(); i++) {
-			if(entradas.get(i).getIdEntrada() == idEntrada) {
+			if(i == indiceEntrada) {
 				entradas.remove(i);
+				System.out.println("\n\t- Entrada eliminada del carrito satisfactoriamente.");//refactorizar esta linea
 			}
 		}
 	}
@@ -70,8 +71,8 @@ public class Compra {
 				""".formatted(calcularPrecioDeCompra());
 		
 		descuento = """
-					~ Descuento aplicado: %d%%
-				""".formatted(calcularDescuento());
+					~ Descuento aplicado: %.2f%%
+				""".formatted(calcularDescuento() * 100);
 		
 		importeFinal = """
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -82,15 +83,31 @@ public class Compra {
 		
 		System.out.println(cabecera);
 		
-		for (int i = 0; i < entradas.size(); i++) 
-			 entradas.get(i).mostrarEntrada();
+		for (int i = 0; i < entradas.size(); i++) {
+			System.out.println("""
+					~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+					~~~ Nº de entrada:	%d
+					""".formatted(i + 1));
+			entradas.get(i).mostrarEntrada();
+		}
+		
 		
 		System.out.println(precioCompra + descuento + importeFinal);
 	}
 
 	private double calcularImporteFinal() {
 		
-		return (calcularPrecioDeCompra() * calcularDescuento());
+		this.descuento = calcularDescuento();
+		
+		double precioCompra = calcularPrecioDeCompra();
+		
+		double importeFinal = precioCompra;
+		
+		if (descuento > 0) {
+			importeFinal = precioCompra - (precioCompra * descuento);
+		}
+		
+		return (importeFinal);
 	}
 	
 	private double calcularDescuento() {
@@ -103,18 +120,19 @@ public class Compra {
 			for (int i = 0; i < entradas.size(); i++) {
 				if (i == 0) {
 					titulos.add(entradas.get(i).getSesionEntrada().getPelicula().nombrePeli);
-					i++;
 					diversidadPelis++;
 				}
-				if (!titulos.contains(entradas.get(i).getSesionEntrada().getPelicula().nombrePeli)) {
-					diversidadPelis++;
+				else {
+					if ((!titulos.contains(entradas.get(i).getSesionEntrada().getPelicula().nombrePeli))) {
+						diversidadPelis++;
+					}
 				}
 			}	
 		}
 		if (diversidadPelis >= 3)
-			descuento = 3;
+			descuento = 0.3;
 		else if (diversidadPelis == 2)
-			descuento = 2;
+			descuento = 0.2;
 		else
 			descuento = 0;
 		setDescuento(descuento);

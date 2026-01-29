@@ -10,15 +10,6 @@ import vista.*;
 
 public class ConsultarBD {
 
-//	private static String	rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
-//
-//	private static String	user = "dam_v";
-//	private static String	pw = "Elorrieta00-";
-
-//	private static String	rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
-//	private static String	user = "dam_v";
-//	private static String	pw = "Elorrieta00-";
-	
 	/**
 	 * <p>este método lee los datos de el fichero <b>ipConfig.txt</b>
 	 * y los guarda en un array de la siguiente forma:</p></br>
@@ -84,7 +75,7 @@ public class ConsultarBD {
 		Connection	conexion = null;
 		String data[] = datos();
 		
-		try {									// aquí se pondía (data[0], data[1], data[2]);
+		try {									
 			conexion = DriverManager.getConnection(data[0], data[1], data[2]);
 		} catch (SQLException excpsql) {
 			System.out.println("Error, no se pudo realizar la conexión con la base de datos.\n");

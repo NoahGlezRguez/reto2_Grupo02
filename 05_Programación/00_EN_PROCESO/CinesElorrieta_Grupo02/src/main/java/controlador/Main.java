@@ -21,21 +21,16 @@ public class Main {
 	public static void main(String[] args) {
 		
 		int		opc = 0;
-		String	operaciones[] = {"Comenzar compra", "Salir y apagar esta máquina"};
-		boolean	apagar = false,	reiniciar = true;;
+		String	operaciones[] = {"Comenzar compra", "Salir"};
+		boolean	apagar = false;
 		
 		while (!apagar) {
-			if (reiniciar) {
-				MostrarMsg.bienvenida();
-				teclado.nextLine();
-				reiniciar = false;
-			}
+			MostrarMsg.bienvenida();
+			teclado.nextLine();
+			
 			opc = Menu.opciones("Operaciones disponibles", operaciones, "Seleccione la operación que desea realizar");
-			if (opc == 0) {
+			if (opc == 0) 
 				OperacionesCompra.realizarCompra();
-				//else //(no se si esto sera realmente necesario...)
-				//	OperacionesCompra.cerrarCompra(compra);//reset del programa y sus variables que guardaban valores, genera un registro y da opcion a generar factura + despedida personalizada
-			}
 			else {
 				if (Menu.siNo("¿Está segurx de que quiere apagar esta máquina?") == 0)
 					apagar = true;

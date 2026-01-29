@@ -1,22 +1,9 @@
 package controlador;
-import java.util.Scanner;
 import modelo.*;
 import vista.*;
+
 public class ValidarLogin {
 
-	
-	private static Scanner teclado = new Scanner(System.in);
-	
-	public static void main (String [] args) {
-		
-		
-		iniciarSesion();
-		//crearCuenta();
-	}
-	
-	
-	
-	
 	
 	/**
 	 * este método valida la existencia del usuario en la 
@@ -24,7 +11,7 @@ public class ValidarLogin {
 	 *  
 	 * @return <ul> <li>objeto cliente con datos</li> <li><b>null</b> si no existe</li> </ul>
 	 */
-	private static Cliente iniciarSesion(){
+	public static Cliente iniciarSesion(){
 		
 		String dni = "";
 		String contraseña = "";
@@ -32,10 +19,10 @@ public class ValidarLogin {
 		MostrarMsg.mensajeSignIn();
 		
 		System.out.println("\tIntroduzca DNI:");
-		dni = teclado.nextLine();
+		dni = Main.teclado.nextLine();
 		
 		System.out.println("\n\tIntroduzca contraseña");
-		contraseña = teclado.nextLine();
+		contraseña = Main.teclado.nextLine();
 		
 		Cliente iniciado = new Cliente();
 		
@@ -59,7 +46,7 @@ public class ValidarLogin {
 	 * este método llama a otro para crear un usuario nuevo y una vez 
 	 * validado lo envía a la base de datos
 	 */
-	private static void crearCuenta(){
+	public static void crearCuenta(){
 		
 		String cadena = "";
 		boolean action = true;
@@ -73,7 +60,7 @@ public class ValidarLogin {
 			System.out.println("Está seguro de añadir el usuario con los siguientes datos: \n");
 			nuevo.toString();
 			System.out.println("1.Si\n2.No");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			if(ValidarTipoEntrada.checkNum(cadena)){
 				

@@ -2,13 +2,11 @@ package modelo;
 
 public class Entrada {
 
-	int		idEntrada;
 	int		numPersonas;
 	double	importe;
 	Sesion	sesionEntrada = new Sesion();
 
-	public Entrada(int idEntrada, int numPersonas, Sesion sesionEntrada) {
-		this.idEntrada = idEntrada;
+	public Entrada(int numPersonas, Sesion sesionEntrada) {
 		this.numPersonas = numPersonas;
 		//this.importe = importe;//calcular con un metodo
 		this.sesionEntrada = sesionEntrada;
@@ -29,15 +27,13 @@ public class Entrada {
 		hora = sesionEntrada.getHoraInicio();
 		sala = sesionEntrada.getSala().getNumSala();
 		precio = sesionEntrada.getPrecio();
+		importe = numPersonas * precio;
 		
 		String entrada = """
-				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-					~~~ CIE (Código de identificación de entrada):
-						-->			%d
 					~~~ Película: 	%s
-					~~~ Día:		%s
-					~~~ Hora: 		%s
-					~~~ Sala: 		%d
+					~~~ Día:	%s
+					~~~ Hora: 	%s
+					~~~ Sala: 	%d
 					
 					~~~ Nº de personas______________________%d
 					~~~ Precio de la sesión_________________%.2f€
@@ -45,7 +41,7 @@ public class Entrada {
 					~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					~~~ Importe total de entrada____________%.2f€
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				""".formatted(idEntrada, tituloPeli, fecha, hora, sala, numPersonas, precio, importe);
+				""".formatted(tituloPeli, fecha, hora, sala, numPersonas, precio, importe);
 		System.out.println(entrada);
 	}
 	
@@ -57,14 +53,6 @@ public class Entrada {
 
 	//para importe no hay seter, ya que se calcula
 	
-	public int getIdEntrada() {
-		return idEntrada;
-	}
-
-	public void setIdEntrada(int idEntrada) {
-		this.idEntrada = idEntrada;
-	}
-
 	public int getNumPersonas() {
 		return numPersonas;
 	}

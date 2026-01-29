@@ -131,9 +131,9 @@ public class MostrarMsg {
 		
 		String [] msg = {
 			"\t--> Error en la conexión\n",
-			"\t-->Error en los datos\n",
-			"\t-->Nuevo usuario guardado correctamente",
-			"\t-->No hay sesiones disponibles el día de para hoy"
+			"\t--> Error en los datos\n",
+			"\t--> Nuevo usuario guardado correctamente",
+			"\t--> No quedan sesiones con aforo el día seleccionado"
 		};
 		
 		return msg[num];

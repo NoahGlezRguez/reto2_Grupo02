@@ -13,9 +13,10 @@ public class OperacionesCompra {
 	public static void realizarCompra() {
 		
 		Compra 		compra = new Compra();
+		Cliente		comprador = new Cliente();
 		Entrada		nuevaEntrada = new Entrada();
 		
-		String		operaciones[] = {"Comprar entrada", "Consultar carrito", "Terminar compra y pagar", "Cancelar compra y salir"};
+		String		operaciones[] = {"Agregar entrada al carrito", "Eliminar entrada del carrito", "Consultar carrito", "Terminar compra y pagar", "Cancelar compra y salir"};
 		boolean		finalizarCompra = false;
 		int			opc = 0;
 		
@@ -30,23 +31,98 @@ public class OperacionesCompra {
 				if (nuevaEntrada != null)
 					compra.agregarEntrada(nuevaEntrada);
 				break;
+				
 			case 1:
-				//metodoscestacompra
-				System.out.println("Aqui se llaman a metodos del carrito de compra. Y podria ir directamente a pago");
-				 //opcion de querer pagar tras ver el carrito(?)
+				if (compra.getEntradas().size() > 0) 
+					quitarEntradaDelCarrito(compra);
+				else 
+					System.out.println("\n\t - - - >>> Ahora mismo su cesta está vacía");
 				break;
+				
 			case 2:	
-				//pasarela de pago
-				System.out.println("aqui pago");
-				//cliente.comprasRealizadas++ en bd
+				if (compra.getEntradas().size() > 0) {
+					compra.mostrarCesta();
+				}
+				else
+					System.out.println("\n\t - - - >>> Ahora mismo su cesta está vacía");
 				break;
-			case 3:
+				
+			case 3:				
+				
+				break;
+			case 4:
 				compra.cancelarCompra();
+				compra = null;
 				finalizarCompra = true;
 				MostrarMsg.despedida();
 				break;
 			}
 		}
+	}
+	
+	//revisar y refactorizar esto
+	private static void quitarEntradaDelCarrito(Compra compra) {
+
+		boolean esCorrecto;
+		String 	entrada;
+		int		opc = -2;
+
+		do {
+			esCorrecto = true;
+			Menu.msgVolverAtras();
+			System.out.println("\n\t- Indique el nº de entrada que desea eliminar del carrito: ");
+			entrada = Main.teclado.nextLine().trim();
+			if (!ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+				MostrarMsg.errores(-1);//indicar un error adecuado, no este
+				esCorrecto = false;
+			}
+			else {
+				opc = Integer.parseInt(entrada);
+				if ((opc < 1 || opc > compra.getEntradas().size()) && opc != -1) {
+					MostrarMsg.errores(-1);//indicar un error adecuado, no este
+					esCorrecto = false;
+				}
+				else if (opc == -1)
+					esCorrecto = true;
+				else
+					compra.eliminarEntrada(opc - 1);
+			}
+		} while (!esCorrecto);
+	}
+	
+	
+	private static int pago(Compra compra, Cliente comprador) {
+		
+		int		faseCompra = 0;
+		boolean	pagoRealizado = false;
+		
+		if (compra.getEntradas().size() > 0) {
+			//pasarela de pago
+			comprador = ValidarLogin.iniciarSesion();
+			if (comprador == null) {
+				if (Menu.siNo("¿Desea crearse una cuenta de usuario?") == 0) {
+					ValidarLogin.crearCuenta();
+					if (Menu.siNo("¿Desea pagar (solo mediante ContactLess)?") == 0)		
+						System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
+					else
+						faseCompra = 4;
+				}
+				else
+					faseCompra = 4;
+			}
+			else {
+				if (Menu.siNo("¿Desea pagar (solo mediante ContactLess)?") == 0) {
+					//guardar compra y entradas en la bd
+					//guardar cliente.comprasRealizadas++ en bd
+					System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
+				}
+				else
+					faseCompra = 4;
+			}
+
+		}
+		else
+			System.out.println("\n\t - - - >>> Ahora mismo su cesta está vacía");
 	}
 	
 	/**
@@ -73,7 +149,7 @@ public class OperacionesCompra {
 					peliculaElegida = elegirPelicula();
 					if (peliculaElegida == null)
 						faseDeCompra--;
-					else
+					else 
 						faseDeCompra++;
 					break;
 				case 2:
@@ -87,8 +163,10 @@ public class OperacionesCompra {
 					sesionElegida = elegirSesion(peliculaElegida, fechaElegida, compra);
 					if (sesionElegida == null)
 						faseDeCompra--;
-					else 
+					else {
 						faseDeCompra++;
+						nuevaEntrada.setSesionEntrada(sesionElegida);
+					}
 					break;
 				case 4:
 					numPersonas = elegirNumPersonas(sesionElegida, compra);
@@ -97,7 +175,6 @@ public class OperacionesCompra {
 					else {
 						nuevaEntrada.setNumPersonas(numPersonas);
 						//aqui hay que hacer mas cosas
-						System.out.println("\nwow".repeat(15));
 						if (Menu.siNo("¿Confirma añadir esta entrada?\n\t\t...Al elegir 'No', se perderán los datos seleccionados...") == 1)
 							nuevaEntrada = null;	
 						faseDeCompra++;
@@ -154,17 +231,17 @@ public class OperacionesCompra {
 		Sesion				sesionElegida = null;
 		
 		idSesiones = ConsultarBD.consultarSesionesConAforoDisponible(peliculaElegida, fechaElegida, compra);
-		
-		indiceSesionElegida = opcionCorrecta("\n\t·····> Introduzca el nº de la sesión que le interesa: ", idSesiones);
-		
-		if (indiceSesionElegida != -1) {
-			idSesionElegida = idSesiones.get(indiceSesionElegida);
-			sesionElegida = ConsultarBD.consultarSesionElegida(idSesionElegida);
-			sesionElegida.setPelicula(peliculaElegida);
-			sesionElegida.setSala(ConsultarBD.consultarSala(sesionElegida.getIdSesion()));
-			sesionElegida.setAforoDisponible(ConsultarBD.consultarAforo(idSesionElegida, compra));
+		if (!idSesiones.isEmpty()) {
+			indiceSesionElegida = opcionCorrecta("\n\t·····> Introduzca el nº de la sesión que le interesa: ", idSesiones);
+			
+			if (indiceSesionElegida != -1) {
+				idSesionElegida = idSesiones.get(indiceSesionElegida);
+				sesionElegida = ConsultarBD.consultarSesionElegida(idSesionElegida);
+				sesionElegida.setPelicula(peliculaElegida);
+				sesionElegida.setSala(ConsultarBD.consultarSala(sesionElegida.getIdSesion()));
+				sesionElegida.setAforoDisponible(ConsultarBD.consultarAforo(idSesionElegida, compra));
+			}
 		}
-		
 		return (sesionElegida);
 	}
 	
