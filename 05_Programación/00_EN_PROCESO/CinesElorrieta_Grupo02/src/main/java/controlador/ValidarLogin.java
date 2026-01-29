@@ -28,17 +28,13 @@ public class ValidarLogin {
 		
 		iniciado = ConsultarBD.Consultarlogin(dni, contraseña);
 		
-		
 		if( iniciado!= null) {
 			System.out.println("\n===================================");
 			System.out.println("\tBienvenide "+iniciado.getNomCliente());
 			System.out.println("===================================");
 		}
-		
-		
-		
-		return iniciado;
-		
+
+		return (iniciado);
 	}
 	
 	/**
@@ -46,87 +42,24 @@ public class ValidarLogin {
 	 * este método llama a otro para crear un usuario nuevo y una vez 
 	 * validado lo envía a la base de datos
 	 */
-	public static void crearCuenta(){
-		
-		String cadena = "";
-		boolean action = true;
-		int opc = 0;
-		
+	public static Cliente crearCuenta(){
+
 		MostrarMsg.mensajeSignUp();
 		
-		Cliente nuevo = new Cliente(action);
+		Cliente nuevo = new Cliente(true);
+	
+		System.out.println("\tDatos introducidos:");
+		System.out.println(nuevo.toString());
 		
-		do {
-			System.out.println("Está seguro de añadir el usuario con los siguientes datos: \n");
-			nuevo.toString();
-			System.out.println("1.Si\n2.No");
-			cadena = Main.teclado.nextLine();
-			
-			if(ValidarTipoEntrada.checkNum(cadena)){
-				
-				opc = Integer.parseInt(cadena);
-				
-				if(opc == 1) {
-					
-					ConsultarBD.InsertarNuevoUsuario(nuevo);
-					
-				}
-				
-				else if(opc == 2){
-					
-					System.out.println("operación cancelada");
-				}
-				
-				else {
-					
-					action = false;
-				}
-				
-			}
-			
-			else {
-				
-				action = false;
-				System.out.println(MostrarMsg.errores(0));
-			}
+		if (Menu.siNo("Confirmar y guardar datos") == 0)
+			ConsultarBD.InsertarNuevoUsuario(nuevo);
 		
-		}while(!action);
+		else {
+			System.out.println("\n\t...Operación cancelada...");
+			nuevo = null;
+		}
 		
-		
-		
-		
+		return (nuevo);
 	}
 
-//	public static boolean validar(String usuario, String password) {
-//		Connection conexion = ConsultarBD.conectarConBD();
-//		Statement sentencia = null;
-//		ResultSet r = null;
-//		boolean valido = false;
-//
-//		try {
-//			sentencia = conexion.createStatement();
-//			r = sentencia.executeQuery("select NomCli, userpassword from cliente;");
-//
-//			while (r.next()) {
-//				String u = r.getString("NomCli");
-//				String p = r.getString("userpassword");
-//
-//				if (u.equals(usuario) && p.equals(password)) {
-//					valido = true;
-//					break;
-//				}
-//			}
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//
-//		try {
-//			conexion.close();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return valido;
-//	}
 }
