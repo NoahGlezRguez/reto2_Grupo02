@@ -10,10 +10,7 @@ public class Cliente {
 	String	nomCliente;
 	String	apellidos;
 	String	contraseña;
-	int		comprasRealizadas;//esto se borraria? o es trampita? ocupa memoria de forma inutil? resultado de una consulta?
-	
-	
-	
+
 	
 	/**
 	 * <b>Constructor vacío<b>
@@ -58,12 +55,6 @@ public class Cliente {
 	}
 
 	
-	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
-	
-	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
-	
-
-
 	public String getDni() {
 		return dni;
 	}
@@ -104,7 +95,7 @@ public class Cliente {
 	}
 
 
-	public String getContraseña() { //esto se borraria???********************
+	public String getContraseña() { 
 		return contraseña;
 	}
 
@@ -113,14 +104,7 @@ public class Cliente {
 		this.contraseña = contraseña;
 	}
 	
-	public int getComprasRealizadas() {
-		return comprasRealizadas;
-	}
 
-	public void setComprasRealizadas(int comprasRealizadas) {//esto se borraria???********************
-		this.comprasRealizadas = comprasRealizadas;
-	}
-	
 	
 	/**
 	 * this method checks if the letter, length and format of the Dni

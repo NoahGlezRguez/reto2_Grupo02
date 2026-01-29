@@ -6,12 +6,6 @@ public class Entrada {
 	double	importe;
 	Sesion	sesionEntrada = new Sesion();
 
-	public Entrada(int numPersonas, Sesion sesionEntrada) {
-		this.numPersonas = numPersonas;
-		//this.importe = importe;//calcular con un metodo
-		this.sesionEntrada = sesionEntrada;
-	}
-
 	public Entrada() {
 		
 	}
@@ -45,24 +39,13 @@ public class Entrada {
 		System.out.println(entrada);
 	}
 	
-	
-	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
-	
-	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
-	
 
-	//para importe no hay seter, ya que se calcula
-	
 	public int getNumPersonas() {
 		return numPersonas;
 	}
 
 	public void setNumPersonas(int numPersonas) {
 		this.numPersonas = numPersonas;
-	}
-
-	public double getImporte() {
-		return importe;
 	}
 
 	public Sesion getSesionEntrada() {
@@ -72,7 +55,5 @@ public class Entrada {
 	public void setSesionEntrada(Sesion sesionEntrada) {
 		this.sesionEntrada = sesionEntrada;
 	}
-		
-	
-	/*------------------------------------------------------------------------------*/
+
 }

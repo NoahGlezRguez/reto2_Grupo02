@@ -8,7 +8,6 @@ import controlador.ConsultarBD;
 public class Compra {
 
 	private int					idCompra;
-	private String				fechaCompra;
 	private String				tipoCompra = "app";
 	private double				precioCompra;
 	private double				descuento;
@@ -99,13 +98,14 @@ public class Compra {
 		
 		this.descuento = calcularDescuento();
 		
-		double precioCompra = calcularPrecioDeCompra();
+		this.precioCompra = calcularPrecioDeCompra();
 		
 		double importeFinal = precioCompra;
 		
 		if (descuento > 0) {
 			importeFinal = precioCompra - (precioCompra * descuento);
 		}
+		this.importeTotal = importeFinal;
 		
 		return (importeFinal);
 	}
@@ -135,7 +135,7 @@ public class Compra {
 			descuento = 0.2;
 		else
 			descuento = 0;
-		setDescuento(descuento);
+		this.descuento = descuento;
 		return (descuento);
 	}
 	
@@ -147,7 +147,9 @@ public class Compra {
 				precioTotal += calcularPrecioDeEntrada(entradas.get(i));
 			}
 		}
-		setPrecioCompra(precioTotal);
+		
+		this.precioCompra = precioTotal;
+		
 		return (precioTotal);
 	}
 	
@@ -162,57 +164,17 @@ public class Compra {
 		}
 		return (precioEntrada);
 	}
-		
-		
-		
+				
 	public int getIdCompra() {
-	return idCompra;
+		return idCompra;
 	}
+	
 	public void setIdCompra(int idCompra) {
 		this.idCompra = idCompra;
 	}
-	public String getFechaCompra() {
-		return fechaCompra;
-	}
-	public void setFechaCompra(String fechaCompra) {
-		this.fechaCompra = fechaCompra;
-	}
-	public String getTipoCompra() {
-		return tipoCompra;
-	}
-	public void setTipoCompra(String tipoCompra) {
-		this.tipoCompra = tipoCompra;
-	}
-	public double getPrecioCompra() {
-		return precioCompra;
-	}
-	public void setPrecioCompra(double precioCompra) {
-		this.precioCompra = precioCompra;
-	}
-	public double getDescuento() {
-		return descuento;
-	}
-	public void setDescuento(double descuento) {
-		this.descuento = descuento;
-	}
-	public double getImporteTotal() {
-		return importeTotal;
-	}
-	public void setImporteTotal(double importeTotal) {
-		this.importeTotal = importeTotal;
-	}
+
 	public ArrayList<Entrada> getEntradas() {
 		return entradas;
 	}
-	public void setEntradas(ArrayList<Entrada> entradas) {
-		this.entradas = entradas;
-	}
-	public Cliente getComprador() {
-		return comprador;
-	}
-	public void setComprador(Cliente comprador) {
-		this.comprador = comprador;
-	}
-	
 
 }

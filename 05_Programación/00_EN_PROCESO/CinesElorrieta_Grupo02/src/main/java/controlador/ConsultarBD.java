@@ -613,6 +613,7 @@ public class ConsultarBD {
 
 			sentencia.close();
 			conexion.close();
+			consultado.setContraseña(null);
 
 		} catch (Exception e) {
 
