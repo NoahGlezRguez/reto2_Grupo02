@@ -53,8 +53,8 @@ public class Compra {
 
 	public void guardarCompraEnBD() {
 		ConsultarBD.insertarCompraEnBD(tipoCompra, descuento, importeTotal, comprador.getDni());
-		//setIDcompra = ConsultarBD.consultarCompraRealizada();
-		//ConsultarBD.insertarEntradasEnBD(entradas);
+		idCompra = ConsultarBD.consultarCompraRealizada();
+		ConsultarBD.insertarEntradasEnBD(entradas, idCompra);
 	}
 
 	public void mostrarCesta() {

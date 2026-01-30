@@ -477,8 +477,11 @@ public class ConsultarBD {
 		Connection conexion = null;
 		PreparedStatement sentencia = null;
 		ResultSet result = null;
-		String consulta = "select * from cliente where dni = " + "'" + dni + "'" + " and userpassword = "+"md5(" + "'"
-				+ password + "'" +")"+ ";";
+		String consulta = """
+					select *
+					from cliente
+					where dni = ? and userpassword = md5(?)
+				""";
 		Cliente consultado = new Cliente();
 
 		try {
@@ -486,6 +489,9 @@ public class ConsultarBD {
 			conexion = conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 
+			sentencia.setString(1, dni);
+			sentencia.setString(2, password);
+			
 			result = sentencia.executeQuery();
 
 			if (result.next()) {
@@ -520,26 +526,76 @@ public class ConsultarBD {
 		return consultado;
 	}
 
-	public static void insertarEntradasEnBD(ArrayList<Entrada> entradas) {
+	public static void insertarEntradasEnBD(ArrayList<Entrada> entradas, int idCompra) {
 		
+		Connection conexion = null;
+		PreparedStatement sentencia = null;
+		int filasAfectadas = 0;
+		
+		String consulta = """
+					insert into entrada (CantPersonas, importe, idSesion, idCompra)
+					values(?, ?, ?, ?)
+				""";
+		try {
+			conexion = ConsultarBD.conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			
+			for (int i = 0; i < entradas.size(); i++) {
+				
+				sentencia.setInt(1, entradas.get(i).getNumPersonas());
+				sentencia.setDouble(2, entradas.get(i).getNumPersonas() * entradas.get(i).getSesionEntrada().getPrecio());
+				sentencia.setInt(3, entradas.get(i).getSesionEntrada().getIdSesion());
+				sentencia.setInt(4, idCompra);
+				
+				filasAfectadas = sentencia.executeUpdate();
+			
+				if (filasAfectadas > 0) 
+					System.out.println(MostrarMsg.msgBD(4));
+	
+				else 
+					System.out.println(MostrarMsg.msgBD(1));
+			}
+
+		}  catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		} finally {
+
+			try {
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
 	}
 	
 	public static void insertarCompraEnBD(String plataforma, double descuento,
 									double total, String dni) {
 		Connection conexion = null;
-		Statement sentencia = null;
+		PreparedStatement sentencia = null;
 		int filasAfectadas = 0;
 		
 		double importeDescontado = (1 - descuento) * total;
 		
 		String consulta = """
 				insert into compra (plataforma, descuento, total, dni)
-				values('%s', '%.2f', '%.2f', '%s')
-				""".formatted(plataforma, importeDescontado, total, dni);
+				values(?, ?, ?, ?)
+				""";
 		try {
 			conexion = conectarConBD();
-			sentencia = conexion.createStatement();
-			filasAfectadas = sentencia.executeUpdate(consulta);
+			sentencia = conexion.prepareStatement(consulta);
+			
+			sentencia.setString(1, plataforma);
+			sentencia.setDouble(2, importeDescontado);
+			sentencia.setDouble(3, total);
+			sentencia.setString(4, dni);
+			
+			filasAfectadas = sentencia.executeUpdate();
 
 			if (filasAfectadas > 0) 
 				System.out.println(MostrarMsg.msgBD(4));
@@ -589,14 +645,22 @@ public class ConsultarBD {
 		String pass = consultado.pedirContraseña();
 
 		// verificar si funciona así el md5
-		String consulta = "INSERT INTO Cliente VALUES(" + "'" + dni + "'" + ", " + "'" + nom + "'" + ", " + "'" + ape
-				+ "'" + ", " + "'" + mail + "'" + ", " + "MD5(" + "'" + pass + "'" + ")" + ");";
+		String consulta = """
+					insert into cliente
+					values(?, ?, ?, ?, md5(?))
+				""";
 
 		try {
 
 			conexion = conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 
+			sentencia.setString(1, dni);
+			sentencia.setString(2, nom);
+			sentencia.setString(3, ape);
+			sentencia.setString(4, mail);
+			sentencia.setString(5, pass);
+			
 			result = sentencia.executeUpdate();
 
 			// por lo tanto al ser un int aquí se pone > 0
@@ -646,13 +710,21 @@ public class ConsultarBD {
 		Connection conexion = null;
 		PreparedStatement sentencia = null;
 		ResultSet result = null;
-		String consulta = "select " + atributo + " from cliente where " + atributo + " = ?";
+		String consulta = """
+					select ?
+					from cliente
+					where ? = ?
+				""";
 
 		try {
 
 			conexion = conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
-			sentencia.setString(1, cadena);
+			
+			sentencia.setString(1, atributo);
+			sentencia.setString(2, atributo);
+			sentencia.setString(3, cadena);
+			
 			result = sentencia.executeQuery();
 
 			if (result.next()) {
@@ -685,9 +757,10 @@ public class ConsultarBD {
 	// consultar y volcar datos de una sesion en concreto
 	public static Sesion consultarSesionElegida(int idSesionElegida) {
 		String consulta = """
-				select *
-				from sesion
-				where IDSesion = ?""";
+					select *
+					from sesion
+					where IDSesion = ?
+				""";
 		Sesion sesionElegida = new Sesion();
 
 		Connection conexion = null;
@@ -736,9 +809,10 @@ public class ConsultarBD {
 	public static Sala consultarSala(int IdSesion) {
 		Sala sala = new Sala();
 		String consulta = """
-				select sa.*
-				from sala sa join sesion se on sa.numsala = se.numsala
-				where IDSesion = ?""";
+					select sa.*
+					from sala sa join sesion se on sa.numsala = se.numsala
+					where IDSesion = ?
+				""";
 
 		Connection conexion = null;
 		PreparedStatement sentencia = null;
@@ -777,4 +851,50 @@ public class ConsultarBD {
 		return (sala);
 	}
 
+	public static int consultarCompraRealizada() {
+		
+		int idCompra = -1;
+		
+		String consulta = """
+					select idCompra
+					from compra
+					order by FecCompra desc
+					limit 1
+				""";
+
+		Connection conexion = null;
+		Statement sentencia = null;
+		ResultSet result = null;
+		try {
+			conexion = ConsultarBD.conectarConBD();
+			sentencia = conexion.createStatement();
+
+
+			result = sentencia.executeQuery(consulta);
+
+			result.next();
+			idCompra = result.getInt("IDCompra");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+
+			try {
+				if (result != null)
+					result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		return (idCompra);
+	}
+		
 }
