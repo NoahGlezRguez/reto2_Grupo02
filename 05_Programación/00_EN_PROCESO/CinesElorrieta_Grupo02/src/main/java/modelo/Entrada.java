@@ -6,6 +6,17 @@ public class Entrada {
 	double	importe;
 	Sesion	sesionEntrada = new Sesion();
 
+	
+	@Override //toString para utilizado al imprimir la factura 
+	public String toString() {
+		return "Entrada nº:\t" + idEntrada 
+				+"\nCant. Personas:\t" + numPersonas 
+				+"\nimporte:\t" + importe
+				+"\nPelicula:\t"+ sesionEntrada.getPeliculaSesion() 
+				+"\nHora inicio:\t" + sesionEntrada.getHoraInicio() 
+				+"\nHora fin:\t"+ sesionEntrada.getHoraFin();
+	}
+
 	public Entrada() {
 		
 	}

@@ -251,7 +251,7 @@ public class Cliente {
 			else if(cadena.length()>20) {
 				
 				valid = false;
-				System.out.println("\n El apellido no puede tener más de 20 caracteres");
+				System.out.println(MostrarMsg.errores(8));
 			}
 			
 		}while(!valid);
@@ -279,19 +279,19 @@ public class Cliente {
 			if(cadena.isEmpty()) {
 				
 				valid = false;
-				System.out.println("\nFormáto no válido");
+				System.out.println(MostrarMsg.errores(0));
 
 			}
 			
 			else if(cadena.length() > 254) {
 				
 				valid = false;
-				System.out.println("\nLa contraseña es demasiado larga");
+				System.out.println(MostrarMsg.errores(8));
 			}
 			
 			else if(cadena.length() < 8) {
 				valid = false;
-				System.out.println("\nLa contraseña debe contener al menos 8 caracteres");
+				System.out.println(MostrarMsg.errores(5));
 			}
 			
 		}while(!valid);
