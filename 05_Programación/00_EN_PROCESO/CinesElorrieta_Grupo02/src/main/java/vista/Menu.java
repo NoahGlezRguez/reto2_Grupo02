@@ -34,7 +34,7 @@ public class Menu {
 			
 			entrada = Main.teclado.nextLine().trim();
 			
-			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+			if (ValidarTipoEntrada.checkNum(entrada)) {
 				
 				seleccion = Integer.parseInt(entrada);
 				
@@ -70,7 +70,7 @@ public class Menu {
 			System.out.print(menu);
 			entrada = Main.teclado.nextLine().trim();
 			
-			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+			if (ValidarTipoEntrada.checkNum(entrada)) {
 				
 				seleccion = Integer.parseInt(entrada);
 				
