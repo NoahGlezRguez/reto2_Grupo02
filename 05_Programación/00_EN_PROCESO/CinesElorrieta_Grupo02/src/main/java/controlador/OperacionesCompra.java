@@ -271,7 +271,7 @@ public class OperacionesCompra {
 			System.out.println(peticion);
 			entrada = Main.teclado.nextLine().trim();
 			
-			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+			if (ValidarTipoEntrada.checkNum(entrada)) {
 				seleccionIndice = Integer.parseInt(entrada);
 				if ((seleccionIndice < 1 || seleccionIndice > arrayObjetos.size()) && (seleccionIndice != -1)) {
 					esCorrecto = false;
@@ -309,7 +309,7 @@ public class OperacionesCompra {
 			esCorrecto = true;
 			Menu.pedirNumPersonas(sesionElegida, compra);
 			entrada = Main.teclado.nextLine();
-			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+			if (ValidarTipoEntrada.checkNum(entrada)) {
 				numPersonas = Integer.parseInt(entrada);
 				if (numPersonas < 1 && numPersonas != -1 ) {
 					System.out.println("Error, debe ser mínimo una persona, por favor");
