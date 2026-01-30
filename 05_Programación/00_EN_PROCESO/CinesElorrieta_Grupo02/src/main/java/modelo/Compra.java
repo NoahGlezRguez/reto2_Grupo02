@@ -28,6 +28,9 @@ public class Compra {
 	}
 	
 	public void eliminarEntrada(int indiceEntrada) {
+		
+		
+		
 		for (int i = 0; i < entradas.size(); i++) {
 			if(i == indiceEntrada) {
 				entradas.remove(i);

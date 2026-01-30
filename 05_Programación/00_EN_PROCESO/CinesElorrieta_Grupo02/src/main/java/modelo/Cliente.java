@@ -27,12 +27,12 @@ public class Cliente {
 	 * 
 	 */
 	public Cliente(boolean pedirDatos) {
-			
+				
 		this.dni = pedirDni();
 		this.email = pedirEmail();
 		this.nomCliente = pedirNombre();
 		this.apellidos = pedirApellido();
-		
+
 	}
 	
 	public String getDni() {

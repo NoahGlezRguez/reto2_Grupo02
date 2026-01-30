@@ -9,14 +9,14 @@ public class MostrarMsg {
 			*                                                                     *
 			*   ###############################################################   *
 			*   #                                                             #   *
-			*   #   ★☆★         ¡BIENVENIDX A CINES ELORRIETA!	     ★☆★  #   *
+			*   #   ★☆★         ¡BIENVENIDX A CINES ELORRIETA!         ★☆★  #   *
 			*   #                                                             #   *
-			*   #                Donde experimentar nuevos mundos...	  #   *
+			*   #                Donde experimentar nuevos mundos...          #   *
 			*   #              desde la más cómoda de las butacas:.           #   *
 			*   #                                                             #   *
 			*   ###############################################################   *
 			*                                                                     *
-			*            [🎥]  [🎞️]  [🎬]  [🎞️]  [📽️]  [🎞️]  [🎦]  [📽️]             *
+			*            [🎥]  [🎞️]  [🎬]  [🎞️]  [📽️]  [🎞️]  [🎦]  [📽️]    	      *
 			*                                                                     *
 			*              → Pulsa la tecla Enter para comenzar ←                 *
 			*                                                                     *
