@@ -753,7 +753,6 @@ public class ConsultarBD {
 			result.next();
 
 			sala.setNumSala(result.getInt("numSala"));
-			sala.setIdCinePadre(result.getInt("IDCine"));
 			sala.setAforoSala(result.getInt("aforo"));
 
 		} catch (SQLException e) {

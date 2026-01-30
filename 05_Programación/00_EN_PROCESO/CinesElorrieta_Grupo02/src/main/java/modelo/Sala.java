@@ -2,7 +2,7 @@ package modelo;
 
 public class Sala {
 
-	int			idCinePadre;
+	int			idCinePadre = 1;
 	int			numSala;
 	int			aforoSala;
 	
@@ -17,9 +17,6 @@ public class Sala {
 		
 	}
 	
-	public void setIdCinePadre(int idCinePadre) {
-		this.idCinePadre = idCinePadre;
-	}
 
 	public int getNumSala() {
 		return numSala;
