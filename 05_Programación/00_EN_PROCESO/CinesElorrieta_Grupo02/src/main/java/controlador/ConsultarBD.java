@@ -10,15 +10,6 @@ import vista.*;
 
 public class ConsultarBD {
 
-//	private static String	rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
-//
-//	private static String	user = "dam_v";
-//	private static String	pw = "Elorrieta00-";
-
-//	private static String	rutaBD = "jdbc:mysql://10.5.6.196:3307/cine_elorrieta";
-//	private static String	user = "dam_v";
-//	private static String	pw = "Elorrieta00-";
-	
 	/**
 	 * <p>este método lee los datos de el fichero <b>ipConfig.txt</b>
 	 * y los guarda en un array de la siguiente forma:</p></br>
@@ -84,7 +75,7 @@ public class ConsultarBD {
 		Connection	conexion = null;
 		String data[] = datos();
 		
-		try {									// aquí se pondía (data[0], data[1], data[2]);
+		try {									
 			conexion = DriverManager.getConnection(data[0], data[1], data[2]);
 		} catch (SQLException excpsql) {
 			System.out.println("Error, no se pudo realizar la conexión con la base de datos.\n");
@@ -299,7 +290,7 @@ public class ConsultarBD {
 	}
 
 	public static ArrayList<Integer> consultarSesionesConAforoDisponible(Pelicula peliculaElegida,
-			String fechaElegida) {
+			String fechaElegida, Compra compra) {
 
 		ArrayList<Integer> sesionesPelicula = new ArrayList<>(), sesionesConAforo = new ArrayList<>();
 		String consulta = """
@@ -315,7 +306,7 @@ public class ConsultarBD {
 		sesionesPelicula = consultarSesiones(peliculaElegida, fechaElegida);
 
 		for (int i = 0; i < sesionesPelicula.size(); i++) {
-			if (consultarAforo(sesionesPelicula.get(i)) > 0) {
+			if (consultarAforo(sesionesPelicula.get(i), compra) > 0) {
 				sesionesConAforo.add(sesionesPelicula.get(i));
 			}
 		}
@@ -363,13 +354,13 @@ public class ConsultarBD {
 		return (sesionesConAforo);
 	}
 
-	public static int consultarAforo(int idSesion) {
+	public static int consultarAforo(int idSesion, Compra compra) {
 
 		int aforoSala, aforoCompras, aforoCesta, aforoDisponible;
 
 		aforoSala = conocerAforoSala(idSesion);
 		aforoCompras = conocerAforoCompras(idSesion);
-		aforoCesta = conocerAforoCesta(idSesion);
+		aforoCesta = compra.conocerAforoCesta(idSesion);
 
 		aforoDisponible = aforoSala - aforoCompras - aforoCesta;
 
@@ -529,6 +520,55 @@ public class ConsultarBD {
 		return consultado;
 	}
 
+	public static void insertarEntradasEnBD(ArrayList<Entrada> entradas) {
+		
+	}
+	
+	public static void insertarCompraEnBD(String plataforma, double descuento,
+									double total, String dni) {
+		Connection conexion = null;
+		Statement sentencia = null;
+		int filasAfectadas = 0;
+		
+		double importeDescontado = (1 - descuento) * total;
+		
+		String consulta = """
+				insert into compra (plataforma, descuento, total, dni)
+				values('%s', '%.2f', '%.2f', '%s')
+				""".formatted(plataforma, importeDescontado, total, dni);
+		try {
+			conexion = conectarConBD();
+			sentencia = conexion.createStatement();
+			filasAfectadas = sentencia.executeUpdate(consulta);
+
+			if (filasAfectadas > 0) 
+				System.out.println(MostrarMsg.msgBD(4));
+
+			else 
+				System.out.println(MostrarMsg.msgBD(1));
+
+
+		}  catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		} finally {
+
+			try {
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+
+	}
+	
+	
+	
 	/**
 	 * este método inserta un nuevo cliente en la BD
 	 * 
@@ -537,9 +577,8 @@ public class ConsultarBD {
 	 *         <b>true</b> inserción correcta <br>
 	 *         <b>false </b> error de comunicación
 	 */
-	public static boolean InsertarNuevoUsuario(Cliente consultado) {
+	public static void InsertarNuevoUsuario(Cliente consultado) {
 
-		boolean valid = true;
 		Connection conexion = null;
 		PreparedStatement sentencia = null;
 		int result = 0;// en la insercion de datos el result es el numero de rows affected
@@ -547,7 +586,7 @@ public class ConsultarBD {
 		String nom = consultado.getNomCliente();
 		String ape = consultado.getApellidos();
 		String mail = consultado.getEmail();
-		String pass = consultado.getContraseña();
+		String pass = consultado.pedirContraseña();
 
 		// verificar si funciona así el md5
 		String consulta = "INSERT INTO Cliente VALUES(" + "'" + dni + "'" + ", " + "'" + nom + "'" + ", " + "'" + ape
@@ -586,9 +625,10 @@ public class ConsultarBD {
 			e.printStackTrace();
 		}
 
-		return valid;
 	}
 
+	
+	
 	/**
 	 * <b>validador con la DB</b>
 	 * 
@@ -640,15 +680,7 @@ public class ConsultarBD {
 
 	}
 
-	public static int conocerAforoCesta(int idSesion) {
-		int aforoCesta = 0;
-
-		for (int i = 0; i < OperacionesCompra.entradas.size(); i++) {
-			if (OperacionesCompra.entradas.get(i).getSesionEntrada().getIdSesion() == idSesion)
-				aforoCesta += OperacionesCompra.entradas.get(i).getNumPersonas();
-		}
-		return (aforoCesta);
-	}
+	
 
 	// consultar y volcar datos de una sesion en concreto
 	public static Sesion consultarSesionElegida(int idSesionElegida) {
@@ -721,7 +753,6 @@ public class ConsultarBD {
 			result.next();
 
 			sala.setNumSala(result.getInt("numSala"));
-			sala.setIdCinePadre(result.getInt("IDCine"));
 			sala.setAforoSala(result.getInt("aforo"));
 
 		} catch (SQLException e) {

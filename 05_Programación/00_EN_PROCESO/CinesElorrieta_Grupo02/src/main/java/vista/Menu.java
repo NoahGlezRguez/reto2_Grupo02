@@ -128,14 +128,14 @@ public class Menu {
 		System.out.print(sesionDisponible);
 	}
 	
-	public static void pedirNumPersonas(Sesion sesionElegida) { 
+	public static void pedirNumPersonas(Sesion sesionElegida, Compra compra) { 
 		
 		String	peticion = """
 				\t\t- Aforo actual disponible para esta sesión: %s asientos libres de %s.
 				\t\t\t<<<<Para volver atrás, introduzca -1 >>>>
 				\t\t- Introduzca su respuesta: """.formatted(sesionElegida.getAforoDisponible(), sesionElegida.getSala().getAforoSala());
 		
-		sesionElegida.setAforoDisponible(ConsultarBD.consultarAforo(sesionElegida.getIdSesion()));
+		sesionElegida.setAforoDisponible(ConsultarBD.consultarAforo(sesionElegida.getIdSesion(), compra));
 		
 		System.out.print(peticion);
 			

@@ -2,22 +2,14 @@ package modelo;
 import controlador.*;
 import vista.MostrarMsg;
 
-import java.util.Scanner;
-
 
 public class Cliente {
 	
-	private static Scanner teclado = new Scanner(System.in);
-
 	String	dni;
 	String	email;
 	String	nomCliente;
 	String	apellidos;
-	String	contraseña;
-	int		comprasRealizadas;//esto se borraria? o es trampita? ocupa memoria de forma inutil? resultado de una consulta?
-	
-	
-	
+
 	
 	/**
 	 * <b>Constructor vacío<b>
@@ -35,39 +27,14 @@ public class Cliente {
 	 * 
 	 */
 	public Cliente(boolean pedirDatos) {
-	
+			
 		this.dni = pedirDni();
 		this.email = pedirEmail();
 		this.nomCliente = pedirNombre();
 		this.apellidos = pedirApellido();
-		this.contraseña = pedirContraseña();
 		
 	}
 	
-
-	/**
-	 * <b>Constructor con parámetros</b> <br>
-	 * @param dni
-	 * @param email
-	 * @param nomCliente
-	 * @param apellidos
-	 * @param contraseña
-	 */
-	public Cliente(String dni, String email, String nomCliente, String apellidos, String contraseña) {
-		this.dni = dni;
-		this.email = email;
-		this.nomCliente = nomCliente;
-		this.apellidos = apellidos;
-		this.contraseña = contraseña;
-	}
-
-	
-	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
-	
-	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
-	
-
-
 	public String getDni() {
 		return dni;
 	}
@@ -108,23 +75,6 @@ public class Cliente {
 	}
 
 
-	public String getContraseña() { //esto se borraria???********************
-		return contraseña;
-	}
-
-
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
-	}
-	
-	public int getComprasRealizadas() {
-		return comprasRealizadas;
-	}
-
-	public void setComprasRealizadas(int comprasRealizadas) {//esto se borraria???********************
-		this.comprasRealizadas = comprasRealizadas;
-	}
-	
 	
 	/**
 	 * this method checks if the letter, length and format of the Dni
@@ -175,12 +125,12 @@ public class Cliente {
 	 * 
 	 * @return String DNI
 	 */
-	public String pedirDni(){
+	private String pedirDni(){
 		
 		String cadena = "";
 		do {
 			System.out.println("Introduzca DNI: ");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			
 		}while(validarDni(cadena) == false || ConsultarBD.validarExistencia(cadena, "dni") == false);
@@ -193,7 +143,7 @@ public class Cliente {
 	 * 
 	 * @return String nombre de cliente
 	 */
-	public String pedirNombre(){
+	private String pedirNombre(){
 		
 		String cadena = "";
 		boolean valid = true;
@@ -201,7 +151,7 @@ public class Cliente {
 		do {
 			valid = true;
 			System.out.println("Introduzca el nombre: ");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			if(!ValidarTipoEntrada.checkSoloLetras(cadena)) {
 				valid = false;
@@ -222,7 +172,7 @@ public class Cliente {
 	 * Este método pide el Email y valida el formato
 	 * @return String Email
 	 */
-	public String pedirEmail(){
+	private String pedirEmail(){
 		
 		String cadena = "";
 		boolean valid = true;
@@ -231,7 +181,7 @@ public class Cliente {
 			
 			valid = true;
 			System.out.println("\nIntroduzca el correo electrónico");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			if(cadena.indexOf('@') != cadena.lastIndexOf('@') || cadena.charAt(0) == '@' || cadena.contains("@") == false || cadena.contains(".") == false) {
 				
@@ -266,9 +216,7 @@ public class Cliente {
 			
 			
 		}while(!valid);
-		
-		
-		
+
 		return cadena;
 		
 	}
@@ -276,8 +224,8 @@ public class Cliente {
 	@Override
 	public String toString() {
 		
-		return "DNI: " + dni + "\n Email: " + email + "\n Nombre: " + nomCliente + "\n apellido: " + apellidos
-				+ "\n contraseña: " + contraseña;
+		return "\t- DNI: " + dni + "\n\t- Email: " + email + "\n\t- Nombre: "
+				+ nomCliente + "\n\t- Apellido(s): " + apellidos + "\n\t- Contraseña: ********\n";
 	}
 
 
@@ -285,7 +233,7 @@ public class Cliente {
 	 * Este método pide aún apellido y lo valida
 	 * @return String apellido validado
 	 */
-	public String pedirApellido(){
+	private String pedirApellido(){
 
 		String cadena = "";
 		boolean valid = true;
@@ -293,7 +241,7 @@ public class Cliente {
 		do {
 			valid = true;
 			System.out.println("Introduzca el Apellido: ");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			if(!ValidarTipoEntrada.checkSoloLetras(cadena)) {
 				valid = false;
@@ -326,7 +274,7 @@ public class Cliente {
 			
 			valid = true;
 			System.out.println("\nintroduzca la contraseña: ");
-			cadena = teclado.nextLine();
+			cadena = Main.teclado.nextLine();
 			
 			if(cadena.isEmpty()) {
 				
@@ -351,7 +299,5 @@ public class Cliente {
 		return cadena;
 		
 	}
-	
-	
-	/*------------------------------------------------------------------------------*/
+
 }

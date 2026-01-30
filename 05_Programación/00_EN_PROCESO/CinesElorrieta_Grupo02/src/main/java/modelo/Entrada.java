@@ -2,18 +2,11 @@ package modelo;
 
 public class Entrada {
 
-	int		idEntrada;
 	int		numPersonas;
 	double	importe;
 	Sesion	sesionEntrada = new Sesion();
 
-	public Entrada(int idEntrada, int numPersonas, Sesion sesionEntrada) {
-		this.idEntrada = idEntrada;
-		this.numPersonas = numPersonas;
-		//this.importe = importe;//calcular con un metodo
-		this.sesionEntrada = sesionEntrada;
-	}
-
+	
 	@Override //toString para utilizado al imprimir la factura 
 	public String toString() {
 		return "Entrada nº:\t" + idEntrada 
@@ -28,20 +21,38 @@ public class Entrada {
 		
 	}
 	
-	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
-	
-	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
-	
-
-	//para importe no hay seter, ya que se calcula
-	
-	public int getIdEntrada() {
-		return idEntrada;
+	public void mostrarEntrada() {
+		
+		String	tituloPeli, fecha, hora;
+		int		sala;
+		double	precio;
+		
+		tituloPeli = sesionEntrada.getPelicula().getNombrePeli();
+		fecha = sesionEntrada.getFecSesion();
+		hora = sesionEntrada.getHoraInicio();
+		sala = sesionEntrada.getSala().getNumSala();
+		precio = sesionEntrada.getPrecio();
+		importe = numPersonas * precio;
+		
+		String entrada = """
+					~~~ Película: 	%s
+					~~~ Día:	%s
+					~~~ Hora: 	%sh
+					~~~ Sala: 	%d
+					
+					~~~ Nº de personas ·     ·     ·     ·    %d
+					~~~ Precio de la sesión  ·     ·     ·    %.2f€
+					
+					-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+					
+					~~~ Importe total de entrada   ·     ·    %.2f€
+					
+				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+				""".formatted(tituloPeli, fecha, hora.substring(0, 5), sala, numPersonas, precio, importe);
+		
+		System.out.println(entrada);
 	}
-
-	public void setIdEntrada(int idEntrada) {
-		this.idEntrada = idEntrada;
-	}
+	
 
 	public int getNumPersonas() {
 		return numPersonas;
@@ -51,10 +62,6 @@ public class Entrada {
 		this.numPersonas = numPersonas;
 	}
 
-	public double getImporte() {
-		return importe;
-	}
-
 	public Sesion getSesionEntrada() {
 		return sesionEntrada;
 	}
@@ -62,7 +69,5 @@ public class Entrada {
 	public void setSesionEntrada(Sesion sesionEntrada) {
 		this.sesionEntrada = sesionEntrada;
 	}
-		
-	
-	/*------------------------------------------------------------------------------*/
+
 }

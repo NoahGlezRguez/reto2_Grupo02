@@ -1,6 +1,6 @@
 package modelo;
 
-public class Sesion { //realmente se necesitan aqui TODOS los atributos??
+public class Sesion { 
 
 	int			idSesion;
 	String		fecSesion;
@@ -13,45 +13,10 @@ public class Sesion { //realmente se necesitan aqui TODOS los atributos??
 	Sala 		sala = new Sala();
 	Pelicula 	pelicula = new Pelicula();
 	
-	
-	
-	
-	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
-	
-	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
-	
-	public Sala getSala() {
-		return sala;
-	}
-
-	public void setSala(Sala sala) {
-		this.sala = sala;
-	}
-
-	public Pelicula getPelicula() {
-		return pelicula;
-	}
-
-	public void setPelicula(Pelicula pelicula) {
-		this.pelicula = pelicula;
-	}
-
 	public Sesion() {
 		
-	}
+	}	
 	
-	public Sesion(int idSesion, String fecSesion, String horaInicio, String horaFin, double precio, int aforoDisponible,
-			int salaSesion, int peliculaSesion) {
-		this.idSesion = idSesion;
-		this.fecSesion = fecSesion;
-		this.horaInicio = horaInicio;
-		this.horaFin = horaFin;	//creo que sobra este atributo
-		this.precio = precio;
-		this.aforoDisponible = aforoDisponible;
-		this.salaSesion = salaSesion;
-		this.peliculaSesion = peliculaSesion;
-	}
-
 	public int getIdSesion() {
 		return idSesion;
 	}	
@@ -71,9 +36,7 @@ public class Sesion { //realmente se necesitan aqui TODOS los atributos??
 	public void setHoraInicio(String horaInicio) {
 		this.horaInicio = horaInicio;
 	}
-	public String getHoraFin() {
-		return horaFin;
-	}
+
 	public void setHoraFin(String horaFin) {
 		this.horaFin = horaFin;
 	}
@@ -89,9 +52,7 @@ public class Sesion { //realmente se necesitan aqui TODOS los atributos??
 	public void setAforoDisponible(int aforoDisponible) {
 		this.aforoDisponible = aforoDisponible;
 	}
-	public int getSalaSesion() {
-		return salaSesion;
-	}
+
 	public void setSalaSesion(int salaSesion) {
 		this.salaSesion = salaSesion;
 	}
@@ -102,5 +63,20 @@ public class Sesion { //realmente se necesitan aqui TODOS los atributos??
 		this.peliculaSesion = peliculaSesion;
 	}
 	
-	/*------------------------------------------------------------------------------*/
+	public Sala getSala() {
+		return sala;
+	}
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
+	}
+
+	public Pelicula getPelicula() {
+		return pelicula;
+	}
+
+	public void setPelicula(Pelicula pelicula) {
+		this.pelicula = pelicula;
+	}
+	
 }
