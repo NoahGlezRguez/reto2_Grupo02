@@ -63,8 +63,8 @@ create table Compra(
 	IDCompra int unsigned auto_increment primary key,
     FecCompra timestamp default current_timestamp not null,
     plataforma enum ('web','app') not null, 
-    descuento decimal (5,2) not null, 
-    total decimal(4,2) not null,
+    descuento decimal (10, 2) not null, 
+    total decimal(10, 2) not null,
 	DNI varchar(9) not null,
     constraint FK_Cliente_Compra foreign key (DNI) references Cliente (DNI) on update cascade on delete cascade
     
@@ -76,7 +76,7 @@ create table Entrada(
 
 	IDEntrada int unsigned auto_increment primary key,
     CantPersonas int unsigned not null,
-    importe decimal(4,2) not null, 
+    importe decimal(10,2) not null, 
     IDSesion int unsigned not null,
     IDCompra int unsigned not null,
     constraint FK_Sesion_Entrada foreign key (IDSesion) references Sesion(IDSesion) on update cascade on delete cascade,
@@ -283,8 +283,9 @@ insert into entrada values
 
 
 /*--------------------- fin de insert de entrada ---------------*/
-
-
+select fec, idsesion, hora_ini, numsala, precio 
+from sesion
+where idpeli = 3 and fec = '2026-02-12';
 
 /* ---------------- consultas para comprobar la base de datos + consultas de ayuda para program ------------------*/
 
@@ -373,11 +374,10 @@ limit 3;
 /* ● Datos de los clientes a los que se les ha aplicado mayores descuentos en sus
 compras. */
  
- select DNI, NomCli, Ape, mail, sum(descuento) as descuento_total_suma
- from cliente natural join compra
- group by descuento
- order by sum(descuento) desc
- limit 3;
+ select DNI, NomCli, Ape, mail, /*sum(descuento) as descuento_total_suma*/ descuento
+ from cliente natural join compra;
+ /*group by DNI
+ order by sum(descuento) desc;*/
  
  /*● Datos de los clientes que han adquirido mayor número de entradas.*/
 
