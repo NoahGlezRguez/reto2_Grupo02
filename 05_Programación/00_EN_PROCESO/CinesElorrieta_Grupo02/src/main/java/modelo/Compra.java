@@ -57,10 +57,11 @@ public class Compra {
 	public void mostrarCesta() {
 		
 		String 	cabecera, valores;
-		double	costeCompra, porcenDescuento;
 		
-		costeCompra = calcularPrecioDeCompra();
-		porcenDescuento = calcularPorcenDescuento() * 100;
+		precioCompra = calcularPrecioDeCompra();
+		porcenDescuento = calcularPorcenDescuento();
+		descuento = precioCompra * porcenDescuento;
+		importeTotal = precioCompra - descuento;
 		
 		
 		cabecera = """
@@ -69,18 +70,18 @@ public class Compra {
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				""";
 		
-		valores = """
-				
-					~ Precio de las entradas: %.2f€
+		valores = """				
+					~ Precio de las entradas ·     ·     ·    %.2f€
 					
-					~ ¡¡¡%.2f%%  de descuento por nueva promoción!!!
-				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-					~ Coste final de su compra: 	 
+					~ Descuento aplicable por promoción  ·    %.2f%%
 					
-				 		%.2f - %.2f =  %.2f € (con I.V.A. incluido)
+				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+					~ Coste final de su compra(con I.V.A. incluido): 	 
+					
+				        %.2f - %.2f  = ·     ·     ·     ·  %.2f€ 
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				
-				""".formatted(costeCompra, porcenDescuento, costeCompra, this.descuento, calcularImporteFinal());
+				""".formatted(precioCompra, porcenDescuento * 100, precioCompra, descuento, importeTotal);
 		
 		
 		System.out.println(cabecera);
@@ -96,17 +97,6 @@ public class Compra {
 		System.out.println(valores);
 	}
 
-	private double calcularImporteFinal() {
-		
-		porcenDescuento = calcularPorcenDescuento();
-		
-		precioCompra = calcularPrecioDeCompra();
-		
-		descuento = precioCompra * porcenDescuento;
-		
-		return (precioCompra - descuento);
-	}
-	
 	private double calcularPorcenDescuento() {
 		
 		double				porcentajeDescuento = 0;
@@ -122,6 +112,7 @@ public class Compra {
 				else {
 					if ((!titulos.contains(entradas.get(i).getSesionEntrada().getPelicula().nombrePeli))) {
 						diversidadPelis++;
+						titulos.add(entradas.get(i).getSesionEntrada().getPelicula().nombrePeli);
 					}
 				}
 			}	
@@ -144,8 +135,6 @@ public class Compra {
 				precioTotal += calcularPrecioDeEntrada(entradas.get(i));
 			}
 		}
-		
-		this.precioCompra = precioTotal;
 		
 		return (precioTotal);
 	}

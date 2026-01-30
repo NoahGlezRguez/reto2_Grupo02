@@ -29,11 +29,13 @@ public class Entrada {
 					~~~ Hora: 	%sh
 					~~~ Sala: 	%d
 					
-					~~~ Nº de personas______________________%d
-					~~~ Precio de la sesión_________________%.2f€
+					~~~ Nº de personas ·     ·     ·     ·    %d
+					~~~ Precio de la sesión  ·     ·     ·    %.2f€
 					
-					~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-					~~~ Importe total de entrada____________%.2f€
+					-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+					
+					~~~ Importe total de entrada   ·     ·    %.2f€
+					
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				""".formatted(tituloPeli, fecha, hora.substring(0, 5), sala, numPersonas, precio, importe);
 		
