@@ -633,7 +633,7 @@ public class ConsultarBD {
 	 *         <b>true</b> inserción correcta <br>
 	 *         <b>false </b> error de comunicación
 	 */
-	public static void InsertarNuevoUsuario(Cliente consultado) {
+	public static void InsertarNuevoUsuario(Cliente consultado, String pw) {
 
 		Connection conexion = null;
 		PreparedStatement sentencia = null;
@@ -642,7 +642,6 @@ public class ConsultarBD {
 		String nom = consultado.getNomCliente();
 		String ape = consultado.getApellidos();
 		String mail = consultado.getEmail();
-		String pass = consultado.pedirContraseña();
 
 		// verificar si funciona así el md5
 		String consulta = """
@@ -659,7 +658,7 @@ public class ConsultarBD {
 			sentencia.setString(2, nom);
 			sentencia.setString(3, ape);
 			sentencia.setString(4, mail);
-			sentencia.setString(5, pass);
+			sentencia.setString(5, pw);
 			
 			result = sentencia.executeUpdate();
 

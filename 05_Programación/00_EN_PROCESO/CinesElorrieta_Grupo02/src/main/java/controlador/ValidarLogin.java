@@ -48,11 +48,12 @@ public class ValidarLogin {
 		
 		Cliente nuevo = new Cliente(true);
 	
+		String pw = nuevo.pedirContraseña();
 		System.out.println("\tDatos introducidos:");
 		System.out.println(nuevo.toString());
 		
 		if (Menu.siNo("Confirmar y guardar datos") == 0)
-			ConsultarBD.InsertarNuevoUsuario(nuevo);
+			ConsultarBD.InsertarNuevoUsuario(nuevo, pw);
 		
 		else {
 			System.out.println("\n\t...Operación cancelada...");
