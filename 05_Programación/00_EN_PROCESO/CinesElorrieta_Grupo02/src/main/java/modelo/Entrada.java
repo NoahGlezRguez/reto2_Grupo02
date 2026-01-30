@@ -52,7 +52,6 @@ public class Entrada {
 		System.out.println(entrada);
 	}
 	
-
 	public int getNumPersonas() {
 		return numPersonas;
 	}

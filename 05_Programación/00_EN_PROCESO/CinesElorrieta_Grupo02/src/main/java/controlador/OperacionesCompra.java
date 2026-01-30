@@ -123,16 +123,13 @@ public class OperacionesCompra {
 		if (pagoRealizado) {
 			comprador = cliente;
 			System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
-			if (Menu.siNo("¿Desea que le demos una factura?") == 0)
+			compra.guardarCompraEnBD();
+			if (Menu.siNo("¿Desea obtener una factura de su compra?") == 0)
 				compra.generarFactura();
-			//guardar compra y datos con inserts en la bd
 		}
 		else
 			System.out.println("\n\t~~~ Compra cancelada, reiniciando sistema... :) ~~~\n");
-		
-		if (Menu.siNo("¿Desea obtener la factura de su compra?") == 0) {
-			//generarFactura de la compra 
-		}
+	
 	}
 	
 	/**
@@ -267,7 +264,7 @@ public class OperacionesCompra {
 		do {
 			esCorrecto = true;
 			System.out.println(peticion);
-			entrada = Main.teclado.nextLine();
+			entrada = Main.teclado.nextLine().trim();
 			
 			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
 				seleccionIndice = Integer.parseInt(entrada);
@@ -280,8 +277,10 @@ public class OperacionesCompra {
 				else // opcion correcta:
 					seleccionIndice--;//se ajusta al indice real, que empezaria en 0 en vez de 1
 			}
-			else
+			else {
 				System.out.println("Error, dato incorrecto");//dar formato de msg de error
+				esCorrecto = false;
+			}
 			
 		} while (!esCorrecto);
 		
