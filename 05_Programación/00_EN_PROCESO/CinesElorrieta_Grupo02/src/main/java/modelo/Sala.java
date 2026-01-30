@@ -17,14 +17,6 @@ public class Sala {
 		
 	}
 	
-	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
-	
-	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
-	
-	public int getIdCinePadre() {
-		return idCinePadre;
-	}
-
 	public void setIdCinePadre(int idCinePadre) {
 		this.idCinePadre = idCinePadre;
 	}
@@ -45,5 +37,4 @@ public class Sala {
 		this.aforoSala = aforoSala;
 	}	
 	
-	/*------------------------------------------------------------------------------*/
 }

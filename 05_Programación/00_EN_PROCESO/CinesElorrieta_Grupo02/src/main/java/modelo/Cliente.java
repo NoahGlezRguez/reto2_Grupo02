@@ -9,7 +9,6 @@ public class Cliente {
 	String	email;
 	String	nomCliente;
 	String	apellidos;
-	String	contraseña;
 
 	
 	/**
@@ -28,32 +27,13 @@ public class Cliente {
 	 * 
 	 */
 	public Cliente(boolean pedirDatos) {
-	
+			
 		this.dni = pedirDni();
 		this.email = pedirEmail();
 		this.nomCliente = pedirNombre();
 		this.apellidos = pedirApellido();
-		this.contraseña = pedirContraseña();
 		
 	}
-	
-
-	/**
-	 * <b>Constructor con parámetros</b> <br>
-	 * @param dni
-	 * @param email
-	 * @param nomCliente
-	 * @param apellidos
-	 * @param contraseña
-	 */
-	public Cliente(String dni, String email, String nomCliente, String apellidos, String contraseña) {
-		this.dni = dni;
-		this.email = email;
-		this.nomCliente = nomCliente;
-		this.apellidos = apellidos;
-		this.contraseña = contraseña;
-	}
-
 	
 	public String getDni() {
 		return dni;
@@ -94,16 +74,6 @@ public class Cliente {
 		this.apellidos = apellidos;
 	}
 
-
-	public String getContraseña() { 
-		return contraseña;
-	}
-
-
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
-	}
-	
 
 	
 	/**
@@ -155,7 +125,7 @@ public class Cliente {
 	 * 
 	 * @return String DNI
 	 */
-	public String pedirDni(){
+	private String pedirDni(){
 		
 		String cadena = "";
 		do {
@@ -173,7 +143,7 @@ public class Cliente {
 	 * 
 	 * @return String nombre de cliente
 	 */
-	public String pedirNombre(){
+	private String pedirNombre(){
 		
 		String cadena = "";
 		boolean valid = true;
@@ -202,7 +172,7 @@ public class Cliente {
 	 * Este método pide el Email y valida el formato
 	 * @return String Email
 	 */
-	public String pedirEmail(){
+	private String pedirEmail(){
 		
 		String cadena = "";
 		boolean valid = true;
@@ -246,9 +216,7 @@ public class Cliente {
 			
 			
 		}while(!valid);
-		
-		
-		
+
 		return cadena;
 		
 	}
@@ -265,7 +233,7 @@ public class Cliente {
 	 * Este método pide aún apellido y lo valida
 	 * @return String apellido validado
 	 */
-	public String pedirApellido(){
+	private String pedirApellido(){
 
 		String cadena = "";
 		boolean valid = true;
