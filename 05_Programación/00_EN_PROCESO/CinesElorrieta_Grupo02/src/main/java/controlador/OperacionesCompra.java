@@ -49,8 +49,11 @@ public class OperacionesCompra {
 				
 			case 3:
 				if (compra.getEntradas().size() > 0) {
-					pago(compra, comprador);
-					finalizarCompra = true;
+					comprador = pago(compra);
+					if (comprador != null) {
+						//compra.setComprador(comprador);//crear setter
+						finalizarCompra = true;
+					}
 				}
 				else
 					System.out.println("\n\t - - - >>> Ahora mismo su cesta está vacía");
@@ -77,8 +80,8 @@ public class OperacionesCompra {
 			Menu.msgVolverAtras();
 			System.out.println("\n\t- Indique el nº de entrada que desea eliminar del carrito: ");
 			entrada = Main.teclado.nextLine().trim();
-			if (!ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
-				MostrarMsg.errores(-1);//indicar un error adecuado, no este
+			if (!ValidarTipoEntrada.checkNum(entrada)) {
+				//MostrarMsg.errores();//indicar un error adecuado, no este
 				esCorrecto = false;
 			}
 			else {
@@ -96,7 +99,7 @@ public class OperacionesCompra {
 	}
 	
 	
-	private static void pago(Compra compra, Cliente comprador) {
+	private static Cliente pago(Compra compra) {
 		
 		Cliente cliente = null;
 		
@@ -121,15 +124,17 @@ public class OperacionesCompra {
 				pagoRealizado = true;
 		}	
 		if (pagoRealizado) {
-			comprador = cliente;
 			System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
 			compra.guardarCompraEnBD();
 			if (Menu.siNo("¿Desea obtener una factura de su compra?") == 0)
 				compra.generarFactura();
 		}
-		else
+		else {
 			System.out.println("\n\t~~~ Compra cancelada, reiniciando sistema... :) ~~~\n");
+			cliente = null;
+		}
 	
+		return (cliente);
 	}
 	
 	/**
