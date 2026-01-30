@@ -98,15 +98,17 @@ public class OperacionesCompra {
 	
 	private static void pago(Compra compra, Cliente comprador) {
 		
-
+		Cliente cliente = null;
+		
 		boolean	pagoRealizado = false;
-		
-		comprador = ValidarLogin.iniciarSesion();
-		
-		if (comprador == null) {
+		if (Menu.siNo("¿Tiene ya una cuenta de usuario registrada en nuestro cine?") == 0) {
+			cliente = new Cliente();
+			cliente = ValidarLogin.iniciarSesion();
+		}
+		if (cliente == null) {
 			if (Menu.siNo("¿Desea crearse una cuenta de usuario?") == 0) {
-				comprador = ValidarLogin.crearCuenta();
-				if (comprador != null) {
+				cliente = ValidarLogin.crearCuenta();
+				if (cliente != null) {
 					if (Menu.siNo("¿Desea pagar (solo mediante ContactLess)?") == 0) 
 						pagoRealizado = true;
 				}
