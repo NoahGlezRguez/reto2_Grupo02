@@ -18,7 +18,7 @@ public class Menu {
 	 */
 	public static int opciones(String titulo, String opciones[], String peticion) {
 		
-		int		seleccion = 0;
+		int		seleccion = -1;
 		boolean	esCorrecto;
 		String	entrada;
 		
@@ -32,7 +32,7 @@ public class Menu {
 			
 			System.out.printf("\n\t·····> %s: ", peticion);
 			
-			entrada = Main.teclado.nextLine();
+			entrada = Main.teclado.nextLine().trim();
 			
 			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
 				
@@ -42,6 +42,8 @@ public class Menu {
 					//MostrarMensajeDeError.mostrarError(8);
 					esCorrecto = false;
 				}
+				else
+					seleccion--;
 			}
 			else 
 				esCorrecto = false;
@@ -50,7 +52,7 @@ public class Menu {
 		
 		System.out.println("\n-----------------------------------------------------------------------\n");
 		
-		return (seleccion - 1);
+		return (seleccion);
 	}
 	
 	//sirve para las decisiones de confirmacion
@@ -66,7 +68,7 @@ public class Menu {
 		do {
 			esCorrecto = true;
 			System.out.print(menu);
-			entrada = Main.teclado.nextLine();
+			entrada = Main.teclado.nextLine().trim();
 			
 			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
 				
