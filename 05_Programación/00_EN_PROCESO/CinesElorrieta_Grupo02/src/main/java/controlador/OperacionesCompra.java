@@ -103,7 +103,9 @@ public class OperacionesCompra {
 		boolean	pagoRealizado = false;
 		if (Menu.siNo("¿Tiene ya una cuenta de usuario registrada en nuestro cine?") == 0) {
 			cliente = new Cliente();
-			cliente = ValidarLogin.iniciarSesion();
+			cliente = ValidarLogin.iniciarSesion(); //ver que ocurre si te equivocas varias veces (posible bucle infinito)
+													//si es una equivocacion, dar varios intentos o mantener en este menu de iniciar sesion
+													// con opcion de volver atras
 		}
 		if (cliente == null) {
 			if (Menu.siNo("¿Desea crearse una cuenta de usuario?") == 0) {
@@ -119,7 +121,10 @@ public class OperacionesCompra {
 				pagoRealizado = true;
 		}	
 		if (pagoRealizado) {
+			comprador = cliente;
 			System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
+			if (Menu.siNo("¿Desea que le demos una factura?") == 0)
+				compra.generarFactura();
 			//guardar compra y datos con inserts en la bd
 		}
 		else

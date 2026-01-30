@@ -1,6 +1,8 @@
 package modelo;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import controlador.ConsultarBD;
@@ -171,16 +173,20 @@ public class Compra {
 	 * consultar con la bd que entradas pertenecen a esa compra, 
 	 * obtener los datos y dar formáto a la factura.
 	 */
-	private void generarFactura() {
+	public void generarFactura() {
 		
 		String ruta = "";
+		
+		LocalDateTime momentoActual = LocalDateTime.now();
+		DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		
 		
 		// esto luego se pasará al paquete vista
 		String linea = "----------------------------"+
 						  "Compra nº"               +String.valueOf(idCompra)+
-						  "Fecha:"  				+fechaCompra+
-						  "Plataforma:"			  	+compraEnApp+ // plataforma, convertir a String
+						  "Fecha:"  				+ momentoActual.format(formatoFechaHora) +
+						  "Plataforma:"			  	+ tipoCompra + 
+						  "Cliente:"				+ comprador.getDni() + " " + comprador.getNomCliente() +
 						  
 						  //Entradas? aquí usaré el Entrada.toString
 						  //junto con un for 
