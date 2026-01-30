@@ -1,5 +1,7 @@
 <!-- header -->
 <!-- https://www.php.net/manual/en/function.require.php-->
+<?php $tit="Hogar";?>
+<?php include('./include/dbconnect.php');?>
 <?php require('./include/header.php');?>
 
     <main>
@@ -52,4 +54,5 @@
     </main>
 
 <!-- footer
-<?php require('./include/footer.php'); ?>
+<?php require('./include/footer.php');
+$conn->close();?>

@@ -1,13 +1,15 @@
 <?php
+include('./include/dbconnect.php');
 
 // https://www.php.net/manual/en/function.error-reporting.php
 ini_set('error_reporting', E_ALL);
 
 // Para trabajar con $_SESSION
-session_start();
-
+//session_start();
 // incluir datos para la conexion de la bd
-include('./include/dbconnect.php');
+//include('./include/dbconnect.php');
+
+//Los dos de arriba son ahora innecesarios
 
 // recoger datos del formulario de login aplicando la condición de que se ha pulsado el botón de iniciar sesión
 if (isset($_POST['iniciar_sesion'])) {
@@ -59,7 +61,7 @@ if(isset($_POST['registrarse'])){
     // mensaje de error con la base de datos
         echo "<script> alert('Error');window.location='crearCuenta.php';</script>";
     }
-}
+} // ALERTA ERROR ALERTA ERROR SI PONES EL MISMO DNI DOS VECES, LA WEB SE MUERE, HAY QUE CONTROLARLO
 
 // Cerrar conexion
 $conn->close();

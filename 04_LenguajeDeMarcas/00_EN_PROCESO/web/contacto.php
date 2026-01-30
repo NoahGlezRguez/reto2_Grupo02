@@ -1,3 +1,5 @@
+<?php $tit="Contactame";?>
+<?php include('./include/dbconnect.php');?>
 <?php require('./include/header.php');?>
         <!-- please do not modify this part 👆-->
 
@@ -17,8 +19,8 @@
                 <label for="text">Mensaje:</label><br/>
                 <textarea id="text" name="text" rows="4" cols="40" required></textarea><br/><br/>
                 
-                <input type="submit" value="Enviar" id="enviar">
-                <input type="reset" value="Borrar" id="resetar">
+                <input type="submit" class="botonchachipiruli" value="Enviar" id="enviar">
+                <input type="reset" class="botonchachipiruli" value="Borrar" id="resetar">
             </form>
         </div>
         
@@ -30,4 +32,5 @@
     </main>
     
     <!-- please do not modify this part 👇-->
-<?php require('./include/footer.php'); ?>
+<?php require('./include/footer.php');
+$conn->close();?>

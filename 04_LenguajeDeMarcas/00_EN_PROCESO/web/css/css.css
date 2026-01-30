@@ -1,16 +1,15 @@
 .menu {
-
     display: flex;
     list-style: none;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
 
     height: 60px;
     background-color: #f8f8f8;
-   /*padding: 10px;*/
-    padding-left: 2rem;
-    border-radius: 1rem;
-    
+    width: 100%;
+    margin: 0px;
+    padding: 0;
+    border-radius: 0 0 1em 1em;
 }
 
 .menu li .CerSes {
@@ -40,7 +39,7 @@
     color: white;
 } 
 
-.cartelera, .promo, .contacto, .inicio, .sesion{
+.menlisel{
     background-color: rgba(0, 153, 135, 0.082);
     border-radius: 5px;  
     border-bottom: 1px solid rgba(24, 134, 121 );
@@ -51,6 +50,12 @@
 
 /* Responsive Design for mobiles phones */
 @media (max-width: 600px) {
+      #logoMobile a{
+        justify-self: center;
+        align-self: center;
+    }
+
+
     .menu {
         flex-direction: column;
         height: auto;
@@ -71,9 +76,9 @@
     }
 
     header{
-        
+        justify-self: center;
         align-items: center;
-        justify-content: right;
+        justify-content: center;
         flex-direction: column-reverse;
         background-color: aqua;
     }
@@ -129,13 +134,12 @@ footer {
 
 header{
     background-color: #f0f0f0;
-    padding: 10px 20px;
     display: flex;
-    justify-content: space-between;
+    width: 100%;
     align-items: center;
-    margin-bottom: 20px;
-    border-radius: 1rem;
-    
+    margin-bottom: 0px;
+    justify-content: space-between;
+    border-radius: 1rem 1rem 0px 0px;
 }
 
 .socialMedia img {
@@ -149,14 +153,19 @@ header{
 }
 
 .socialMedia{
-    display: flex;
-    align-items:start;
-    justify-content: left;
-    margin: 1rem;
+    justify-self: end;
+    align-items: start;
+    margin: 1em;
 }
 
-#titulo, #title, #preguntasf {
-    color: #0c4600;
+#titulo, #title {
+    color: #0c4600; font-style: italic; font-size: 4em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0%;
+}
+
+header div{
+    padding: 2rem;
 }
 
 #preguntas{
@@ -313,17 +322,14 @@ header{
 }
 
 .titulopelitexto{
-    font-size: 2rem;
-    
+    font-size: 3em;
+    font-family:Georgia, 'Times New Roman', Times, serif
 }
 
 #versesiones{
 
     width: 8rem;
     height: 3rem;
-    border-radius: 1rem;
-    border: solid rgba(235, 161, 198, 0.589) 0.1rem;
-    background-color: rgba(235, 170, 213, 0.705);
     color:#4f0964;
     font-size: 1rem;
     font-weight: bold;
@@ -349,19 +355,33 @@ header{
 
 
 
-#formISB, #enviar, #resetar, #submitnewuser, #resetnewuser{
+.botonchachipiruli {
 
-    border-radius: 2rem;
+    border-radius: 1rem;
     height: 1.7rem;
     background-color: pink;
     border: 1px solid salmon;
     font-weight: bold;
     box-shadow: #3333336f 0px 3px 5px;
+    transition: 100ms;
 }
 
-#formISB:hover{
+.botonchachipiruli:hover{
+    background-color: rgb(255, 219, 225);
+}
 
-    background-color: rgb(238, 125, 146);
+.botonchachipiruli:active{
+    transform: scale(1.25, 0.75);
+}
+
+img, video{
+    transition: 250ms ease-out;
+}
+
+/* Funcion de accesibilidad, para que puedas ver mejor la imagen */
+.contenido img:hover, video:hover {
+    transform: scale(2);
+    cursor:zoom-in;
 }
 
 #usuario, #password, .inputcrear{
@@ -435,3 +455,66 @@ header{
 }
 
 /*FIN contacto*/
+
+/* nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn */
+/* faq🖕 */
+
+#faqdiv {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    align-items: center;
+    justify-self: center;
+    border: .25em solid #D68EBC;
+    border-radius: 2em;
+    box-shadow: #326b5d60 0em 2em 15em;
+    padding: 5em;
+}
+
+#preguntasf {
+    justify-self: center;
+    font-size: 3em;
+    font-style: italic;
+    color: #0c4600;
+}
+
+#faqimg {
+    height: 25em;
+    width: 25em;
+    border-radius: 2em;
+}
+
+/* FIN de FAQ */
+
+/* nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn */
+/* sesiones */
+
+#sesmaindiv{
+    display: flex;
+    align-content: center; justify-content: space-evenly;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+#sesmaindiv p {
+    align-items: center; justify-items: space-evenly;
+    align-self: center; justify-self: center;
+}
+
+.sesdiv {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: #0000003f 0em 2em 2em;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5em;
+    width: 15em;
+    height: auto;
+    padding: 1em;
+    margin: 1em;
+}
+
+.sesdiv form {
+    align-self: center; justify-self: center;
+}
+
