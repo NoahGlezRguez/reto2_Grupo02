@@ -586,7 +586,7 @@ public class ConsultarBD {
 		String nom = consultado.getNomCliente();
 		String ape = consultado.getApellidos();
 		String mail = consultado.getEmail();
-		String pass = consultado.getContraseña();
+		String pass = consultado.pedirContraseña();
 
 		// verificar si funciona así el md5
 		String consulta = "INSERT INTO Cliente VALUES(" + "'" + dni + "'" + ", " + "'" + nom + "'" + ", " + "'" + ape
@@ -613,7 +613,6 @@ public class ConsultarBD {
 
 			sentencia.close();
 			conexion.close();
-			consultado.setContraseña(null);
 
 		} catch (Exception e) {
 
