@@ -26,7 +26,7 @@ public class Entrada {
 		String entrada = """
 					~~~ Película: 	%s
 					~~~ Día:	%s
-					~~~ Hora: 	%s
+					~~~ Hora: 	%sh
 					~~~ Sala: 	%d
 					
 					~~~ Nº de personas______________________%d
@@ -35,7 +35,8 @@ public class Entrada {
 					~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					~~~ Importe total de entrada____________%.2f€
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				""".formatted(tituloPeli, fecha, hora, sala, numPersonas, precio, importe);
+				""".formatted(tituloPeli, fecha, hora.substring(0, 5), sala, numPersonas, precio, importe);
+		
 		System.out.println(entrada);
 	}
 	

@@ -10,6 +10,7 @@ public class Compra {
 	private int					idCompra;
 	private String				tipoCompra = "app";
 	private double				precioCompra;
+	private double				porcenDescuento;
 	private double				descuento;
 	private double				importeTotal;
 	private ArrayList<Entrada>	entradas = new ArrayList<>();
@@ -53,11 +54,14 @@ public class Compra {
 		//ConsultarBD.insertarEntradasEnBD(entradas);
 	}
 
-
-	
 	public void mostrarCesta() {
 		
-		String cabecera, precioCompra, descuento, importeFinal;
+		String 	cabecera, valores;
+		double	costeCompra, porcenDescuento;
+		
+		costeCompra = calcularPrecioDeCompra();
+		porcenDescuento = calcularPorcenDescuento() * 100;
+		
 		
 		cabecera = """
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -65,19 +69,18 @@ public class Compra {
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				""";
 		
-		precioCompra = """
-					~ Precio total de las entradas (I.V.A. incluido): %.2f€
-				""".formatted(calcularPrecioDeCompra());
-		
-		descuento = """
-					~ Descuento aplicado: %.2f%%
-				""".formatted(calcularDescuento() * 100);
-		
-		importeFinal = """
+		valores = """
+				
+					~ Precio de las entradas: %.2f€
+					
+					~ ¡¡¡%.2f%%  de descuento por nueva promoción!!!
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-					~ Precio final con descuento aplicado: %.2f€
+					~ Coste final de su compra: 	 
+					
+				 		%.2f - %.2f =  %.2f € (con I.V.A. incluido)
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				""".formatted(calcularImporteFinal());
+				
+				""".formatted(costeCompra, porcenDescuento, costeCompra, this.descuento, calcularImporteFinal());
 		
 		
 		System.out.println(cabecera);
@@ -90,29 +93,23 @@ public class Compra {
 			entradas.get(i).mostrarEntrada();
 		}
 		
-		
-		System.out.println(precioCompra + descuento + importeFinal);
+		System.out.println(valores);
 	}
 
 	private double calcularImporteFinal() {
 		
-		this.descuento = calcularDescuento();
+		porcenDescuento = calcularPorcenDescuento();
 		
-		this.precioCompra = calcularPrecioDeCompra();
+		precioCompra = calcularPrecioDeCompra();
 		
-		double importeFinal = precioCompra;
+		descuento = precioCompra * porcenDescuento;
 		
-		if (descuento > 0) {
-			importeFinal = precioCompra - (precioCompra * descuento);
-		}
-		this.importeTotal = importeFinal;
-		
-		return (importeFinal);
+		return (precioCompra - descuento);
 	}
 	
-	private double calcularDescuento() {
+	private double calcularPorcenDescuento() {
 		
-		double				descuento = 0;
+		double				porcentajeDescuento = 0;
 		int					diversidadPelis = 0;
 		ArrayList<String> 	titulos = new ArrayList<>();
 		
@@ -130,13 +127,13 @@ public class Compra {
 			}	
 		}
 		if (diversidadPelis >= 3)
-			descuento = 0.3;
+			porcentajeDescuento = 0.3;
 		else if (diversidadPelis == 2)
-			descuento = 0.2;
+			porcentajeDescuento = 0.2;
 		else
-			descuento = 0;
-		this.descuento = descuento;
-		return (descuento);
+			porcentajeDescuento = 0;
+
+		return (porcentajeDescuento);
 	}
 	
 	private double calcularPrecioDeCompra() {
@@ -162,6 +159,7 @@ public class Compra {
 			precioSesion = entrada.getSesionEntrada().getPrecio();
 			precioEntrada = precioSesion * entrada.getNumPersonas();
 		}
+		
 		return (precioEntrada);
 	}
 				
