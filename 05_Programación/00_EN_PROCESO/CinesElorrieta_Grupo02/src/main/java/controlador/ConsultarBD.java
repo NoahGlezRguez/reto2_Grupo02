@@ -534,7 +534,7 @@ public class ConsultarBD {
 		
 		String consulta = """
 					insert into entrada (CantPersonas, importe, idSesion, idCompra)
-					values(?, ?, ?, ?)
+					values(?, round(?, 2), ?, ?)
 				""";
 		try {
 			conexion = ConsultarBD.conectarConBD();
@@ -580,11 +580,11 @@ public class ConsultarBD {
 		PreparedStatement sentencia = null;
 		int filasAfectadas = 0;
 		
-		double importeDescontado = (1 - descuento) * total;
+		double importeDescontado = descuento * total;
 		
 		String consulta = """
 				insert into compra (plataforma, descuento, total, dni)
-				values(?, ?, ?, ?)
+				values(?, round(?, 2), round(?, 2), ?)
 				""";
 		try {
 			conexion = conectarConBD();
