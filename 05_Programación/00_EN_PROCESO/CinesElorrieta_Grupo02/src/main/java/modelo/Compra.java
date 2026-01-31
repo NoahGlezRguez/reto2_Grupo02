@@ -1,5 +1,5 @@
 package modelo;
-
+import vista.*;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -175,33 +175,14 @@ public class Compra {
 		
 		String ruta = "";
 		
-		
-		// esto luego se pasará al paquete vista
-		String linea = "----------------------------"+
-						  "Compra nº"               +String.valueOf(idCompra)+
-						  "Fecha:"  				+fechaCompra+
-						  "Plataforma:"			  	+tipoCompra+ // plataforma, convertir a String
-						  "Cliente:"				+comprador.getNomCliente()+
-						  "DNI:"					+comprador.getDni()+
-						  //Entradas? aquí usaré el Entrada.toString
-						  //junto con un for 
-						  
-						  "Descuento"				+String.valueOf(descuento)+
-						  "Importe"					+String.valueOf(precioCompra)+
-						  "Total"					+String.valueOf(importeTotal)+
-						  ""
-				;
-		
-		String hola = "";
-		
-		for(int i = 0; i<entradas.size(); i++) {
-			
-			
-			hola +=  entradas.get(i).toString();
-		};
-		// esto luego se pasará al paquete vista
+		String mensaje = MostrarMsg.factura(String.valueOf(idCompra),"fechaCompra", tipoCompra, 
+				comprador.getNomCliente(), comprador.getDni(), 
+				String.valueOf(descuento), String.valueOf(precioCompra), 
+				String.valueOf(importeTotal), entradas);
 		
 		
+		
+	
 		
 		FileWriter fichero = null;
 		
@@ -213,9 +194,9 @@ public class Compra {
 			fichero = new FileWriter(ruta, true);
 			buffer = new BufferedWriter(fichero);
 			buffer.newLine();
-			buffer.write("holaaaaa");
+			buffer.write(mensaje);
 			buffer.newLine();
-			buffer.write("factura");
+			
 			
 		}catch(IOException e) {
 			

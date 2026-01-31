@@ -176,7 +176,7 @@ public class MostrarMsg {
 				Cliente:			%15S
 				DNI:				%15S
 				
-				%200S
+				%S
 				
 				
 				Descuento:			%15S
