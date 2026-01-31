@@ -5,7 +5,7 @@
   <p>
     <a id="preguntas" href="preguntas.php">Preguntas frecuentes</a>
   </p>
-  <video loop autoplay src="img/tsrh.mp4"width="400" height="200"> </videos><br/>
+
 </footer>
 
 </body>

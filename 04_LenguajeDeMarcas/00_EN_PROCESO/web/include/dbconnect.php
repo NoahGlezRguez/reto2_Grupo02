@@ -1,10 +1,10 @@
 <?php
 session_start();
 # cambiar: servidor, puerto, password
-$db_server = '10.5.6.44';
-$db_port = 3307;
-$db_user_name = 'dam_v';
-$db_password = 'Elorrieta00-';
+$db_server = '192.168.1.210';
+$db_port = 8889;
+$db_user_name = 'luis';
+$db_password = '123.Elorrieta';
 $db_name = 'cine_elorrieta';
 
 
