@@ -123,7 +123,8 @@ public class MostrarMsg {
 	 * <li>Error en la conexión</li>
 	 * <li>Error en los datos</li>
 	 * <li>Nuevo usuario guardado correctamente</li>
-	 * <li>No hay sesiones disponibles para hoy</li>
+	 * <li>No quedan sesiones con aforo el día seleccionado</li>
+	 * <li>Se ha realizado la compra satisfactoriamente</li>
 	 * <li></li>
 	 * </ol>
 	 * @param num ID del mensaje 

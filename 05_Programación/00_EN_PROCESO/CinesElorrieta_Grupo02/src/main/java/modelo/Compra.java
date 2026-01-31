@@ -180,12 +180,7 @@ public class Compra {
 				String.valueOf(descuento), String.valueOf(precioCompra), 
 				String.valueOf(importeTotal), entradas);
 		
-		
-		
-	
-		
 		FileWriter fichero = null;
-		
 		BufferedWriter buffer= null;
 		
 		try {
