@@ -171,20 +171,20 @@ public class MostrarMsg {
 		String formato = 
 				"""
 				------------------------------------
-				Compra nº:			%15S
-				Fecha:				%15S
-				Plataforma:			%15S
-				Cliente:			%15S
-				DNI:				%15S
+				Compra nº:			%15s
+				Fecha:				%15s
+				Plataforma:			%15s
+				Cliente:			%15s
+				DNI:				%15s
 				
-				%S
-				
-				
-				Descuento:			%15S
-				Importe:			%15S
+				%s
 				
 				
-				Total:				%15S
+				Descuento:			%15s
+				Importe:			%15s
+				
+				
+				Total:				%15s
 				-------------------------------------
 				""".formatted(a, b, c, d, e, hola, f, g, h) ;
 		

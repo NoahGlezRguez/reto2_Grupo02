@@ -9,12 +9,22 @@ public class Entrada {
 	
 	@Override //toString para utilizado al imprimir la factura 
 	public String toString() {
-		return "Entrada nº:\t" + idEntrada 
-				+"\nCant. Personas:\t" + numPersonas 
-				+"\nimporte:\t" + importe
-				+"\nPelicula:\t"+ sesionEntrada.getPeliculaSesion() 
-				+"\nHora inicio:\t" + sesionEntrada.getHoraInicio() 
-				+"\nHora fin:\t"+ sesionEntrada.getHoraFin();
+		return 
+				"""
+				Pelicula:           %15s
+				Cant. Personas:     %15s
+				Importe:            %15s
+				Fecha:              %15s
+				Hora inicio:        %15s
+				""".formatted(
+						sesionEntrada.getPelicula().getNombrePeli(),
+						String.valueOf(numPersonas),
+						String.valueOf(importe),
+						sesionEntrada.getFecSesion(),
+						sesionEntrada.getHoraInicio()
+						
+						);
+		
 	}
 
 	public Entrada() {
