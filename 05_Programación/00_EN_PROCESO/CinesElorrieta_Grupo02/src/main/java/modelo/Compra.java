@@ -180,8 +180,9 @@ public class Compra {
 		String linea = "----------------------------"+
 						  "Compra nº"               +String.valueOf(idCompra)+
 						  "Fecha:"  				+fechaCompra+
-						  "Plataforma:"			  	+compraEnApp+ // plataforma, convertir a String
-						  
+						  "Plataforma:"			  	+tipoCompra+ // plataforma, convertir a String
+						  "Cliente:"				+comprador.getNomCliente()+
+						  "DNI:"					+comprador.getDni()+
 						  //Entradas? aquí usaré el Entrada.toString
 						  //junto con un for 
 						  
