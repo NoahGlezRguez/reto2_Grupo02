@@ -65,13 +65,28 @@
 
                     while($rowf = $reslut->fetch_assoc()){
                         $haySesiones = true;
+                        $sqlAforo = "SELECT s.aforo - ifnull(sum(e.CantPersonas),0) as aforo_disponible
+                                     FROM sala s
+                                     LEFT JOIN sesion se ON s.NumSala = se.NumSala
+                                     LEFT JOIN entrada e ON se.IDsesion = e.IDsesion
+                                     WHERE se.IDsesion = " . $rowf['IDsesion'] . "
+                                     GROUP BY s.aforo;";
+
+                        $resAforo = $conn->query($sqlAforo);
+                        $rowAforo = $resAforo->fetch_assoc();
                         /*Falta elegir la cantidad de personas haciendo una consulta en la bd*/
                         echo "<div class='sesdiv'>";
                             echo "<p> De ". $rowf['hora_ini']. " hasta " . $rowf['hora_fin'] ."</p> <p> Sala " . $rowf['NumSala'] . "</p> <p> Precio: " . $rowf['precio'] . "€</p>";
                             echo "<form action='carrito.php' method='post'>
                             <input type='hidden' name='idses' value='". $rowf['IDsesion'] ."'/>
                             <label> Cantidad de entradas: </label>
-                            <select name='cantidad'></select><br><br>
+                            <select name='cantidad'>";
+                            
+                            for($i = 1; $i <= $rowAforo['aforo_disponible']; $i++){
+                                echo "<option value='$i'>$i</option>";
+                            }
+                            
+                            echo "</select><br><br>
                             <input type='submit' class='botonchachipiruli' value='Reservar' name='resbot'/></form>";
                         echo "</div>"; /* aquí en el select se debe consultar el aforo disponible para cada sesión */
                     }
