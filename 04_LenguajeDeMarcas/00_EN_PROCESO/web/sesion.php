@@ -10,16 +10,18 @@
     <?php
         isset($_POST['versesbot']);
         $idpe = $_POST['idpeli'];
-        $sqlfec = "SELECT fec FROM sesion s JOIN pelicula p ON s.IDPeli = p.IDPeli WHERE p.IDPeli='$idpe' AND fec>=current_date;";
+        $sqlfec = "SELECT fec FROM sesion s JOIN pelicula p ON s.IDPeli = p.IDPeli WHERE p.IDPeli='$idpe' AND fec>=current_date
+        OR (s.fec = CURRENT_DATE AND s.hora_ini >= CURRENT_TIME);"; /*Falta que muestre solo las que tienen aforo*/
+
         $sqltit = "SELECT NomPeli FROM pelicula WHERE IDPeli = '$idpe';";
         $resluet = $conn->query($sqlfec);
         $result = $conn->query($sqltit);
         
-
+        $sql = "SELECT * FROM pelicula natural join sesion natural join entrada natural join sala";
         
 
         if($rown = $result->fetch_assoc()){
-            echo "<h1 class='subtitulo'>" . $rown['NomPeli'] . "</h1>";
+            echo "<div class='sesionContenedor'><h1 class='subtitulo'>" . $rown['NomPeli'] . "</h1>";
         }
         echo "
             <form>
@@ -43,7 +45,7 @@
         <input type='submit' value='Mostrar sesiones' class='botonchachipiruli' name='recogersesion'>
         </form>";
 
-        if(isset($_POST['recogersesion'])){
+        if(isset($_POST['recogersesion']) && isset($_POST['fecsel'])){
             $fecseleccionada = $_POST['fecsel'];
             $sqlfec = "SELECT fec FROM sesion s JOIN pelicula p ON s.IDPeli = p.IDPeli WHERE p.IDPeli='$idpe' AND fec='$fecseleccionada';";
             $resluet = $conn->query($sqlfec);
@@ -59,21 +61,30 @@
                     $fecsel = $row['fec'];
                     $sqlses = "SELECT * FROM sesion where fec='$fecsel' and IDPeli='$idpe';";
                     $reslut = $conn->query($sqlses);
-                    $numsa = 0;
+                    $haySesiones = false;
+
                     while($rowf = $reslut->fetch_assoc()){
-                        $numsa = $numsa + 1;
+                        $haySesiones = true;
+                        /*Falta elegir la cantidad de personas haciendo una consulta en la bd*/
                         echo "<div class='sesdiv'>";
-                            echo "<p>" . $numsa . "</p><p> De ". $rowf['hora_ini']. " hasta " . $rowf['hora_fin'] ."</p> <p> Sala " . $rowf['NumSala'] . "</p> <p> Precio: " . $rowf['precio'] . "€</p>";
+                            echo "<p> De ". $rowf['hora_ini']. " hasta " . $rowf['hora_fin'] ."</p> <p> Sala " . $rowf['NumSala'] . "</p> <p> Precio: " . $rowf['precio'] . "€</p>";
                             echo "<form action='carrito.php' method='post'>
                             <input type='hidden' name='idses' value='". $rowf['IDsesion'] ."'/>
+                            <label> Cantidad de entradas: </label>
+                            <select name='cantidad'></select><br><br>
                             <input type='submit' class='botonchachipiruli' value='Reservar' name='resbot'/></form>";
-                        echo "</div>";
+                        echo "</div>"; /* aquí en el select se debe consultar el aforo disponible para cada sesión */
                     }
-                echo "</details></div>";
+                echo "</details></div> </div>";
+                if(!$haySesiones){
+                    echo "<p> No hay sesiones disponibles para la fecha seleccionada. </p>";    
+                }
             }
         }
-       
-      
+
+        else{
+            echo "<p> Por favor, seleccione una fecha para ver las sesiones disponibles. </p>";
+        }
     
     ?>
 </main>

@@ -9,7 +9,7 @@
 
   
     <h2 class="subtitulo">Mi cuenta</h2>
-    <h6> Mi perfil no parece alguien tocandose </h6>
+
     
     
     <div class="Loginform">

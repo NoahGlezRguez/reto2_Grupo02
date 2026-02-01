@@ -3,9 +3,8 @@
     list-style: none;
     justify-content: center;
     align-items: center;
-
     height: 60px;
-    background-color: #f8f8f8;
+    background-color: #f0f0f0;
     width: 100%;
     margin: 0px;
     padding: 0;
@@ -379,7 +378,7 @@ img, video{
 }
 
 /* Funcion de accesibilidad, para que puedas ver mejor la imagen */
-.contenido img:hover, video:hover {
+.contenido img:hover {
     transform: scale(2);
     cursor:zoom-in;
 }
@@ -518,3 +517,9 @@ img, video{
     align-self: center; justify-self: center;
 }
 
+.sesionContenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
