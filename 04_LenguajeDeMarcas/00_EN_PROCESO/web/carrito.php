@@ -13,9 +13,9 @@ else {
 
 // Metemos en el carrito lo nuevo
 if (isset($_POST['idses']) && isset($_POST['resbot'])){
-    $idses = intval($_POST['idses']); // id de la sesión convertido en int
+    $idses = $_POST['idses']; 
     $cantidad = isset($_POST['cantidad']) ? intval($_POST['cantidad']) : 1; // cantidad convertida en int, por defecto 1 
-    $carrito[$idses] = $cantidad;   //guardamos para esa sesion esa cantidad // si no se pone por defecto 1 no funciona bien
+    $carrito[] = $idses;   //guardamos para esa sesion esa cantidad // si no se pone por defecto 1 no funciona bien
 }
 
 // Volcamos a la sesión el contenido actual del Carrito
@@ -27,11 +27,12 @@ echo '<script>console.log('. implode($carrito) .');</script>';
 // Añadimos el header
 $tit="Mi Carrito";
 require('./include/header.php');
+$idpelis = array();
 
 // De aqui para abajo va la parte visual de la pagina
 $valid = true;
-foreach($carrito as $idses => $cantidad){
-    $sqlses = "SELECT * FROM sesion where IDSesion=". $idses .";";
+foreach($carrito as $i => $value){
+    $sqlses = "SELECT * FROM sesion where IDSesion=". $value .";";
     $result = $conn->query($sqlses);
 
     if($rrftp = $result -> fetch_assoc()){
@@ -51,8 +52,11 @@ foreach($carrito as $idses => $cantidad){
         } 
     }
 }
-if(!$valid){
+if(!$valid){ 
+
     echo '<form method="post">
+            <inut disabled type="" value="" name="descuento"
+            <input disabled type="" value"" name="total">
             <input type="submit" value="Pagar" name="pagar"/>
             <input type="submit" value="Vaciar Carrito" name="vaciar"/>
         </form>'; /* corregir vaciar carrito */ 
