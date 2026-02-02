@@ -2,8 +2,9 @@ package modelo;
 import vista.*;
 import java.io.*;
 import java.util.ArrayList;
-
 import controlador.ConsultarBD;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Compra {
@@ -173,9 +174,9 @@ public class Compra {
 	 */
 	public void generarFactura() {
 		
-		String ruta = "";
+		String ruta = "src/main/java/files/factura.txt";
 		
-		String mensaje = MostrarMsg.factura(String.valueOf(idCompra),"fechaCompra", tipoCompra, 
+		String mensaje = MostrarMsg.factura(String.valueOf(idCompra), obtenerTiempoActual(), tipoCompra, 
 				comprador.getNomCliente(), comprador.getDni(), 
 				String.valueOf(descuento), String.valueOf(precioCompra), 
 				String.valueOf(importeTotal), entradas);
@@ -210,6 +211,17 @@ public class Compra {
 			}
 		}
 		
+	}
+
+	/**
+	 * Devuelve el tiempo actual
+	 * 
+	 * @return la fecha con formato mes, ano, dia hora,min, seg
+	 */
+	public static String obtenerTiempoActual() {
+		LocalDateTime fecha = LocalDateTime.now();
+		DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		return fecha.format(formateador);
 	}
 
 	
