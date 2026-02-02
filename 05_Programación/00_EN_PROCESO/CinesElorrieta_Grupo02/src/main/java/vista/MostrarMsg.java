@@ -1,5 +1,7 @@
 package vista;
+import java.util.ArrayList;
 
+import modelo.*;
 public class MostrarMsg {
 
 	public static void bienvenida() {
@@ -121,7 +123,8 @@ public class MostrarMsg {
 	 * <li>Error en la conexión</li>
 	 * <li>Error en los datos</li>
 	 * <li>Nuevo usuario guardado correctamente</li>
-	 * <li>No hay sesiones disponibles para hoy</li>
+	 * <li>No quedan sesiones con aforo el día seleccionado</li>
+	 * <li>Se ha realizado la compra satisfactoriamente</li>
 	 * <li></li>
 	 * </ol>
 	 * @param num ID del mensaje 
@@ -138,6 +141,54 @@ public class MostrarMsg {
 		};
 		
 		return msg[num];
+	}
+	/**
+	 * este método recibe por parámetros en el siguiente orden:</br>
+	 * <ol>
+	 * <li>String idcompra</li>
+	 * <li>String Fecha</li>
+	 * <li>String Plataforma de compra</li>
+	 * <li>String nombre del cliente</li>
+	 * <li>String DNI</li>
+	 * <li>String Descuento</li>
+	 * <li>String importe</li>
+	 * <li>String total</li>
+	 * <li>ArrayList de entradas</li>
+	 * </ol>
+	 * <p> los rellena en un string con fromato y devulve la
+	 * factura a imprimir</p>
+	 * @param 8 String + 1 arraylist
+	 * @return String con formato
+	 */
+	public static String factura(String a, String b, String c, String d, String e, String f, String g, String h, ArrayList<Entrada> entrada) {
+		
+		String hola = "";
+		
+		for(int i = 0; i<entrada.size(); i++) {
+			hola +=  entrada.get(i).toString();
+		};
+		
+		String formato = 
+				"""
+				------------------------------------
+				Compra nº:			%15s
+				Fecha:				%15s
+				Plataforma:			%15s
+				Cliente:			%15s
+				DNI:				%15s
+				
+				%s
+				
+				
+				Descuento:			%15s
+				Importe:			%15s
+				
+				
+				Total:				%15s
+				-------------------------------------
+				""".formatted(a, b, c, d, e, hola, f, g, h) ;
+		
+		return formato;
 	}
 	
 	

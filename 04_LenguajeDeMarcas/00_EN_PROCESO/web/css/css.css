@@ -3,9 +3,8 @@
     list-style: none;
     justify-content: center;
     align-items: center;
-
     height: 60px;
-    background-color: #f8f8f8;
+    background-color: #f0f0f0;
     width: 100%;
     margin: 0px;
     padding: 0;
@@ -14,7 +13,9 @@
 
 .menu li .CerSes {
     background-color: rgba(168, 0, 0, 0.534);
-    border-radius: 5em;
+    border-radius: 1rem;
+    box-shadow: #0000003f 3px 0px 10px;
+    height: 2.2rem;
 }
 .menu li .CerSes:hover {
     background-color: rgba(255, 104, 104, 0.654);
@@ -100,8 +101,10 @@
         height: 200px;
     }
 
+    .titulopeli{
+        font-size: 0.7rem;
+    }
 
-    
 }   
 
 
@@ -374,15 +377,10 @@ header div{
     transform: scale(1.25, 0.75);
 }
 
-img, video{
-    transition: 250ms ease-out;
-}
+
 
 /* Funcion de accesibilidad, para que puedas ver mejor la imagen */
-.contenido img:hover, video:hover {
-    transform: scale(2);
-    cursor:zoom-in;
-}
+
 
 #usuario, #password, .inputcrear{
 
@@ -457,7 +455,7 @@ img, video{
 /*FIN contacto*/
 
 /* nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn */
-/* faq🖕 */
+/* faq */
 
 #faqdiv {
     display: flex;
@@ -465,7 +463,6 @@ img, video{
     width: 65%;
     align-items: center;
     justify-self: center;
-    border: .25em solid #D68EBC;
     border-radius: 2em;
     box-shadow: #326b5d60 0em 2em 15em;
     padding: 5em;
@@ -478,10 +475,16 @@ img, video{
     color: #0c4600;
 }
 
-#faqimg {
-    height: 25em;
-    width: 25em;
-    border-radius: 2em;
+
+.separador{
+    margin-top: 2rem;
+    border: 2px solid #d19cbeaf;
+    border-radius: 1rem;
+    padding-top: 2rem;
+    width: 90%;
+    align-items: center;
+    padding: 1rem;
+    box-shadow: #3333336f 0px 5px 8px;
 }
 
 /* FIN de FAQ */
@@ -497,8 +500,11 @@ img, video{
 }
 
 #sesmaindiv p {
-    align-items: center; justify-items: space-evenly;
-    align-self: center; justify-self: center;
+
+    align-items: center;
+    justify-items: space-evenly;
+    align-self: center; 
+    justify-self: center;
 }
 
 .sesdiv {
@@ -516,5 +522,12 @@ img, video{
 
 .sesdiv form {
     align-self: center; justify-self: center;
+}
+
+.sesionContenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 

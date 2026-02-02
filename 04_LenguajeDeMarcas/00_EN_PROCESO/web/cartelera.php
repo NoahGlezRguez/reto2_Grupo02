@@ -7,7 +7,8 @@
 <main id="cartelera">
 
     <?php
-    $result = $conn->query("SELECT * FROM pelicula natural join genero order by IDPeli asc");
+    /*muestra solo las peliculas que tengan sesiones y que tengan sesiones disponibles para la fecha */
+    $result = $conn->query("SELECT * FROM pelicula p natural join genero where p.IDPeli IN (SELECT IDPeli FROM sesion where idpeli in (select idpeli from pelicula) and fec >= current_date OR (fec = current_date AND hora_ini >= current_time)) order by IDPeli asc");
     $rows = $result->fetch_all(MYSQLI_ASSOC);
     //https://www.php.net/manual/en/mysqli-result.fetch-all.php
     
