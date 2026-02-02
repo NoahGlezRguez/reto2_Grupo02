@@ -171,8 +171,8 @@ public class MostrarMsg {
 		String formato = 
 				"""
 				------------------------------------
-				Compra nº:			%15s
-				Fecha:				%15s
+				Compra nº:			%-15s
+				Fecha:				%-15s
 				Plataforma:			%15s
 				Cliente:			%15s
 				DNI:				%15s
