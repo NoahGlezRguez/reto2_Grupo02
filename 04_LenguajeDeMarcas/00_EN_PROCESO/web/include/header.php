@@ -72,7 +72,7 @@
       echo "
       <ul class='menu'>
           <li><a href='index.php'>Inicio</a></li>
-          <li><a href='sesion.php'>Cartelera</a></li>
+          <li><a href='login.php'>Cartelera</a></li>
           <li><a href='promociones.php'>Promociones</a></li>
           <li><a href='contacto.php'>Contacto</a></li>
           <li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
