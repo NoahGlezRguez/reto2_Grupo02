@@ -176,11 +176,6 @@ public class Compra {
 		
 		String ruta = "src/main/java/files/factura.txt";
 		
-		String mensaje = MostrarMsg.factura(String.valueOf(idCompra), obtenerTiempoActual(), tipoCompra, 
-				comprador.getNomCliente(), comprador.getDni(), 
-				String.valueOf(descuento), String.valueOf(precioCompra), 
-				String.valueOf(importeTotal), entradas);
-		
 		FileWriter fichero = null;
 		BufferedWriter buffer= null;
 		
@@ -190,7 +185,7 @@ public class Compra {
 			fichero = new FileWriter(ruta, true);
 			buffer = new BufferedWriter(fichero);
 			buffer.newLine();
-			buffer.write(mensaje);
+			buffer.write(factura());
 			buffer.newLine();
 			
 			
@@ -222,6 +217,50 @@ public class Compra {
 		LocalDateTime fecha = LocalDateTime.now();
 		DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		return fecha.format(formateador);
+	}
+	
+	
+	/**
+	 * Se encarga de generar la factura
+	 * @return la factura formateada
+	 */
+	public String factura() {
+
+		return """
+				------------------------------------
+				Compra nº:			%15d
+				Fecha:				%15s
+				Plataforma:			%15s
+				Cliente:			%15s
+				DNI:				%15s
+				
+				%s
+				
+				
+				Descuento:			€%15.2f
+				Importe:			€%15.2f
+				
+				
+				Total:				€%15.2f
+				-------------------------------------
+				""".formatted(idCompra, 
+						obtenerTiempoActual(),
+						tipoCompra,
+						comprador.getNomCliente(),
+						comprador.getDni(),
+						recibirEntradas(entradas),
+						descuento, 
+						precioCompra,
+						importeTotal);
+	}
+	
+	private static String recibirEntradas(ArrayList<Entrada> entrada) {
+		String resultado = "";
+		for(int i = 0; i<entrada.size(); i++) {
+			resultado +=  entrada.get(i).toString();
+		}
+		
+		return resultado;
 	}
 
 	
