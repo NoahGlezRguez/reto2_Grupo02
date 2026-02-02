@@ -29,7 +29,7 @@ $tit="Mi Carrito";
 require('./include/header.php');
 
 // De aqui para abajo va la parte visual de la pagina
-
+$valid = true;
 foreach($carrito as $idses => $cantidad){
     $sqlses = "SELECT * FROM sesion where IDSesion=". $idses .";";
     $result = $conn->query($sqlses);
@@ -39,9 +39,7 @@ foreach($carrito as $idses => $cantidad){
         $respe = $conn->query($sqlpel);
 
         if($rowpe = $respe -> fetch_assoc()){
-
-            
-
+            $valid = false;
             echo'<div class="sesdiv">' .
                 '<p> Pelicula: '. $rowpe['NomPeli'] .'</p>
                 <p> Fecha: '. $rrftp['fec'] .'</p>
@@ -53,12 +51,15 @@ foreach($carrito as $idses => $cantidad){
         } 
     }
 }
+if(!$valid){
+    echo '<form method="post">
+            <input type="submit" value="Pagar" name="pagar"/>
+            <input type="submit" value="Vaciar Carrito" name="vaciar"/>
+        </form>'; /* corregir vaciar carrito */ 
+        /* revisar */ 
 
-echo '<form method="post">
-    <input type="submit" value="Pagar" name="pagar"/>
-    <input type="submit" value="Vaciar Carrito" name="vaciar"/>
-</form>'; /* corregir vaciar carrito */ 
-/* revisar */ 
+}
+
 if(isset($_POST['vaciar'])){
     $_SESSION['carrito'] = array();
     $carrito = array();
