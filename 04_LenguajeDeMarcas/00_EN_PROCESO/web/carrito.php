@@ -63,7 +63,25 @@ foreach($carrito as $i => $sesion){
                 </div>';/*Corregir cantidad que al seleccionarla se pone la misma en todas las entradas*/
         } 
     }
+
+    $sqlConfirm = "SELECT distinct IDPeli FROM pelicula where IDSesion in (".$sesion[0] ;
 }
+
+foreach($carrito as $i => $sesion){
+
+  
+    if($i = count($carrito)-1){
+
+        $sesiontoString += "'"+$sesion[0]+"'";
+    }
+
+    else{
+        $sesiontoString += "'"+$sesion[0]+"', "
+    }
+
+}
+
+echo $sesiontoString;
 
 if(!$valid){ 
 
