@@ -171,7 +171,7 @@ public class Compra {
 	 * consultar con la bd que entradas pertenecen a esa compra, 
 	 * obtener los datos y dar formáto a la factura.
 	 */
-	private void generarFactura() {
+	public void generarFactura() {
 		
 		String ruta = "";
 		
