@@ -12,12 +12,11 @@ else {
 }
 
 // Metemos en el carrito lo nuevo
-$esta_sesion = array():
+$esta_sesion = array();
 $cantidad = 0;
 if (isset($_POST['idses']) && isset($_POST['resbot'])){
     $idses = $_POST['idses']; 
-    /* $cantidad = isset($_POST['cantidad']) ? intval($_POST['cantidad']) : 1; // cantidad convertida en int, por defecto 1 */
-    if( $_POST['cantidad'])){
+    if(isset($_POST['cantidad'])){
         $cantidad = intval($_POST['cantidad']);
     }
     else{
@@ -25,23 +24,22 @@ if (isset($_POST['idses']) && isset($_POST['resbot'])){
     }
     $esta_sesion[] = $idses;   //guardamos para esa sesion esa cantidad // si no se pone por defecto 1 no funciona bien
     $esta_sesion[] = $cantidad;
+    if($esta_sesion != null){
+        $carrito[] = $esta_sesion;
+    }
 }
 
 // Volcamos a la sesión el contenido actual del Carrito
-$carrito[] = $esta_sesion;
 $_SESSION['carrito'] = $carrito;
-
-// Log en consola por si acaso
-echo '<script>console.log('. implode($carrito) .');</script>';
 
 // Añadimos el header
 $tit="Mi Carrito";
 require('./include/header.php');
 
-
 // De aqui para abajo va la parte visual de la pagina
 $valid = true;
 foreach($carrito as $i => $sesion){
+    echo 'Esta sesion: ' . $sesion[0] . ' y la cantidad es ' . $sesion[1] . '<br>';
     $sqlses = "SELECT * FROM sesion where IDSesion=". $sesion[0] .";";
     $result = $conn->query($sqlses);
 
@@ -77,7 +75,7 @@ if(!$valid){
 
 if(isset($_POST['vaciar'])){
     unset($carrito);
-    $_SESSION['carrito'] = $carrito;    
+    $_SESSION['carrito'] = null;    
 }
 
 else if(isset($_POST['pagar'])){
