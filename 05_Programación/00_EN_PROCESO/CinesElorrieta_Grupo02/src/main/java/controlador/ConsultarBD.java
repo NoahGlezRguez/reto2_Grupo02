@@ -78,7 +78,7 @@ public class ConsultarBD {
 		try {									
 			conexion = DriverManager.getConnection(data[0], data[1], data[2]);
 		} catch (SQLException excpsql) {
-			System.out.println("Error, no se pudo realizar la conexión con la base de datos.\n");
+			MostrarMsg.errores(0);
 			System.out.println("SQLException: " + excpsql.getMessage());
 			System.out.println("SQLState: " + excpsql.getSQLState());
 			System.out.println("VendorError: " + excpsql.getErrorCode());
@@ -240,10 +240,6 @@ public class ConsultarBD {
 	// consultar, mostrar (y guardar solo los idSesiones) una sesion de una pelicula
 	// determinada un dia determinado
 	public static ArrayList<Integer> consultarSesiones(Pelicula peliculaElegida, String fechaElegida) {// esto tiene
-																										// tela... hay
-																										// que volcar
-																										// datos en
-																										// objeto
 
 		ArrayList<Integer> sesionesPelicula = new ArrayList<>();
 
@@ -333,7 +329,8 @@ public class ConsultarBD {
 				e.printStackTrace();
 			} catch (NullPointerException e2) {
 				System.err.println(e2.getMessage());
-			} finally {
+			}  
+			finally {
 
 				try {
 					if (result != null)
@@ -349,7 +346,7 @@ public class ConsultarBD {
 
 			}
 		} else
-			System.out.println(MostrarMsg.msgBD(3));
+			MostrarMsg.errores(2);
 
 		return (sesionesConAforo);
 	}
@@ -443,9 +440,9 @@ public class ConsultarBD {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+
 		} catch (NullPointerException e2) {
 			System.err.println(e2.getMessage());
-
 		} finally {
 
 			try {
@@ -504,25 +501,27 @@ public class ConsultarBD {
 			}
 
 			else {
-				System.out.println(MostrarMsg.errores(1));
+				MostrarMsg.errores(5);
 				consultado = null;
+			} 
+		} catch (SQLException e) {
+				e.printStackTrace();
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		} finally {
+			try {
+				if (result != null)
+					result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-
-			result.close();
-			sentencia.close();
-			conexion.close();
-
-		} catch (Exception e) {
-
-			if (conexion == null) {
-
-				System.out.println("la conexion es null");
-
-			}
-
-			e.printStackTrace();
+			
 		}
-
 		return consultado;
 	}
 
@@ -549,11 +548,8 @@ public class ConsultarBD {
 				
 				filasAfectadas = sentencia.executeUpdate();
 			
-				if (filasAfectadas > 0) 
-					System.out.println(MostrarMsg.msgBD(4));
-	
-				else 
-					System.out.println(MostrarMsg.msgBD(1));
+				if (filasAfectadas < 1) 
+					MostrarMsg.errores(1);
 			}
 
 		}  catch (SQLException e) {
@@ -597,18 +593,14 @@ public class ConsultarBD {
 			
 			filasAfectadas = sentencia.executeUpdate();
 
-			if (filasAfectadas > 0) 
-				System.out.println(MostrarMsg.msgBD(4));
-
-			else 
-				System.out.println(MostrarMsg.msgBD(1));
-
+			if (filasAfectadas < 1) 
+				MostrarMsg.errores(1);
 
 		}  catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e2) {
 			System.err.println(e2.getMessage());
-		} finally {
+		}  finally {
 
 			try {
 				if (sentencia != null)
@@ -620,7 +612,6 @@ public class ConsultarBD {
 				e.printStackTrace();
 			}
 		}		
-
 	}
 	
 	
@@ -662,32 +653,28 @@ public class ConsultarBD {
 			
 			result = sentencia.executeUpdate();
 
-			// por lo tanto al ser un int aquí se pone > 0
-			if (result > 0) {
-
-				System.out.println(MostrarMsg.msgBD(2));
-
-			}
-
-			else {
-				System.out.println(MostrarMsg.msgBD(1));
+			if (result < 1) {
+				MostrarMsg.errores(1);
 				consultado = null;
 			}
 
-			sentencia.close();
-			conexion.close();
 
-		} catch (Exception e) {
-
-			if (conexion == null) {
-
-				System.out.println(MostrarMsg.msgBD(0));
-
-			}
-
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		}  finally {
+			
+			try {
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
 
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	
@@ -729,22 +716,27 @@ public class ConsultarBD {
 			if (result.next()) {
 
 				valido = false;
-				System.out.println(MostrarMsg.errores(2));
+				MostrarMsg.errores(5);
 			}
 
-			result.close();
-			sentencia.close();
-			conexion.close();
-
-		} catch (Exception e) {
-
-			if (conexion == null) {
-
-				System.out.println(MostrarMsg.msgBD(0));
-
-			}
+		} catch (SQLException e) {
 
 			e.printStackTrace();
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		} finally {
+			
+			try {
+				if (result != null)
+					result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return valido;
@@ -831,7 +823,9 @@ public class ConsultarBD {
 		} catch (SQLException e) {
 			e.printStackTrace();
 
-		} finally {
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		}  finally {
 
 			try {
 				if (result != null)
@@ -877,6 +871,8 @@ public class ConsultarBD {
 		} catch (SQLException e) {
 			e.printStackTrace();
 
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
 		} finally {
 
 			try {

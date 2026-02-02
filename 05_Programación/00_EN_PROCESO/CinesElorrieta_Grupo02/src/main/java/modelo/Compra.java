@@ -1,9 +1,9 @@
 package modelo;
-import vista.*;
 import java.io.*;
 import java.util.ArrayList;
 
 import controlador.ConsultarBD;
+import vista.MostrarMsg;
 
 
 public class Compra {
@@ -23,6 +23,7 @@ public class Compra {
 	
 	public void agregarEntrada(Entrada nuevaEntrada) {
 		entradas.add(nuevaEntrada);
+		MostrarMsg.operacionRealizada(0);
 	}
 	
 	public void eliminarEntrada(int indiceEntrada) {
@@ -32,16 +33,11 @@ public class Compra {
 		for (int i = 0; i < entradas.size(); i++) {
 			if(i == indiceEntrada) {
 				entradas.remove(i);
-				System.out.println("\n\t- Entrada eliminada del carrito satisfactoriamente.");//refactorizar esta linea
+				MostrarMsg.operacionRealizada(1);
 			}
 		}
 	}
 	
-	public void cancelarCompra() {
-		entradas.clear();
-	}
-	
-
 	public int conocerAforoCesta(int idSesion) {
 		int aforoCesta = 0;
 
@@ -75,14 +71,14 @@ public class Compra {
 				""";
 		
 		valores = """				
-					~ Precio de las entradas ·     ·     ·    %.2f€
+					~ Precio de las entradas ·     ·     ·    %8.2f€
 					
-					~ Descuento aplicable por promoción  ·    %.2f%%
+					~ Descuento aplicable por promoción  ·    %8.2f%%
 					
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					~ Coste final de su compra(con I.V.A. incluido): 	 
 					
-				        %.2f - %.2f  = ·     ·     ·     ·  %.2f€ 
+				        %-4.2f - %-4.2f  = ·     ·     ·     ·  %8.2f€ 
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				
 				""".formatted(precioCompra, porcenDescuento * 100, precioCompra, descuento, importeTotal);
@@ -169,6 +165,56 @@ public class Compra {
 	}
 	
 	/**
+	 * este método recibe por parámetros en el siguiente orden:</br>
+	 * <ol>
+	 * <li>String idcompra</li>
+	 * <li>String Fecha</li>
+	 * <li>String Plataforma de compra</li>
+	 * <li>String nombre del cliente</li>
+	 * <li>String DNI</li>
+	 * <li>String Descuento</li>
+	 * <li>String importe</li>
+	 * <li>String total</li>
+	 * <li>ArrayList de entradas</li>
+	 * </ol>
+	 * <p> los rellena en un string con fromato y devulve la
+	 * factura a imprimir</p>
+	 * @param 8 String + 1 arraylist
+	 * @return String con formato
+	 */
+	private static String factura(String a, String b, String c, String d, String e, String f, String g, String h, ArrayList<Entrada> entrada) {
+		
+		String hola = "";
+		
+		for(int i = 0; i<entrada.size(); i++) {
+			hola +=  entrada.get(i).toString();
+		};
+		
+		String formato = 
+				"""
+				------------------------------------
+				Compra nº:			%15s
+				Fecha:				%15s
+				Plataforma:			%15s
+				Cliente:			%15s
+				DNI:				%15s
+				
+				%s
+				
+				
+				Descuento:			%15s
+				Importe:			%15s
+				
+				
+				Total:				%15s
+				-------------------------------------
+				""".formatted(a, b, c, d, e, hola, f, g, h) ;
+		
+		return formato;
+	}
+	
+	
+	/**
 	 * escribe en un fichero y funciona, se utilizará para la factura
 	 * en el reto, tendrá que recibir un objeto compra como parámetro,
 	 * consultar con la bd que entradas pertenecen a esa compra, 
@@ -177,14 +223,14 @@ public class Compra {
 	public void generarFactura() {
 		
 		String ruta = "src/main/java/files/facturas.txt";
-		
-		String mensaje = MostrarMsg.factura(String.valueOf(idCompra),"fechaCompra", tipoCompra, 
-				comprador.getNomCliente(), comprador.getDni(), 
+
+		String mensaje = factura(String.valueOf(idCompra),"fechaCompra", tipoCompra, 
+				comprador.getNomCliente(), comprador.getDni(),
 				String.valueOf(descuento), String.valueOf(precioCompra), 
 				String.valueOf(importeTotal), entradas);
 		
 		FileWriter fichero = null;
-		BufferedWriter buffer= null;
+		BufferedWriter buffer = null;
 		
 		try {
 			
@@ -194,7 +240,7 @@ public class Compra {
 			buffer.newLine();
 			buffer.write(mensaje);
 			buffer.newLine();
-			
+			MostrarMsg.operacionRealizada(5);
 			
 		}catch(IOException e) {
 			

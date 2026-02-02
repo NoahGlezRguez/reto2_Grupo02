@@ -13,8 +13,8 @@ public class OperacionesCompra {
 	public static void realizarCompra() {
 		
 		Compra 		compra = new Compra();
-		Cliente		comprador = new Cliente();
-		Entrada		nuevaEntrada = new Entrada();
+		Cliente		comprador = null;
+		Entrada		nuevaEntrada = null;
 		
 		String		operaciones[] = {"Agregar entrada al carrito", "Eliminar entrada del carrito", "Consultar carrito", "Terminar compra y pagar", "Cancelar compra y salir"};
 		boolean		finalizarCompra = false;
@@ -36,7 +36,7 @@ public class OperacionesCompra {
 				if (compra.getEntradas().size() > 0) 
 					quitarEntradaDelCarrito(compra);
 				else 
-					System.out.println("\n\t - - - >>> Ahora mismo su cesta está vacía");
+					MostrarMsg.errores(12);
 				break;
 				
 			case 2:	
@@ -44,25 +44,28 @@ public class OperacionesCompra {
 					compra.mostrarCesta();
 				}
 				else
-					System.out.println("\n\t - - - >>> Ahora mismo su cesta está vacía");
+					MostrarMsg.errores(12);
 				break;
 				
 			case 3:
 				if (compra.getEntradas().size() > 0) {
 					comprador = pago(compra);
 					if (comprador != null) {
-						compra.setComprador(comprador);//crear setter
+						compra.setComprador(comprador);
 						finalizarCompra = true;
 					}
+					else
+						finalizarCompra = true;
 				}
 				else
-					System.out.println("\n\t - - - >>> Ahora mismo su cesta está vacía");
+					MostrarMsg.errores(12);
 				break;
 			case 4:
-				compra.cancelarCompra();
-				compra = null;
+				if (comprador != null)
+					MostrarMsg.despedida(comprador.getNomCliente());
+				else
+					MostrarMsg.despedida();
 				finalizarCompra = true;
-				MostrarMsg.despedida();
 				break;
 			}
 		}
@@ -81,13 +84,13 @@ public class OperacionesCompra {
 			System.out.println("\n\t- Indique el nº de entrada que desea eliminar del carrito: ");
 			entrada = Main.teclado.nextLine().trim();
 			if (!ValidarTipoEntrada.checkNum(entrada)) {
-				//MostrarMsg.errores();//indicar un error adecuado, no este
+				MostrarMsg.errores(3);
 				esCorrecto = false;
 			}
 			else {
 				opc = Integer.parseInt(entrada);
 				if ((opc < 1 || opc > compra.getEntradas().size()) && opc != -1) {
-					MostrarMsg.errores(-1);//indicar un error adecuado, no este
+					MostrarMsg.errores(8);
 					esCorrecto = false;
 				}
 				else if (opc == -1)
@@ -103,37 +106,24 @@ public class OperacionesCompra {
 		
 		Cliente cliente = null;
 		
-		boolean	pagoRealizado = false;
-		if (Menu.siNo("¿Tiene ya una cuenta de usuario registrada en nuestro cine?") == 0) {
-			cliente = ValidarLogin.iniciarSesion(); //ver que ocurre si te equivocas varias veces (posible bucle infinito)
-													//si es una equivocacion, dar varios intentos o mantener en este menu de iniciar sesion
-													// con opcion de volver atras
-		}
-		if (cliente == null) {
-			if (Menu.siNo("¿Desea crearse una cuenta de usuario?") == 0) {
-				cliente = ValidarLogin.crearCuenta();
-				if (cliente != null) {
-					if (Menu.siNo("¿Desea pagar (solo mediante ContactLess)?") == 0) 
-						pagoRealizado = true;
-				}
-			}
-		}
-		else {
-			if (Menu.siNo("¿Desea pagar (solo mediante ContactLess)?") == 0) 
-				pagoRealizado = true;
-		}	
-		if (pagoRealizado) {
-			System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
-			compra.setComprador(cliente);
-			compra.guardarCompraEnBD();
-			if (Menu.siNo("¿Desea obtener una factura de su compra?") == 0)
-				compra.generarFactura();
-		}
-		else {
-			System.out.println("\n\t~~~ Compra cancelada, reiniciando sistema... :) ~~~\n");
-			cliente = null;
-		}
+		if (Menu.siNo("¿Tiene ya una cuenta de usuario registrada en nuestro cine?") == 0) 
+			cliente = ValidarLogin.iniciarSesion(); 
 	
+		else if (Menu.siNo("¿Desea crearse una cuenta de usuario?") == 0) 
+				cliente = ValidarLogin.crearCuenta();
+		
+		if (cliente != null) {
+			if (Menu.siNo("¿Desea pagar (solo con Bitcoins)?") == 0) {
+				System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
+				compra.setComprador(cliente);
+				compra.guardarCompraEnBD();
+				if (Menu.siNo("¿Desea obtener una factura de su compra?") == 0)
+					compra.generarFactura();
+			}
+		}	
+		else 
+			System.out.println("\n\t~~~ Compra cancelada, reiniciando sistema... :) ~~~\n");
+
 		return (cliente);
 	}
 	
@@ -215,7 +205,7 @@ public class OperacionesCompra {
 			}
 		}
 		else
-			System.out.println("Error, no hay cartelera disponible ahora mismo, lo sentimos");//dar formato de msg de error
+			MostrarMsg.errores(13);
 		
 		return (peliculaElegida); //sera null si puso la opcion de volver atras
 	}
@@ -275,7 +265,7 @@ public class OperacionesCompra {
 				seleccionIndice = Integer.parseInt(entrada);
 				if ((seleccionIndice < 1 || seleccionIndice > arrayObjetos.size()) && (seleccionIndice != -1)) {
 					esCorrecto = false;
-					System.out.println("Error, opcion incorrecta, vuelvalo a intentar");//dar formato de msg de error
+					MostrarMsg.errores(8);
 				}
 				else if (seleccionIndice == -1) 
 					System.out.println("\n\t...Volviendo atrás..." + "\n".repeat(8));
@@ -283,7 +273,7 @@ public class OperacionesCompra {
 					seleccionIndice--;//se ajusta al indice real, que empezaria en 0 en vez de 1
 			}
 			else {
-				System.out.println("Error, dato incorrecto");//dar formato de msg de error
+				MostrarMsg.errores(8);
 				esCorrecto = false;
 			}
 			

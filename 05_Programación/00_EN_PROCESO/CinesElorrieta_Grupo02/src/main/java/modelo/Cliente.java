@@ -85,34 +85,26 @@ public class Cliente {
 	private boolean validarDni(String cadena) {
 		
 		boolean valido = true;
+		int 	num = -1;
 		
-		if(cadena.length() != 9 || Character.isLetter(cadena.charAt(8)) == false) {
-			
+		if(cadena.length() != 9 || Character.isLetter(cadena.charAt(8)) == false) 			
 			valido = false;
-			System.out.println(MostrarMsg.errores(0));
-		}
-		
-		else if(ValidarTipoEntrada.checkNum(cadena.substring(0, 7)) == false) {
-			
-			valido = false;
-			System.out.println(MostrarMsg.errores(0));
-		}
-		
-		try {
-			
-			int num = Integer.parseInt(cadena.substring(0, 7));
-			
-			if(num < 0) {
+
+		if (valido) {	
+			try {
 				
+				num = Integer.parseInt(cadena.substring(0, 7));
+				
+				if(num < 0) 					
+					valido = false;
+	
+			}catch(Exception e) {
 				valido = false;
-				System.out.println(MostrarMsg.errores(0));
 			}
-			
-		}catch(Exception e) {
-			
-			valido = false;
-			System.out.println(MostrarMsg.errores(0));
 		}
+		
+		if (!valido)
+			MostrarMsg.errores(3);
 		
 		return valido;
 	}
@@ -151,18 +143,16 @@ public class Cliente {
 		do {
 			valid = true;
 			System.out.println("Introduzca el nombre: ");
-			cadena = Main.teclado.nextLine();
+			cadena = Main.teclado.nextLine().trim();
 			
-			if(!ValidarTipoEntrada.checkSoloLetras(cadena)) {
+			if(!ValidarTipoEntrada.checkSoloLetras(cadena))
 				valid = false;
-				System.out.println(MostrarMsg.errores(0));
-			}
-			
-			else if(cadena.length()>20) {
+
+			else if (cadena.length() > 20) 
 				valid = false;
-				System.out.println("\nError, el nombre no puede contener más de 20 caracteres.");
-			}
-			
+
+			if (!valid)
+				MostrarMsg.errores(3);
 		}while(!valid);
 		
 		return cadena;
@@ -180,40 +170,23 @@ public class Cliente {
 		do {
 			
 			valid = true;
-			System.out.println("\nIntroduzca el correo electrónico");
-			cadena = Main.teclado.nextLine();
+			System.out.println("\nIntroduzca el correo electrónico: ");
+			cadena = Main.teclado.nextLine().trim();
 			
-			if(cadena.indexOf('@') != cadena.lastIndexOf('@') || cadena.charAt(0) == '@' || cadena.contains("@") == false || cadena.contains(".") == false) {
-				
-				System.out.println(MostrarMsg.errores(0));
+			if(cadena.isBlank() || cadena.length() > 100 ) 
+				valid = false;	
+			
+			else if(cadena.indexOf('@') != cadena.lastIndexOf('@') || cadena.charAt(0) == '@' || cadena.contains("@") == false || cadena.contains(".") == false) 
 				valid = false;
-			}
-			
-			else if(cadena.isBlank()) {
-				
-				System.out.println(MostrarMsg.errores(0));
+
+			else if(ConsultarBD.validarExistencia(cadena, "mail") == false) 			
 				valid = false;
-				
-			}
-			
-			else if(ConsultarBD.validarExistencia(cadena, "mail")==false) {
-				
+
+			else if(cadena.substring(cadena.indexOf('@'), cadena.length()).indexOf('.') != cadena.substring(cadena.indexOf('@'), cadena.length()).lastIndexOf('.'))				
 				valid = false;
-			}
-			
-			else if(cadena.length()>100) {
-				
-				valid = false;
-				System.out.println("el correo electrónico no puede tener más de 100 caracteres");
-			}
-			
-			else if(cadena.substring(cadena.indexOf('@'), cadena.length()).indexOf('.') != cadena.substring(cadena.indexOf('@'), cadena.length()).lastIndexOf('.')){
-				
-				valid = false;
-				System.out.println(MostrarMsg.errores(0));
-				
-			}
-			
+
+			if (!valid)
+				MostrarMsg.errores(3);
 			
 		}while(!valid);
 
@@ -241,17 +214,17 @@ public class Cliente {
 		do {
 			valid = true;
 			System.out.println("Introduzca el Apellido: ");
-			cadena = Main.teclado.nextLine();
+			cadena = Main.teclado.nextLine().trim();
 			
 			if(!ValidarTipoEntrada.checkSoloLetras(cadena)) {
 				valid = false;
-				System.out.println(MostrarMsg.errores(0));
+				MostrarMsg.errores(3);
 			}
 			
 			else if(cadena.length()>20) {
 				
 				valid = false;
-				System.out.println(MostrarMsg.errores(8));
+				MostrarMsg.errores(10);
 			}
 			
 		}while(!valid);
@@ -266,32 +239,31 @@ public class Cliente {
 	 */
 	public String  pedirContraseña(){
 
-		//falta validar que sea de un largo en específico
 		String cadena = "";
 		boolean valid = true;
 		
 		do {
 			
 			valid = true;
-			System.out.println("\nintroduzca la contraseña: ");
+			System.out.println("\nIntroduzca la contraseña: ");
 			cadena = Main.teclado.nextLine();
 			
 			if(cadena.isEmpty()) {
 				
 				valid = false;
-				System.out.println(MostrarMsg.errores(0));
+				MostrarMsg.errores(11);
 
 			}
 			
 			else if(cadena.length() > 254) {
 				
 				valid = false;
-				System.out.println(MostrarMsg.errores(8));
+				MostrarMsg.errores(10);
 			}
 			
 			else if(cadena.length() < 8) {
 				valid = false;
-				System.out.println(MostrarMsg.errores(5));
+				MostrarMsg.errores(7);
 			}
 			
 		}while(!valid);
