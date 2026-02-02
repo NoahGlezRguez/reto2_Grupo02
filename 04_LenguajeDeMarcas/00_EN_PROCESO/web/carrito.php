@@ -66,19 +66,14 @@ foreach($carrito as $i => $sesion){
 
     $sqlConfirm = "SELECT distinct IDPeli FROM pelicula where IDSesion in (".$sesion[0] ;
 }
-
+// Aqui se guradarn todas las sesiones del carrito en un string para la consulta (●'◡'●)
+$sesiontoString='';
 foreach($carrito as $i => $sesion){
-
-  
-    if($i = count($carrito)-1){
-
-        $sesiontoString += "'"+$sesion[0]+"'";
+    if($i < count($carrito)-1){
+        $sesiontoString = $sesiontoString . "'".$sesion[0]."', ";
+    } else{
+        $sesiontoString = $sesiontoString . "'".$sesion[0]."'";
     }
-
-    else{
-        $sesiontoString += "'"+$sesion[0]+"', "
-    }
-
 }
 
 echo $sesiontoString;
