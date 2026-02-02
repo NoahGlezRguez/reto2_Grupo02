@@ -174,9 +174,9 @@ public class Compra {
 	 * consultar con la bd que entradas pertenecen a esa compra, 
 	 * obtener los datos y dar formáto a la factura.
 	 */
-	private void generarFactura() {
+	public void generarFactura() {
 		
-		String ruta = "";
+		String ruta = "src/main/java/files/facturas.txt";
 		
 		String mensaje = MostrarMsg.factura(String.valueOf(idCompra),"fechaCompra", tipoCompra, 
 				comprador.getNomCliente(), comprador.getDni(), 
@@ -215,13 +215,7 @@ public class Compra {
 		
 	}
 
-	
-	
-	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
-	
-	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
-	
-	
-	
-	/*------------------------------------------------------------------------------*/
+	public void setComprador(Cliente comprador) {
+		this.comprador = comprador;
+	}
 }
