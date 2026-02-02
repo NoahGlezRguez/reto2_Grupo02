@@ -28,10 +28,14 @@ if (isset($_POST['idses']) && isset($_POST['resbot'])){
         $carrito[] = $esta_sesion;
     }
 }
-
-// Volcamos a la sesión el contenido actual del Carrito
-$_SESSION['carrito'] = $carrito;
-
+// Vaciamos el carrito si la pagina recibe el boton vaciar
+if(isset($_POST['vaciar'])){
+    unset($carrito);
+    $_SESSION['carrito'] = null;
+} else{
+    // Volcamos a la sesión el contenido actual del Carrito
+    $_SESSION['carrito'] = $carrito;
+}
 // Añadimos el header
 $tit="Mi Carrito";
 require('./include/header.php');
@@ -71,11 +75,6 @@ if(!$valid){
         </form>'; /* corregir vaciar carrito */ 
         /* revisar */ 
 
-}
-
-if(isset($_POST['vaciar'])){
-    unset($carrito);
-    $_SESSION['carrito'] = null;    
 }
 
 else if(isset($_POST['pagar'])){
