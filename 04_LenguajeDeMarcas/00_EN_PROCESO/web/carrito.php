@@ -12,13 +12,23 @@ else {
 }
 
 // Metemos en el carrito lo nuevo
+$esta_sesion = array():
+$cantidad = 0;
 if (isset($_POST['idses']) && isset($_POST['resbot'])){
     $idses = $_POST['idses']; 
-    $cantidad = isset($_POST['cantidad']) ? intval($_POST['cantidad']) : 1; // cantidad convertida en int, por defecto 1 
-    $carrito[] = $idses;   //guardamos para esa sesion esa cantidad // si no se pone por defecto 1 no funciona bien
+    /* $cantidad = isset($_POST['cantidad']) ? intval($_POST['cantidad']) : 1; // cantidad convertida en int, por defecto 1 */
+    if( $_POST['cantidad'])){
+        $cantidad = intval($_POST['cantidad']);
+    }
+    else{
+        $cantidad = 1;
+    }
+    $esta_sesion[] = $idses;   //guardamos para esa sesion esa cantidad // si no se pone por defecto 1 no funciona bien
+    $esta_sesion[] = $cantidad;
 }
 
 // Volcamos a la sesión el contenido actual del Carrito
+$carrito[] = $esta_sesion;
 $_SESSION['carrito'] = $carrito;
 
 // Log en consola por si acaso
@@ -27,12 +37,12 @@ echo '<script>console.log('. implode($carrito) .');</script>';
 // Añadimos el header
 $tit="Mi Carrito";
 require('./include/header.php');
-$idpelis = array();
+
 
 // De aqui para abajo va la parte visual de la pagina
 $valid = true;
-foreach($carrito as $i => $value){
-    $sqlses = "SELECT * FROM sesion where IDSesion=". $value .";";
+foreach($carrito as $i => $sesion){
+    $sqlses = "SELECT * FROM sesion where IDSesion=". $sesion[0] .";";
     $result = $conn->query($sqlses);
 
     if($rrftp = $result -> fetch_assoc()){
@@ -47,11 +57,12 @@ foreach($carrito as $i => $value){
                 <p> Horario: '. $rrftp['hora_ini']. ' - ' . $rrftp['hora_fin'] .'</p>
                 <p> Sala: ' . $rrftp['NumSala'] . '</p>
                 <p> Precio: ' . $rrftp['precio'] . '€</p>
-                <p> Cantidad: ' . $cantidad . '</p>
+                <p> Cantidad: ' . $sesion[1] . '</p>
                 </div>';/*Corregir cantidad que al seleccionarla se pone la misma en todas las entradas*/
         } 
     }
 }
+
 if(!$valid){ 
 
     echo '<form method="post">
@@ -65,9 +76,8 @@ if(!$valid){
 }
 
 if(isset($_POST['vaciar'])){
-    $_SESSION['carrito'] = array();
-    $carrito = array();
-    
+    unset($carrito);
+    $_SESSION['carrito'] = $carrito;    
 }
 
 else if(isset($_POST['pagar'])){
