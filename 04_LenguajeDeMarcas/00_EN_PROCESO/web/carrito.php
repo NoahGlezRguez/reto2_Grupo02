@@ -13,9 +13,11 @@ else {
 }
 
 $total = 0;
+$importe = 0;
 // Metemos en el carrito lo nuevo
 $esta_sesion = array();
 $cantidad = 0;
+
 if (isset($_POST['idses']) && isset($_POST['resbot'])){
     $idses = $_POST['idses']; 
     if(isset($_POST['cantidad'])){
@@ -38,11 +40,73 @@ if(isset($_POST['vaciar'])){
     // Volcamos a la sesión el contenido actual del Carrito
     $_SESSION['carrito'] = $carrito;
 }
+
+if(isset($_POST['pagar'])){
+    /* Aquí iría la lógica de pago*/
+
+    $dni = $_POST['dnii'];
+    $plat = $_POST['plat'];
+    $desc = $_POST['descuento'];
+    $tot = $_POST['total'];
+
+    //prepare statement como en java para mayor seguridad
+    $sqlcom = $conn->prepare (
+        "INSERT INTO compra (plataforma, descuento, total, DNI)
+         VALUES (?, ?, ?, ?)"
+    );
+
+     $sqlcom->bind_param("sdds", $plat, $desc, $tot, $dni);
+
+
+
+     $sqlIdcom= "SELECT max(IDCompra) as num
+                FROM compra";
+
+    $idcmax = $conn->query($sqlIdcom);
+    $row= $idcmax -> fetch_assoc();
+    $idcmax = $row['num'];
+
+    //for each para hacer los inserts de las entradas
+    foreach($carrito as $i => $sesion){
+
+        $sqlses = "SELECT * FROM sesion where IDSesion=". $sesion[0] .";";
+        $result = $conn->query($sqlses);
+
+        if($rrftp = $result -> fetch_assoc()){
+
+            $import = $sesion[1] * $rrftp['precio'];
+
+            $sqlEntradas = "INSERT INTO entrada VALUES(NULL, ".$sesion[1].", " . $import . ", ". $sesion[0] .", ".$idcmax. ");";
+            $conn->query($sqlEntradas);
+
+           
+        }
+
+    }
+
+    /* si se ejecuta la inserción de compra y también la de entradas correctamente*/
+    if($sqlcom->execute() && $conn->query($sqlEntradas)){
+        $_SESSION['carrito'] = array();
+         $carrito = array();
+        echo'<script> window.alert("Compra realizada correctamente");</script>';
+        
+     
+    }
+    else{
+       echo'<script> window.alert("error en los datos");</script>'; 
+    }
+
+    
+   
+}
+
 // Añadimos el header
 $tit="Mi Carrito";
 require('./include/header.php');
 
 // De aqui para abajo va la parte visual de la pagina
+
+//el valid es para verificar si entra en la sesión, es decir si el carrito tiene algo para mostrar los botones de pagar y vaciar
 $valid = true;
 foreach($carrito as $i => $sesion){
     echo 'Esta sesion: ' . $sesion[0] . ' y la cantidad es ' . $sesion[1] . '<br>';
@@ -54,17 +118,18 @@ foreach($carrito as $i => $sesion){
         $respe = $conn->query($sqlpel);
 
         if($rowpe = $respe -> fetch_assoc()){
-            $valid = false;
+            $valid = false; //valid diciendo que pasó por aquí
+            $importe =  $rrftp['precio'] * $sesion[1];
             echo'<div class="sesdiv">' .
                 '<p> Pelicula: '. $rowpe['NomPeli'] .'</p>
                 <p> Fecha: '. $rrftp['fec'] .'</p>
                 <p> Horario: '. $rrftp['hora_ini']. ' - ' . $rrftp['hora_fin'] .'</p>
                 <p> Sala: ' . $rrftp['NumSala'] . '</p>
-                <p> Precio: ' . $rrftp['precio'] . '€</p>
+                <p> Precio: ' . $importe . '€</p>
                 <p> Cantidad: ' . $sesion[1] . '</p>
                 </div>';/*Corregir cantidad que al seleccionarla se pone la misma en todas las entradas*/
 
-                $total = $total + $rrftp['precio'];
+                $total = $total + $importe;
         } 
     }
 
@@ -80,8 +145,10 @@ foreach($carrito as $i => $sesion){
     }
 }
 
+
 echo $sesiontoString;
 
+//cálculo del descuento 
 if(count($carrito)>0){
     $sqlConfirm = "SELECT distinct IDPeli FROM sesion where IDSesion in (". $sesiontoString . ");";
     $rowsids = $conn->query($sqlConfirm);
@@ -112,58 +179,25 @@ if(count($carrito)>0){
     
 
 
-
+// si el carrito tiene algo muestra los siguientes botones y valores 
     if(!$valid){ 
 
         isset($_SESSION["dni"]);
         echo '<form method="post">
                 <input type="hidden" value="web" name="plat">
-                <input disabled type="text" value="'. $_SESSION["dni"] .'" name="dni">
-                <label>Descuento: </label>
-                <input disabled type="number" value="'.$descuento.'" name="descuento">
+                <input  readonly type="text" value="'. $_SESSION["dni"] .'" name="dnii">
+                <label name=""> Descuento: </label>
+                <input  readonly type="number" value="'.$descuento.'" name="descuento">
                 <label>Total: </label>
-                <input disabled type="number" value="'.$total.'" name="total">
+                <input readonly type="number" value="'.$total.'" name="total">
                 <input type="submit" value="Pagar" name="pagar"/>
                 <input type="submit" value="Vaciar Carrito" name="vaciar"/>
-            </form>'; /* corregir vaciar carrito */ 
-            /* revisar */ 
-        
+            </form>'; 
     }
 
 }
 
 
-
-//aquí guardo la compra 
-else if(isset($_POST['pagar'])){
-    /* Aquí iría la lógica de pago*/
-
-    $dni = $_POST['dni'];
-    $plat = $_POST['plat'];
-    $desc = $_POST['descuento'];
-    $tot = $_POST['total'];
-
-    /*$sqlIdcom= "SELECT max(IDCompra)
-                FROM compra";
-
-    $idcmax = $conn->query($sqlIdcom);
-    $idcmax = $idcmax -> fetch_assoc();
-    $idcmax = $idcmax + 1;*/
-
-    $sqlcom = "INSERT INTO compra VALUES( null, null, '".$plat."', " . $desc . ", ". $tot .", ". $dni .");";
-    
-    if($conn->query($sqlcom)){
-
-        echo'<script> window.alert(holaaa);</script>';
-
-    }
-
-    echo "<p>Pago realizado con éxito. ¡Gracias por su compra!</p>";
-    $_SESSION['carrito'] = array();
-    $carrito = array();
-
-    /*falta poner el insert */
-}
 
 // Footer y cerramos la conexion
 require('./include/footer.php');
