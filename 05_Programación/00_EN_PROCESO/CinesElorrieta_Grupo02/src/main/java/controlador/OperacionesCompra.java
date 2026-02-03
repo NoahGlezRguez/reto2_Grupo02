@@ -151,11 +151,11 @@ public class OperacionesCompra {
 	 */
 	public static Entrada comprarEntradas(Compra compra) {
 		
-		Entrada		nuevaEntrada = new Entrada();
+		Entrada		nuevaEntrada = null;
 		
-		Pelicula		peliculaElegida = new Pelicula();
+		Pelicula		peliculaElegida = null;
 		String		fechaElegida = null;
-		Sesion		sesionElegida =  new Sesion();
+		Sesion		sesionElegida =  null;
 		int			numPersonas = 0;
 		
 		int			faseDeCompra = 1;
@@ -163,24 +163,30 @@ public class OperacionesCompra {
 		while (faseDeCompra > 0 && faseDeCompra < 5) {
 			switch (faseDeCompra) {
 				case 1:
+					peliculaElegida = new Pelicula();
 					peliculaElegida = elegirPelicula();
-					if (peliculaElegida == null)
+					if (peliculaElegida == null) 
 						faseDeCompra--;
 					else 
 						faseDeCompra++;
 					break;
 				case 2:
 					fechaElegida = elegirFecha(peliculaElegida);
-					if (fechaElegida == null)
+					if (fechaElegida == null) {
 						faseDeCompra--;
+						sesionElegida = null;
+						nuevaEntrada = null;
+					}
 					else
 						faseDeCompra++;
 					break;
 				case 3:
+					sesionElegida =  new Sesion();
 					sesionElegida = elegirSesion(peliculaElegida, fechaElegida, compra);
 					if (sesionElegida == null)
 						faseDeCompra--;
 					else {
+						nuevaEntrada = new Entrada();
 						faseDeCompra++;
 						nuevaEntrada.setSesionEntrada(sesionElegida);
 					}
@@ -191,7 +197,6 @@ public class OperacionesCompra {
 						faseDeCompra--;
 					else {
 						nuevaEntrada.setNumPersonas(numPersonas);
-						//aqui hay que hacer mas cosas
 						if (Menu.siNo("¿Confirma añadir esta entrada?\n\t\t...Al elegir 'No', se perderán los datos seleccionados...") == 1)
 							nuevaEntrada = null;	
 						faseDeCompra++;
