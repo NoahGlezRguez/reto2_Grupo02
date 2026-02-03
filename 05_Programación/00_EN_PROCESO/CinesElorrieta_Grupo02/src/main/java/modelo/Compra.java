@@ -255,12 +255,13 @@ public class Compra {
 	}
 	
 	private static String recibirEntradas(ArrayList<Entrada> entrada) {
-		String resultado = "";
+		 StringBuilder resultado = new StringBuilder();
+		
 		for(int i = 0; i<entrada.size(); i++) {
-			resultado +=  entrada.get(i).toString();
+			resultado.append(entrada.get(i).toString());
 		}
 		
-		return resultado;
+		return resultado.toString();
 	}
 
 	
