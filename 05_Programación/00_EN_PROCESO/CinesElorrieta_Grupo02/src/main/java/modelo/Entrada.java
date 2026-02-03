@@ -9,13 +9,18 @@ public class Entrada {
 	
 	@Override //toString para utilizado al imprimir la factura 
 	public String toString() {
+		
+		importe = (long)(importe * 100) / 100;
+		
 		return 
 				"""
-				Pelicula:           %15s
-				Cant. Personas:     %15s
-				Importe:            %15s
-				Fecha:              %15s
-				Hora inicio:        %15s
+				- - - - - - - - - - - - - - - -
+				Pelicula:           	%15s
+				Cant. Personas:     	%15s
+				Importe:         	%15s€
+				Fecha:              	%15s
+				Hora inicio:        	%15s
+				- - - - - - - - - - - - - - - - 
 				""".formatted(
 						sesionEntrada.getPelicula().getNombrePeli(),
 						String.valueOf(numPersonas),
@@ -77,6 +82,11 @@ public class Entrada {
 
 	public void setSesionEntrada(Sesion sesionEntrada) {
 		this.sesionEntrada = sesionEntrada;
+	}
+	
+	public void setImporte() {
+		importe = sesionEntrada.getPrecio() * numPersonas;
+		importe = (long)(importe * 100) / 100;
 	}
 
 }

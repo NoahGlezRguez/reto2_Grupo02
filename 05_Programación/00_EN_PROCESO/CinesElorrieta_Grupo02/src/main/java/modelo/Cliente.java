@@ -121,11 +121,11 @@ public class Cliente {
 		
 		String cadena = "";
 		do {
-			System.out.println("Introduzca DNI: ");
+			System.out.print("Introduzca DNI: ");
 			cadena = Main.teclado.nextLine();
 			
 			
-		}while(validarDni(cadena) == false || ConsultarBD.validarExistencia(cadena, "dni") == false);
+		}while(validarDni(cadena) == false || OperacionesBD.validarExistencia(cadena, "dni") == false);
 		
 		return cadena;
 	}
@@ -142,7 +142,7 @@ public class Cliente {
 		
 		do {
 			valid = true;
-			System.out.println("Introduzca el nombre: ");
+			System.out.print("Introduzca el nombre: ");
 			cadena = Main.teclado.nextLine().trim();
 			
 			if(!ValidarTipoEntrada.checkSoloLetras(cadena))
@@ -170,7 +170,7 @@ public class Cliente {
 		do {
 			
 			valid = true;
-			System.out.println("\nIntroduzca el correo electrónico: ");
+			System.out.print("\nIntroduzca el correo electrónico: ");
 			cadena = Main.teclado.nextLine().trim();
 			
 			if(cadena.isBlank() || cadena.length() > 100 ) 
@@ -179,7 +179,7 @@ public class Cliente {
 			else if(cadena.indexOf('@') != cadena.lastIndexOf('@') || cadena.charAt(0) == '@' || cadena.contains("@") == false || cadena.contains(".") == false) 
 				valid = false;
 
-			else if(ConsultarBD.validarExistencia(cadena, "mail") == false) 			
+			else if(OperacionesBD.validarExistencia(cadena, "mail") == false) 			
 				valid = false;
 
 			else if(cadena.substring(cadena.indexOf('@'), cadena.length()).indexOf('.') != cadena.substring(cadena.indexOf('@'), cadena.length()).lastIndexOf('.'))				
@@ -213,7 +213,7 @@ public class Cliente {
 		
 		do {
 			valid = true;
-			System.out.println("Introduzca el Apellido: ");
+			System.out.print("Introduzca el Apellido: ");
 			cadena = Main.teclado.nextLine().trim();
 			
 			if(!ValidarTipoEntrada.checkSoloLetras(cadena)) {
@@ -245,7 +245,7 @@ public class Cliente {
 		do {
 			
 			valid = true;
-			System.out.println("\nIntroduzca la contraseña: ");
+			System.out.print("Introduzca la contraseña: ");
 			cadena = Main.teclado.nextLine();
 			
 			if(cadena.isEmpty()) {

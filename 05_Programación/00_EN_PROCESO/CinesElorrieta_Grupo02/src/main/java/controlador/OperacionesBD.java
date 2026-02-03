@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import modelo.*;
 import vista.*;
 
-public class ConsultarBD {
+public class OperacionesBD {
 
 	/**
 	 * <p>este método lee los datos de el fichero <b>ipConfig.txt</b>
@@ -103,7 +103,7 @@ public class ConsultarBD {
 		Statement sentencia = null;
 		ResultSet result = null;
 		try {
-			conexion = ConsultarBD.conectarConBD();
+			conexion = OperacionesBD.conectarConBD();
 			sentencia = conexion.createStatement();
 			result = sentencia.executeQuery(consulta);
 
@@ -153,7 +153,7 @@ public class ConsultarBD {
 		ResultSet result = null;
 
 		try {
-			conexion = ConsultarBD.conectarConBD();
+			conexion = OperacionesBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 
 			sentencia.setInt(1, idPeliElegida);
@@ -201,7 +201,7 @@ public class ConsultarBD {
 		ResultSet result = null;
 
 		try {
-			conexion = ConsultarBD.conectarConBD();
+			conexion = OperacionesBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 			sentencia.setInt(1, peliculaElegida.getIdPeli());
 
@@ -254,7 +254,7 @@ public class ConsultarBD {
 		ResultSet result = null;
 
 		try {
-			conexion = ConsultarBD.conectarConBD();
+			conexion = OperacionesBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 			sentencia.setInt(1, peliculaElegida.getIdPeli());
 			sentencia.setString(2, fechaElegida);
@@ -311,7 +311,7 @@ public class ConsultarBD {
 			Menu.cabeceraMenu(3, peliculaElegida.getNombrePeli(), fechaElegida, null);
 
 			try {
-				conexion = ConsultarBD.conectarConBD();
+				conexion = OperacionesBD.conectarConBD();
 				sentencia = conexion.prepareStatement(consulta);
 
 				for (int i = 0; i < sesionesConAforo.size(); i++) {
@@ -378,7 +378,7 @@ public class ConsultarBD {
 		ResultSet result = null;
 
 		try {
-			conexion = ConsultarBD.conectarConBD();
+			conexion = OperacionesBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 
 			sentencia.setInt(1, idSesion);
@@ -424,7 +424,7 @@ public class ConsultarBD {
 		ResultSet result = null;
 
 		try {
-			conexion = ConsultarBD.conectarConBD();
+			conexion = OperacionesBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 
 			sentencia.setInt(1, idSesion);
@@ -501,7 +501,7 @@ public class ConsultarBD {
 			}
 
 			else {
-				MostrarMsg.errores(5);
+				MostrarMsg.errores(4);
 				consultado = null;
 			} 
 		} catch (SQLException e) {
@@ -533,10 +533,10 @@ public class ConsultarBD {
 		
 		String consulta = """
 					insert into entrada (CantPersonas, importe, idSesion, idCompra)
-					values(?, round(?, 2), ?, ?)
+					values(?, ?, ?, ?)
 				""";
 		try {
-			conexion = ConsultarBD.conectarConBD();
+			conexion = OperacionesBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 			
 			for (int i = 0; i < entradas.size(); i++) {
@@ -576,18 +576,16 @@ public class ConsultarBD {
 		PreparedStatement sentencia = null;
 		int filasAfectadas = 0;
 		
-		double importeDescontado = descuento * total;
-		
 		String consulta = """
 				insert into compra (plataforma, descuento, total, dni)
-				values(?, round(?, 2), round(?, 2), ?)
+				values(?, ?, ?, ?)
 				""";
 		try {
 			conexion = conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 			
 			sentencia.setString(1, plataforma);
-			sentencia.setDouble(2, importeDescontado);
+			sentencia.setDouble(2, descuento);
 			sentencia.setDouble(3, total);
 			sentencia.setString(4, dni);
 			
@@ -759,7 +757,7 @@ public class ConsultarBD {
 		ResultSet result = null;
 
 		try {
-			conexion = ConsultarBD.conectarConBD();
+			conexion = OperacionesBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 
 			sentencia.setInt(1, idSesionElegida);
@@ -809,7 +807,7 @@ public class ConsultarBD {
 		PreparedStatement sentencia = null;
 		ResultSet result = null;
 		try {
-			conexion = ConsultarBD.conectarConBD();
+			conexion = OperacionesBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 
 			sentencia.setInt(1, IdSesion);
@@ -859,7 +857,7 @@ public class ConsultarBD {
 		Statement sentencia = null;
 		ResultSet result = null;
 		try {
-			conexion = ConsultarBD.conectarConBD();
+			conexion = OperacionesBD.conectarConBD();
 			sentencia = conexion.createStatement();
 
 

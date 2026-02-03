@@ -23,17 +23,17 @@ public class MostrarMsg {
 			***********************************************************************
 				        		""";
         
-        System.out.print(a);        
+        System.out.print("\n".repeat(5) + a);        
 	}
 	
 	public static void bienvenida(String nombreCliente) {
         
         String a = """
-			***********************************************************************
-			*   #   ★☆★         										★☆★  #   *
+			\n\n***********************************************************************
+			                 ★☆★                  
         		     		     	¡Bienvenide %s!         
-			*   #   ★☆★         										★☆★  #   *
-			***********************************************************************
+			                 ★☆★         										
+			***********************************************************************\n\n
 				        		""".formatted(nombreCliente);
         
         System.out.print(a);        
@@ -97,25 +97,27 @@ public class MostrarMsg {
 	public static void errores(int num) {
 				
 		String [] msg = {
-				"en la conexión\n",
-				"no se ha podido procesar sus datos\n",
-				"No quedan sesiones con aforo el día seleccionado",
-				"formato no válido\n",
-				"el usuario no existe\n",
-				"el usuario ya existe\n",
-				"Usuario y/o contraseña incorrectos, por favor inténtelo de nuevo\n",
-				"debe introducir al menos 8 caracteres\n",
-				"Por favor seleccione un opción válida\n",
-				"Por favor introduzca un valor positivo\n",
-				"el formato introducido es muy largo\n",
+				"no se ha podido establecer conexión con la base de datos",
+				"no se ha podido procesar sus datos, pruebe más tarde...",
+				"ya no quedan sesiones con aforo el día seleccionado",
+				"formato no válido",
+				"el usuario no existe",
+				"el usuario ya existe",
+				"usuario y/o contraseña incorrecto/s, prueba otra vez",
+				"debe introducir mínimo 8 caracteres",
+				"opción no válida",
+				"SRDFÑFGLIHDPKFGUHWOERUGHPEAROUGHPQAEORUGHQEPOR",
+				"el formato introducido es muy largo",
 				"no has introducido nada",
 				"ahora mismo no hay nada en su carrito",
-				"no hay cartelera disponible ahora mismo, lo sentimos"
+				"no hay cartelera disponible ahora mismo, lo sentimos",
+				"debe ser mínimo una persona",
+				"ha excedido del aforo disponible"
 			};
 			
 		String msgError = """
-		\n\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-		\t>>>>> Error: %s
+		\n\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+		\tError → %s
 		//////////////////////////////////////////////////////////\n\n
 		""".formatted(msg[num]);
 	
@@ -126,14 +128,14 @@ public class MostrarMsg {
 	public static void mensajeSignIn() {
 		
 		String msg = 
-				"===================================\n\tInicio de sesion\n===================================";
+				"\n\n======================= Inicio de sesion obligatorio =======================\n";
 		System.out.println(msg);
 	}
 	
 	public static void mensajeSignUp() {
 		
 		String msg = 
-				"===================================\n\tCrear nueva cuenta\n===================================";
+				"\n\n======================= Creación de un nuevo usuario =======================\n";
 		System.out.println(msg);
 	}
 	
@@ -167,7 +169,7 @@ public class MostrarMsg {
 		};
 		
 		String	output = """
-				\n\n··························································
+				\n\n····························································
 				   - - - -> %s
 				····························································\n\n
 				""".formatted(msg[indice]);

@@ -28,8 +28,10 @@ public class OperacionesCompra {
 					
 			case 0:
 				nuevaEntrada = comprarEntradas(compra);
-				if (nuevaEntrada != null)
+				if (nuevaEntrada != null) {
+					nuevaEntrada.setImporte();
 					compra.agregarEntrada(nuevaEntrada);
+				}
 				break;
 				
 			case 1:
@@ -49,7 +51,7 @@ public class OperacionesCompra {
 				
 			case 3:
 				if (compra.getEntradas().size() > 0) {
-					comprador = pago(compra);
+					comprador = finDeCompra(compra);
 					if (comprador != null) {
 						compra.setComprador(comprador);
 						finalizarCompra = true;
@@ -102,19 +104,31 @@ public class OperacionesCompra {
 	}
 	
 	
-	private static Cliente pago(Compra compra) {
+	private static Cliente finDeCompra(Compra compra) {
 		
 		Cliente cliente = null;
+		int		intentos = 3;
 		
-		if (Menu.siNo("¿Tiene ya una cuenta de usuario registrada en nuestro cine?") == 0) 
-			cliente = ValidarLogin.iniciarSesion(); 
-	
-		else if (Menu.siNo("¿Desea crearse una cuenta de usuario?") == 0) 
+		if (Menu.siNo("¿Tiene ya una cuenta de usuario registrada en nuestro cine?") == 0) {
+			do {
+				System.out.println("\t- Intentos de inicio de sesión restantes = %d".formatted(intentos));
+				cliente = ValidarLogin.iniciarSesion();
+				if (cliente == null)
+					intentos--;
+				else
+					intentos = 0;
+			} while (intentos > 0);
+			
+		}
+		if (cliente == null) {			
+			if (Menu.siNo("¿Desea crearse una cuenta de usuario?") == 0) 
 				cliente = ValidarLogin.crearCuenta();
+		}
 		
 		if (cliente != null) {
 			if (Menu.siNo("¿Desea pagar (solo con Bitcoins)?") == 0) {
 				System.out.println("\n\t~~~ Pago realizado correctamente :) ~~~\n");
+				MostrarMsg.operacionRealizada(2);
 				compra.setComprador(cliente);
 				compra.guardarCompraEnBD();
 				if (Menu.siNo("¿Desea obtener una factura de su compra?") == 0)
@@ -194,14 +208,14 @@ public class OperacionesCompra {
 		int					idPeliElegida = -1, indiceEnCartelera = -1;
 		Pelicula 			peliculaElegida = null;
 
-		cartelera = ConsultarBD.consultarCartelera();
+		cartelera = OperacionesBD.consultarCartelera();
 		
 		if (cartelera.size() > 0) {
 			indiceEnCartelera = opcionCorrecta("\n\t·····> Introduzca el nº de la película: ", cartelera); //lo que introduce el usuario, ya validado
 			//si no quiere volver atras:
 			if (indiceEnCartelera != -1) {
 				idPeliElegida = cartelera.get(indiceEnCartelera);
-				peliculaElegida = ConsultarBD.consultarPeliculaElegida(idPeliElegida);
+				peliculaElegida = OperacionesBD.consultarPeliculaElegida(idPeliElegida);
 			}
 		}
 		else
@@ -217,7 +231,7 @@ public class OperacionesCompra {
 		String				fechaElegida = null;
 		int					seleccionIndice = 0;
 		
-		fechas = ConsultarBD.consultarFechas(peliculaElegida);
+		fechas = OperacionesBD.consultarFechas(peliculaElegida);
 		seleccionIndice = opcionCorrecta("\n\t·····> Introduzca el nº de la fecha que le interesa: ", fechas);
 		
 		if (seleccionIndice != -1) 
@@ -232,16 +246,16 @@ public class OperacionesCompra {
 		int					indiceSesionElegida = 0, idSesionElegida = 0;
 		Sesion				sesionElegida = null;
 		
-		idSesiones = ConsultarBD.consultarSesionesConAforoDisponible(peliculaElegida, fechaElegida, compra);
+		idSesiones = OperacionesBD.consultarSesionesConAforoDisponible(peliculaElegida, fechaElegida, compra);
 		if (!idSesiones.isEmpty()) {
 			indiceSesionElegida = opcionCorrecta("\n\t·····> Introduzca el nº de la sesión que le interesa: ", idSesiones);
 			
 			if (indiceSesionElegida != -1) {
 				idSesionElegida = idSesiones.get(indiceSesionElegida);
-				sesionElegida = ConsultarBD.consultarSesionElegida(idSesionElegida);
+				sesionElegida = OperacionesBD.consultarSesionElegida(idSesionElegida);
 				sesionElegida.setPelicula(peliculaElegida);
-				sesionElegida.setSala(ConsultarBD.consultarSala(sesionElegida.getIdSesion()));
-				sesionElegida.setAforoDisponible(ConsultarBD.consultarAforo(idSesionElegida, compra));
+				sesionElegida.setSala(OperacionesBD.consultarSala(sesionElegida.getIdSesion()));
+				sesionElegida.setAforoDisponible(OperacionesBD.consultarAforo(idSesionElegida, compra));
 			}
 		}
 		return (sesionElegida);
@@ -258,7 +272,7 @@ public class OperacionesCompra {
 		
 		do {
 			esCorrecto = true;
-			System.out.println(peticion);
+			System.out.print(peticion);
 			entrada = Main.teclado.nextLine().trim();
 			
 			if (ValidarTipoEntrada.checkNum(entrada)) {
@@ -279,6 +293,8 @@ public class OperacionesCompra {
 			
 		} while (!esCorrecto);
 		
+		System.out.println("\n-----------------------------------------------------------------------\n");
+		
 		return (seleccionIndice);
 	}
 	
@@ -298,19 +314,23 @@ public class OperacionesCompra {
 		do {
 			esCorrecto = true;
 			Menu.pedirNumPersonas(sesionElegida, compra);
-			entrada = Main.teclado.nextLine();
+			entrada = Main.teclado.nextLine().trim();
+			
 			if (ValidarTipoEntrada.checkNum(entrada)) {
 				numPersonas = Integer.parseInt(entrada);
 				if (numPersonas < 1 && numPersonas != -1 ) {
-					System.out.println("Error, debe ser mínimo una persona, por favor");
+					MostrarMsg.errores(14);
 					esCorrecto = false;
 				}
 				else if (numPersonas > sesionElegida.getAforoDisponible()) {
-					System.out.println("Error, ha seleccionado más personas que asientos disponibles tiene esta sesión...");
+					MostrarMsg.errores(15);
 					esCorrecto = false;
 				}
 			}
-			
+			else {
+				esCorrecto = false;
+				MostrarMsg.errores(3);
+			}
 		} while (!esCorrecto);
 			
 		return (numPersonas);

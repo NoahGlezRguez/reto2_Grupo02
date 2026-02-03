@@ -2,7 +2,7 @@ package modelo;
 import java.io.*;
 import java.util.ArrayList;
 
-import controlador.ConsultarBD;
+import controlador.OperacionesBD;
 import vista.MostrarMsg;
 
 
@@ -28,14 +28,12 @@ public class Compra {
 	
 	public void eliminarEntrada(int indiceEntrada) {
 		
-		
-		
-		for (int i = 0; i < entradas.size(); i++) {
-			if(i == indiceEntrada) {
-				entradas.remove(i);
-				MostrarMsg.operacionRealizada(1);
-			}
+		if (indiceEntrada > 0 && indiceEntrada < entradas.size()) {
+			entradas.remove(indiceEntrada);
+			MostrarMsg.operacionRealizada(1);
 		}
+		else
+			MostrarMsg.errores(8);
 	}
 	
 	public int conocerAforoCesta(int idSesion) {
@@ -49,9 +47,16 @@ public class Compra {
 	}
 
 	public void guardarCompraEnBD() {
-		ConsultarBD.insertarCompraEnBD(tipoCompra, descuento, importeTotal, comprador.getDni());
-		idCompra = ConsultarBD.consultarCompraRealizada();
-		ConsultarBD.insertarEntradasEnBD(entradas, idCompra);
+		
+		precioCompra = (long)(calcularPrecioDeCompra() * 100) / 100;
+		porcenDescuento = calcularPorcenDescuento();
+		descuento = precioCompra * porcenDescuento;
+		descuento = (long)(descuento * 100) / 100;
+		importeTotal = (long)((precioCompra - descuento) * 100) / 100;
+		
+		OperacionesBD.insertarCompraEnBD(tipoCompra, descuento, importeTotal, comprador.getDni());
+		idCompra = OperacionesBD.consultarCompraRealizada();
+		OperacionesBD.insertarEntradasEnBD(entradas, idCompra);
 	}
 
 	public void mostrarCesta() {
@@ -186,28 +191,29 @@ public class Compra {
 		
 		String hola = "";
 		
-		for(int i = 0; i<entrada.size(); i++) {
-			hola +=  entrada.get(i).toString();
+		for(int i = 0; i < entrada.size(); i++) {
+			hola +=  entrada.get(i).toString() + "\n";
 		};
 		
 		String formato = 
 				"""
+				
 				------------------------------------
-				Compra nº:			%15s
-				Fecha:				%15s
-				Plataforma:			%15s
-				Cliente:			%15s
-				DNI:				%15s
+				Compra nº:		%15s
+				
+				Fecha:			%15s
+				Plataforma:		%15s
+				Cliente:		%15s
+				DNI:			%15s
 				
 				%s
+				Descuento:		%15s€
+				Importe:		%15s€
 				
 				
-				Descuento:			%15s
-				Importe:			%15s
-				
-				
-				Total:				%15s
+				Total:			%15s€
 				-------------------------------------
+				
 				""".formatted(a, b, c, d, e, hola, f, g, h) ;
 		
 		return formato;

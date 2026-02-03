@@ -26,7 +26,7 @@ public class ValidarLogin {
 		
 		Cliente iniciado = new Cliente();
 		
-		iniciado = ConsultarBD.Consultarlogin(dni, contraseña);
+		iniciado = OperacionesBD.Consultarlogin(dni, contraseña);
 		
 		if( iniciado!= null) {
 			MostrarMsg.operacionRealizada(4);
@@ -52,7 +52,7 @@ public class ValidarLogin {
 		System.out.println(nuevo.toString());
 		
 		if (Menu.siNo("Confirmar y guardar datos") == 0)
-			ConsultarBD.InsertarNuevoUsuario(nuevo, pw);
+			OperacionesBD.InsertarNuevoUsuario(nuevo, pw);
 		
 		else {
 			System.out.println("\n\t...Operación cancelada...");
