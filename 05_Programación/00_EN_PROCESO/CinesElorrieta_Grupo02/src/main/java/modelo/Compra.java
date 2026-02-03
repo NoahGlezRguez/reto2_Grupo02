@@ -209,14 +209,16 @@ public class Compra {
 	}
 
 	/**
-	 * Devuelve el tiempo actual
+	 * Devuelve la fecha y hora
 	 * 
-	 * @return la fecha con formato mes, ano, dia hora,min, seg
+	 * @return devuelve un array con fecha y hora
 	 */
-	public static String obtenerTiempoActual() {
-		LocalDateTime fecha = LocalDateTime.now();
-		DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		return fecha.format(formateador);
+	public static String[] tiempoActual() {
+		String[] fechaHoraArray = new String[2];
+		LocalDateTime fechaHora = LocalDateTime.now();
+		fechaHoraArray[0] = fechaHora.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		fechaHoraArray[1] = fechaHora.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+	    return fechaHoraArray;
 	}
 	
 	
@@ -225,7 +227,7 @@ public class Compra {
 	 * @return la factura formateada
 	 */
 	public String factura() {
-
+		String[] fechahora = tiempoActual();
 		String formatoEuro = "€%.2f";
 		
 		String descu = String.format(formatoEuro, descuento);
@@ -234,22 +236,24 @@ public class Compra {
 		
 		return """
 				------------------------------------
-				Compra nº:			%15d
-				Fecha:				%15s
-				Plataforma:			%15s
-				Cliente:			%15s
-				DNI:				%15s
+				Compra nº:				%d
+				Fecha:					%s
+				Hora:					%s
+				Plataforma:				%s
+				Cliente:				%s
+				DNI:					%s
 				
 				%s
 				
-				Descuento:			%15s
-				Importe:			%15s
+				Descuento:				%s
+				Importe:				%s
 				
 				
-				Total:				%15s
+				Total:					%s
 				-------------------------------------
 				""".formatted(idCompra, 
-						obtenerTiempoActual(),
+						fechahora[0],
+						fechahora[1],
 						tipoCompra,
 						comprador.getNomCliente(),
 						comprador.getDni(),
