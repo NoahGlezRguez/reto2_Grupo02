@@ -2,8 +2,8 @@ package modelo;
 import java.io.*;
 import java.util.ArrayList;
 
-import controlador.OperacionesBD;
-import vista.MostrarMsg;
+import controlador.*;
+import vista.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -56,9 +56,9 @@ public class Compra {
 		descuento = (long)(descuento * 100) / 100;
 		importeTotal = (long)((precioCompra - descuento) * 100) / 100;
 		
-		OperacionesBD.insertarCompraEnBD(tipoCompra, descuento, importeTotal, comprador.getDni());
-		idCompra = OperacionesBD.consultarCompraRealizada();
-		OperacionesBD.insertarEntradasEnBD(entradas, idCompra);
+		InsertarDatosBD.insertarCompra(tipoCompra, descuento, importeTotal, comprador.getDni());
+		idCompra = ObtenerDatosBD.consultarCompraRealizada();
+		InsertarDatosBD.insertarEntradas(entradas, idCompra);
 	}
 
 	public void mostrarCesta() {

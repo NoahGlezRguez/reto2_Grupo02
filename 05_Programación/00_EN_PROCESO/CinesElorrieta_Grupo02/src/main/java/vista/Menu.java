@@ -137,7 +137,7 @@ public class Menu {
 				\t  → %s asientos libres de %s
 				""".formatted(sesionElegida.getAforoDisponible(), sesionElegida.getSala().getAforoSala());
 		
-		sesionElegida.setAforoDisponible(OperacionesBD.consultarAforo(sesionElegida.getIdSesion(), compra));
+		sesionElegida.setAforoDisponible(ConsultarDatosBD.consultarAforo(sesionElegida.getIdSesion(), compra));
 		
 		System.out.print(info);
 		msgVolverAtras();

@@ -214,14 +214,14 @@ public class OperacionesCompra {
 		int					idPeliElegida = -1, indiceEnCartelera = -1;
 		Pelicula 			peliculaElegida = null;
 
-		cartelera = OperacionesBD.consultarCartelera();
+		cartelera = ConsultarDatosBD.consultarCartelera();
 		
 		if (cartelera.size() > 0) {
 			indiceEnCartelera = ValidarTipoEntrada.opcionCorrecta("\n\t·····> Introduzca el nº de la película: ", cartelera); //lo que introduce el usuario, ya validado
 			//si no quiere volver atras:
 			if (indiceEnCartelera != -1) {
 				idPeliElegida = cartelera.get(indiceEnCartelera);
-				peliculaElegida = OperacionesBD.consultarPeliculaElegida(idPeliElegida);
+				peliculaElegida = ObtenerDatosBD.consultarPeliculaElegida(idPeliElegida);
 			}
 		}
 		else
@@ -237,7 +237,7 @@ public class OperacionesCompra {
 		String				fechaElegida = null;
 		int					seleccionIndice = 0;
 		
-		fechas = OperacionesBD.consultarFechas(peliculaElegida);
+		fechas = ConsultarDatosBD.consultarFechas(peliculaElegida);
 		seleccionIndice = ValidarTipoEntrada.opcionCorrecta("\n\t·····> Introduzca el nº de la fecha que le interesa: ", fechas);
 		
 		if (seleccionIndice != -1) 
@@ -252,16 +252,16 @@ public class OperacionesCompra {
 		int					indiceSesionElegida = 0, idSesionElegida = 0;
 		Sesion				sesionElegida = null;
 		
-		idSesiones = OperacionesBD.consultarSesionesConAforoDisponible(peliculaElegida, fechaElegida, compra);
+		idSesiones = ConsultarDatosBD.consultarSesionesConAforoDisponible(peliculaElegida, fechaElegida, compra);
 		if (!idSesiones.isEmpty()) {
 			indiceSesionElegida = ValidarTipoEntrada.opcionCorrecta("\n\t·····> Introduzca el nº de la sesión que le interesa: ", idSesiones);
 			
 			if (indiceSesionElegida != -1) {
 				idSesionElegida = idSesiones.get(indiceSesionElegida);
-				sesionElegida = OperacionesBD.consultarSesionElegida(idSesionElegida);
+				sesionElegida = ObtenerDatosBD.consultarSesionElegida(idSesionElegida);
 				sesionElegida.setPelicula(peliculaElegida);
-				sesionElegida.setSala(OperacionesBD.consultarSala(sesionElegida.getIdSesion()));
-				sesionElegida.setAforoDisponible(OperacionesBD.consultarAforo(idSesionElegida, compra));
+				sesionElegida.setSala(ObtenerDatosBD.consultarSala(sesionElegida.getIdSesion()));
+				sesionElegida.setAforoDisponible(ConsultarDatosBD.consultarAforo(idSesionElegida, compra));
 			}
 		}
 		return (sesionElegida);

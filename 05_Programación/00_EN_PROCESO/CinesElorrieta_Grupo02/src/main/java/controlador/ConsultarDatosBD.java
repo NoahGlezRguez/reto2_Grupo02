@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import modelo.*;
 import vista.*;
 
-public class OperacionesBD {
+public class ConsultarDatosBD {
 
 	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
 	 * conectar con la bbdd
@@ -117,7 +117,7 @@ public class OperacionesBD {
 		Statement sentencia = null;
 		ResultSet result = null;
 		try {
-			conexion = OperacionesBD.conectarConBD();
+			conexion = ConsultarDatosBD.conectarConBD();
 			sentencia = conexion.createStatement();
 			result = sentencia.executeQuery(consulta);
 
@@ -169,7 +169,7 @@ public class OperacionesBD {
 		ResultSet result = null;
 
 		try {
-			conexion = OperacionesBD.conectarConBD();
+			conexion = ConsultarDatosBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 			sentencia.setInt(1, peliculaElegida.getIdPeli());
 
@@ -222,7 +222,7 @@ public class OperacionesBD {
 		ResultSet result = null;
 
 		try {
-			conexion = OperacionesBD.conectarConBD();
+			conexion = ConsultarDatosBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 			sentencia.setInt(1, peliculaElegida.getIdPeli());
 			sentencia.setString(2, fechaElegida);
@@ -279,7 +279,7 @@ public class OperacionesBD {
 			Menu.cabeceraMenu(3, peliculaElegida.getNombrePeli(), fechaElegida, null);
 
 			try {
-				conexion = OperacionesBD.conectarConBD();
+				conexion = ConsultarDatosBD.conectarConBD();
 				sentencia = conexion.prepareStatement(consulta);
 
 				for (int i = 0; i < sesionesConAforo.size(); i++) {
@@ -346,7 +346,7 @@ public class OperacionesBD {
 		ResultSet result = null;
 
 		try {
-			conexion = OperacionesBD.conectarConBD();
+			conexion = ConsultarDatosBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 
 			sentencia.setInt(1, idSesion);
@@ -392,7 +392,7 @@ public class OperacionesBD {
 		ResultSet result = null;
 
 		try {
-			conexion = OperacionesBD.conectarConBD();
+			conexion = ConsultarDatosBD.conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 
 			sentencia.setInt(1, idSesion);
@@ -503,417 +503,10 @@ public class OperacionesBD {
 	 * obtencion de datos
 	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 	
-	// para volcar en memoria los datos de la pelicula seleccionada
-	public static Pelicula consultarPeliculaElegida(int idPeliElegida) {
-
-		String consulta = """
-				select p.NomPeli, p.duracion, g.nomgen
-				from pelicula p join genero g on p.idgen = g.idgen
-				where p.IDPeli = ?""";
-		Pelicula peliculaElegida = new Pelicula();
-
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		ResultSet result = null;
-
-		try {
-			conexion = OperacionesBD.conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-
-			sentencia.setInt(1, idPeliElegida);
-			result = sentencia.executeQuery();
-
-			result.next();
-			peliculaElegida.setIdPeli(idPeliElegida);
-			peliculaElegida.setNombrePeli(result.getString("NomPeli"));
-			peliculaElegida.setGenero(result.getString("NomGen"));
-			peliculaElegida.setDuracion(result.getInt("Duracion"));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		} finally {
-
-			try {
-				if (result != null)
-					result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-		return (peliculaElegida);
-	}
-	
-	/**
-	 * 
-	 * @return este método consulta el login
-	 * @param credenciales del usuario
-	 * @return <b>Objeto cliente</b> <br>
-	 *         <b>not null</b> el cliente existe y te devuelve el objeto con sus
-	 *         datos <br>
-	 *         <b>null </b> settea el objeto a null
-	 */
-	public static Cliente Consultarlogin(String dni, String password) {
-
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		ResultSet result = null;
-		String consulta = """
-					select *
-					from cliente
-					where dni = ? and userpassword = md5(?)
-				""";
-		Cliente consultado = new Cliente();
-
-		try {
-
-			conexion = conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-
-			sentencia.setString(1, dni);
-			sentencia.setString(2, password);
-			
-			result = sentencia.executeQuery();
-
-			if (result.next()) {
-
-				consultado.setDni(result.getString("DNI"));
-				consultado.setNomCliente(result.getString("nomcli"));
-				consultado.setApellidos(result.getString("ape"));
-				consultado.setEmail(result.getString("mail"));
-
-			}
-
-			else {
-				MostrarMsg.errores(4);
-				consultado = null;
-			} 
-		} catch (SQLException e) {
-				e.printStackTrace();
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		} finally {
-			try {
-				if (result != null)
-					result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		return consultado;
-	}
-	
-	// consultar y volcar datos de una sesion en concreto
-	public static Sesion consultarSesionElegida(int idSesionElegida) {
-		String consulta = """
-					select *
-					from sesion
-					where IDSesion = ?
-				""";
-		Sesion sesionElegida = new Sesion();
-
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		ResultSet result = null;
-
-		try {
-			conexion = OperacionesBD.conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-
-			sentencia.setInt(1, idSesionElegida);
-			result = sentencia.executeQuery();
-
-			result.next();
-
-			sesionElegida.setIdSesion(idSesionElegida);
-			sesionElegida.setFecSesion(result.getString("fec"));
-			sesionElegida.setHoraInicio(result.getString("hora_ini"));
-			sesionElegida.setHoraFin(result.getString("hora_fin"));
-			sesionElegida.setPrecio(result.getDouble("precio"));
-			sesionElegida.setSalaSesion(result.getInt("NumSala"));
-			sesionElegida.setPeliculaSesion(result.getInt("IDPeli"));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		} finally {
-
-			try {
-				if (result != null)
-					result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-		return (sesionElegida);
-	}
-
-	public static Sala consultarSala(int IdSesion) {
-		Sala sala = new Sala();
-		String consulta = """
-					select sa.*
-					from sala sa join sesion se on sa.numsala = se.numsala
-					where IDSesion = ?
-				""";
-
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		ResultSet result = null;
-		try {
-			conexion = OperacionesBD.conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-
-			sentencia.setInt(1, IdSesion);
-			result = sentencia.executeQuery();
-
-			result.next();
-
-			sala.setNumSala(result.getInt("numSala"));
-			sala.setAforoSala(result.getInt("aforo"));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		}  finally {
-
-			try {
-				if (result != null)
-					result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		return (sala);
-	}
-
-	public static int consultarCompraRealizada() {
-		
-		int idCompra = -1;
-		
-		String consulta = """
-					select idCompra
-					from compra
-					order by FecCompra desc
-					limit 1
-				""";
-
-		Connection conexion = null;
-		Statement sentencia = null;
-		ResultSet result = null;
-		try {
-			conexion = OperacionesBD.conectarConBD();
-			sentencia = conexion.createStatement();
-
-
-			result = sentencia.executeQuery(consulta);
-
-			result.next();
-			idCompra = result.getInt("IDCompra");
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		} finally {
-
-			try {
-				if (result != null)
-					result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		return (idCompra);
-	}
 	
 	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
 	 * insersiones
 	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 	
-	public static void insertarEntradasEnBD(ArrayList<Entrada> entradas, int idCompra) {
-		
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		int filasAfectadas = 0;
-		
-		String consulta = """
-					insert into entrada (CantPersonas, importe, idSesion, idCompra)
-					values(?, ?, ?, ?)
-				""";
-		try {
-			conexion = OperacionesBD.conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-			
-			for (int i = 0; i < entradas.size(); i++) {
-				
-				sentencia.setInt(1, entradas.get(i).getNumPersonas());
-				sentencia.setDouble(2, entradas.get(i).getNumPersonas() * entradas.get(i).getSesionEntrada().getPrecio());
-				sentencia.setInt(3, entradas.get(i).getSesionEntrada().getIdSesion());
-				sentencia.setInt(4, idCompra);
-				
-				filasAfectadas = sentencia.executeUpdate();
-			
-				if (filasAfectadas < 1) 
-					MostrarMsg.errores(1);
-			}
-
-		}  catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		} finally {
-
-			try {
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}		
-	}
 	
-	public static void insertarCompraEnBD(String plataforma, double descuento,
-									double total, String dni) {
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		int filasAfectadas = 0;
-		
-		String consulta = """
-				insert into compra (plataforma, descuento, total, dni)
-				values(?, ?, ?, ?)
-				""";
-		try {
-			conexion = conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-			
-			sentencia.setString(1, plataforma);
-			sentencia.setDouble(2, descuento);
-			sentencia.setDouble(3, total);
-			sentencia.setString(4, dni);
-			
-			filasAfectadas = sentencia.executeUpdate();
-
-			if (filasAfectadas < 1) 
-				MostrarMsg.errores(1);
-
-		}  catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		}  finally {
-
-			try {
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}		
-	}
-	
-	
-	
-	/**
-	 * este método inserta un nuevo cliente en la BD
-	 * 
-	 * @param Objeto Cliente
-	 * @return boolean <br>
-	 *         <b>true</b> inserción correcta <br>
-	 *         <b>false </b> error de comunicación
-	 */
-	public static void InsertarNuevoUsuario(Cliente consultado, String pw) {
-
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		int result = 0;// en la insercion de datos el result es el numero de rows affected
-		String dni = consultado.getDni();
-		String nom = consultado.getNomCliente();
-		String ape = consultado.getApellidos();
-		String mail = consultado.getEmail();
-
-		// verificar si funciona así el md5
-		String consulta = """
-					insert into cliente
-					values(?, ?, ?, ?, md5(?))
-				""";
-
-		try {
-
-			conexion = conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-
-			sentencia.setString(1, dni);
-			sentencia.setString(2, nom);
-			sentencia.setString(3, ape);
-			sentencia.setString(4, mail);
-			sentencia.setString(5, pw);
-			
-			result = sentencia.executeUpdate();
-
-			if (result < 1) {
-				MostrarMsg.errores(1);
-				consultado = null;
-			}
-
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		}  finally {
-			
-			try {
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 }

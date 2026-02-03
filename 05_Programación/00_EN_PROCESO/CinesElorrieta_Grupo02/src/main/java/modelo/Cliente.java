@@ -125,7 +125,7 @@ public class Cliente {
 			cadena = Main.teclado.nextLine();
 			
 			
-		}while(validarDni(cadena) == false || OperacionesBD.validarExistencia(cadena, "dni") == false);
+		}while(validarDni(cadena) == false || ConsultarDatosBD.validarExistencia(cadena, "dni") == false);
 		
 		return cadena;
 	}
@@ -179,7 +179,7 @@ public class Cliente {
 			else if(cadena.indexOf('@') != cadena.lastIndexOf('@') || cadena.charAt(0) == '@' || cadena.contains("@") == false || cadena.contains(".") == false) 
 				valid = false;
 
-			else if(OperacionesBD.validarExistencia(cadena, "mail") == false) 			
+			else if(ConsultarDatosBD.validarExistencia(cadena, "mail") == false) 			
 				valid = false;
 
 			else if(cadena.substring(cadena.indexOf('@'), cadena.length()).indexOf('.') != cadena.substring(cadena.indexOf('@'), cadena.length()).lastIndexOf('.'))				
