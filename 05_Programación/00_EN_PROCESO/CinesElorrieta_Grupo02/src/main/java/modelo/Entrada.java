@@ -7,24 +7,22 @@ public class Entrada {
 	Sesion	sesionEntrada = new Sesion();
 
 	
-	@Override //toString para utilizado al imprimir la factura 
+	@Override // toString para utilizado al imprimir la factura
 	public String toString() {
-		return 
-				"""
-				Pelicula:           %15s
-				Cant. Personas:     %15s
-				Importe:            %15s
-				Fecha:              %15s
-				Hora inicio:        %15s
-				""".formatted(
-						sesionEntrada.getPelicula().getNombrePeli(),
-						String.valueOf(numPersonas),
-						String.valueOf(importe),
-						sesionEntrada.getFecSesion(),
-						sesionEntrada.getHoraInicio()
-						
-						);
-		
+		return """
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				""".formatted("Pelicula:", sesionEntrada.getPelicula().getNombrePeli(), 
+						"Cant. Personas:", String.valueOf(numPersonas),
+						"Importe", String.valueOf(importe), 
+						"Fecha", sesionEntrada.getFecSesion(),
+						"Hora inicio:", sesionEntrada.getHoraInicio()
+
+		);
+
 	}
 
 	public Entrada() {
