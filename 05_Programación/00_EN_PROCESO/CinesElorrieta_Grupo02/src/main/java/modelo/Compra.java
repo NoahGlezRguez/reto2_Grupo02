@@ -30,7 +30,7 @@ public class Compra {
 	
 	public void eliminarEntrada(int indiceEntrada) {
 		
-		if (indiceEntrada > 0 && indiceEntrada < entradas.size()) {
+		if (indiceEntrada >= 0 && indiceEntrada < entradas.size()) {
 			entradas.remove(indiceEntrada);
 			MostrarMsg.operacionRealizada(1);
 		}
