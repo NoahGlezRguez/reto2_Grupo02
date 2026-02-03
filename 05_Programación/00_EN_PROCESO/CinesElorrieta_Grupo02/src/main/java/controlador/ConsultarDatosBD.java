@@ -13,6 +13,20 @@ public class ConsultarDatosBD {
 	 * conectar con la bbdd
 	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 	
+	public static Connection conectarConBD() {
+		Connection	conexion = null;
+		String data[] = datos();
+		
+		try {									
+			conexion = DriverManager.getConnection(data[0], data[1], data[2]);
+		} catch (SQLException excpsql) {
+			MostrarMsg.errores(0);
+			System.out.println("SQLException: " + excpsql.getMessage());
+			System.out.println("SQLState: " + excpsql.getSQLState());
+			System.out.println("VendorError: " + excpsql.getErrorCode());
+		}
+		return (conexion);
+	}
 	
 	/**
 	 * <p>este método lee los datos de el fichero <b>ipConfig.txt</b>
@@ -43,15 +57,11 @@ public class ConsultarDatosBD {
 			buffer = new BufferedReader(reader);
 			String datos = "";
 			
-			while((datos = buffer.readLine()) != null) {
-				
+			while((datos = buffer.readLine()) != null) {				
 				confi[cont] = datos.substring(datos.indexOf('=')+1);
 				cont++;
-				
 			}
-			
-			
-			
+
 		}catch(FileNotFoundException e) {
 			
 			MostrarMsg.errores(16);
@@ -60,38 +70,14 @@ public class ConsultarDatosBD {
 			MostrarMsg.errores(17);
 		}
 		
-		finally {
-			
-			try {
-				
-				buffer.close();
-				
-			}catch(Exception e) {
-				
-				//rellenar
+		finally {			
+			try {				
+				buffer.close();				
+			}catch(IOException e) {
+				MostrarMsg.errores(17);
 			}
 		}
-		
-		
-		return confi;
-		
-	}
-
-
-	
-	public static Connection conectarConBD() {
-		Connection	conexion = null;
-		String data[] = datos();
-		
-		try {									
-			conexion = DriverManager.getConnection(data[0], data[1], data[2]);
-		} catch (SQLException excpsql) {
-			MostrarMsg.errores(0);
-			System.out.println("SQLException: " + excpsql.getMessage());
-			System.out.println("SQLState: " + excpsql.getSQLState());
-			System.out.println("VendorError: " + excpsql.getErrorCode());
-		}
-		return (conexion);
+		return confi;	
 	}
 
 	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
@@ -495,18 +481,4 @@ public class ConsultarDatosBD {
 
 	}
 
-	
-
-
-		
-	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
-	 * obtencion de datos
-	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-	
-	
-	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
-	 * insersiones
-	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-	
-	
 }
