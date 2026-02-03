@@ -226,6 +226,12 @@ public class Compra {
 	 */
 	public String factura() {
 
+		String formatoEuro = "€%.2f";
+		
+		String descu = String.format(formatoEuro, descuento);
+		String importe = String.format(formatoEuro, precioCompra);
+		String impTotal = String.format(formatoEuro, importeTotal);
+		
 		return """
 				------------------------------------
 				Compra nº:			%15d
@@ -236,12 +242,11 @@ public class Compra {
 				
 				%s
 				
+				Descuento:			%15s
+				Importe:			%15s
 				
-				Descuento:			€%15.2f
-				Importe:			€%15.2f
 				
-				
-				Total:				€%15.2f
+				Total:				%15s
 				-------------------------------------
 				""".formatted(idCompra, 
 						obtenerTiempoActual(),
@@ -249,9 +254,9 @@ public class Compra {
 						comprador.getNomCliente(),
 						comprador.getDni(),
 						recibirEntradas(entradas),
-						descuento, 
-						precioCompra,
-						importeTotal);
+						descu, 
+						importe,
+						impTotal);
 	}
 	
 	private static String recibirEntradas(ArrayList<Entrada> listaEntradas) {
