@@ -226,7 +226,7 @@ public class Compra {
 	 * Se encarga de generar la factura
 	 * @return la factura formateada
 	 */
-	public String factura() {
+	private String factura() {
 		String[] fechahora = tiempoActual();
 		String formatoEuro = "€%.2f";
 		
