@@ -224,43 +224,43 @@ public class Compra {
 	
 	/**
 	 * Se encarga de generar la factura
+	 * 
 	 * @return la factura formateada
 	 */
 	private String factura() {
 		String[] fechahora = tiempoActual();
 		String formatoEuro = "€%.2f";
-		
+
 		String descu = String.format(formatoEuro, descuento);
 		String importe = String.format(formatoEuro, precioCompra);
 		String impTotal = String.format(formatoEuro, importeTotal);
-		
+
 		return """
-				------------------------------------
-				Compra nº:				%d
-				Fecha:					%s
-				Hora:					%s
-				Plataforma:				%s
-				Cliente:				%s
-				DNI:					%s
-				
+				----------------------------------------------
+				%-20s %25d
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+
 				%s
-				
-				Descuento:				%s
-				Importe:				%s
-				
-				
-				Total:					%s
-				-------------------------------------
-				""".formatted(idCompra, 
-						fechahora[0],
-						fechahora[1],
-						tipoCompra,
-						comprador.getNomCliente(),
-						comprador.getDni(),
-						recibirEntradas(entradas),
-						descu, 
-						importe,
-						impTotal);
+
+				%-20s %25s
+				%-20s %25s
+
+				%-20s %25s
+				----------------------------------------------
+				""".formatted("Compra nº:", idCompra,
+						"Fecha:", fechahora[0], 
+						"Hora:", fechahora[1], 
+						"Plataforma:", tipoCompra, 
+						"Cliente:", comprador.getNomCliente(), 
+						"DNI:", comprador.getDni(),
+						recibirEntradas(entradas), 
+						"Descuento:", descu, 
+						"Importe:", importe, 
+						"Total:", impTotal);
 	}
 	
 	/**
