@@ -78,4 +78,8 @@ public class Entrada {
 		this.sesionEntrada = sesionEntrada;
 	}
 
+	public void setImporte() {
+		importe = sesionEntrada.getPrecio() * numPersonas;
+		importe = (long)(importe * 100) / 100;
+	}
 }
