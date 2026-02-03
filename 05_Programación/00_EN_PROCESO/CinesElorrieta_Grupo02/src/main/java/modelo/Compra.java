@@ -263,6 +263,11 @@ public class Compra {
 						impTotal);
 	}
 	
+	/**
+	 * Genera una cadena con toda la informacion de las entradas
+	 * @param listaEntradas lista de objetos {@link Entrada}
+	 * @return un String que contiene la informacion de todas las entradas
+	 */
 	private static String recibirEntradas(ArrayList<Entrada> listaEntradas) {
 		 StringBuilder resultado = new StringBuilder();
 		
