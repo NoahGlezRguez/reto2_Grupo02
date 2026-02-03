@@ -13,10 +13,10 @@
     
     
     <div class="Loginform">
-      <form action="conexion.php" method="post">
+      <form action="include/dbconnect.php" method="post">
         
-          <label for="usuario">Correo:</label>
-          <input type="email" name="user" id="usuario" placeholder="Correo electrónico" required /><br /><br />
+          <label for="usuario">DNI:</label>
+          <input type="text" name="user" id="usuario" placeholder="DNI" required /><br /><br />
           <label for="password">Contraseña:</label>
           <input type="password" name="pass" id="password" placeholder="Contraseña" required /><br /><br />
           <input type="submit" value="Iniciar sesion" id="formISB" class="botonchachipiruli" name="iniciar_sesion"/>

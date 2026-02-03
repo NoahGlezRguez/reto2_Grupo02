@@ -1,10 +1,10 @@
 <?php
 session_start();
 # cambiar: servidor, puerto, password
-$db_server = '192.168.1.210';
-$db_port = 8889;
-$db_user_name = 'luis';
-$db_password = '123.Elorrieta';
+$db_server = '10.5.6.44';
+$db_port = 3307;
+$db_user_name = 'dam_v';
+$db_password = 'Elorrieta00-';
 $db_name = 'cine_elorrieta';
 
 
@@ -17,6 +17,38 @@ $conn = new mysqli($db_server, $db_user_name, $db_password, $db_name, $db_port);
 if ($conn->connect_error) {
     error_log('Connection error: ' . $conn->connect_error);
     die("Fallo en la conexión: " . $conn->connect_error);
+}
+
+// recoger datos del formulario de login aplicando la condición de que se ha pulsado el botón de iniciar sesión
+
+if (isset($_POST['iniciar_sesion'])) {
+    // Recuperar datos del formulario
+    $usuario = $_POST['user'];
+    $contrasena = md5($_POST['pass'], false);
+
+
+    // Consulta SQL
+    $sql = "SELECT * FROM Cliente WHERE DNI = '$usuario' AND userpassword = '$contrasena'";
+
+    // Ejecutar consulta
+    $result = $conn->query($sql);
+
+    // Comprobar si el usuario existe
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $_SESSION['nombre'] = $row['NomCli'];
+            $_SESSION['dni']= $row['DNI'];
+            // Guardaremos el nombre del usuario para mostrarlo en el encabezado más tarde.
+        }
+        // Si hemos encontrado el registro, iniciamos sesión y procedemos: vamos a la pagina de seleccion de cine
+        header("Location: ../cartelera.php");
+        exit();
+    } else {
+        // Si no existe, mensaje de error (lo resuelvo mediante url)
+        // header("Location: ../index.html?errorea=1");
+        echo "<script> alert('Usuario y/o contraseña incorrectos');window.location='login.php';</script>";
+        exit();
+    }
 }
 
 ?>

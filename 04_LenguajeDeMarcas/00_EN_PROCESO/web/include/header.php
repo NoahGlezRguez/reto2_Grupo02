@@ -50,11 +50,7 @@
 
   </header>
 
-<ul class="menu">
-  <li><a href="index.php">Inicio</a></li>
-  <li><a href="cartelera.php">Cartelera</a></li>
-  <li><a href="promociones.php">Promociones</a></li>
-  <li><a href="contacto.php">Contacto</a></li>
+
 
   <!-- nombre de usuario cargado de la sesion, si existe-->
   <!-- https://www.php.net/manual/en/reserved.variables.session.php-->
@@ -62,12 +58,26 @@
     if (isset($_SESSION["nombre"])) {
 
      
-        echo "<li> 🙋 " . $_SESSION["nombre"] . "</li>";
+        echo "
+        <ul class='menu'>
+          <li><a href='index.php'>Inicio</a></li>
+          <li><a href='cartelera.php'>Cartelera</a></li>
+          <li><a href='promociones.php'>Promociones</a></li>
+          <li><a href='contacto.php'>Contacto</a></li>
+          <li> 🙋 " . $_SESSION["nombre"] . "</li>";
   
         echo "<li><a href='carrito.php'>🛒(" . count($carrito) . ")</a></li>";
         echo "<li><a href=\"logout.php\" class=\"CerSes\"> Cerrar sesion </a></li>";
     } else {
-      echo "<li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
+      echo "
+      <ul class='menu'>
+          <li><a href='index.php'>Inicio</a></li>
+          <li><a href='login.php'>Cartelera</a></li>
+          <li><a href='promociones.php'>Promociones</a></li>
+          <li><a href='contacto.php'>Contacto</a></li>
+          <li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
     }
+
+    
   ?>
 </ul>
