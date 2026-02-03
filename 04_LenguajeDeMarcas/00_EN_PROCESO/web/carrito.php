@@ -52,6 +52,7 @@ foreach($carrito as $idses => $cantidad){
                 </div>';/*Corregir cantidad que al seleccionarla se pone la misma en todas las entradas*/
         } 
     }
+<<<<<<< Updated upstream
 }
 
 echo '<form method="post">
@@ -63,6 +64,33 @@ if(isset($_POST['vaciar'])){
     $_SESSION['carrito'] = array();
     $carrito = array();
     
+=======
+
+    $sqlConfirm = "SELECT distinct IDPeli FROM pelicula where IDSesion in (".$sesion[0] ;
+}
+// Aqui se guradarn todas las sesiones del carrito en un string para la consulta (●'◡'●)
+$sesiontoString='';
+foreach($carrito as $i => $sesion){
+    if($i < count($carrito)-1){
+        $sesiontoString = $sesiontoString . "'".$sesion[0]."', ";
+    } else{
+        $sesiontoString = $sesiontoString . "'".$sesion[0]."'";
+    }
+}
+
+echo $sesiontoString;
+
+if(!$valid){ 
+
+    echo '<form method="post">
+            <inut disabled type="" value="" name="descuento"
+            <input disabled type="" value"" name="total">
+            <input type="submit" value="Pagar" name="pagar"/>
+            <input type="submit" value="Vaciar Carrito" name="vaciar"/>
+        </form>'; /* corregir vaciar carrito */ 
+        /* revisar */ 
+
+>>>>>>> Stashed changes
 }
 
 else if(isset($_POST['pagar'])){

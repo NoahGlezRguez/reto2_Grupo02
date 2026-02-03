@@ -69,5 +69,10 @@
     } else {
       echo "<li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
     }
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
   ?>
 </ul>

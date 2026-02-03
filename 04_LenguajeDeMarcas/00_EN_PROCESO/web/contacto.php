@@ -8,7 +8,7 @@
     <main id="pagcontacto">  
         <!-- this area is the one the you will work with -->
         <div class="contactform">
-            <form  id="fromcon">
+            <form id="fromcon">
                 <h2>Contacto</h2>
                 <label for="name">Nombre:</label><br/>
                 <input type="text" id="name" name="name" required><br/><br/>

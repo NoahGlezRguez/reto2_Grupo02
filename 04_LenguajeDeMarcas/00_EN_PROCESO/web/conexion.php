@@ -1,3 +1,4 @@
+<script src="js/js.js"></script>
 <?php
 include('./include/dbconnect.php');
 
@@ -35,7 +36,14 @@ if (isset($_POST['iniciar_sesion'])) {
     } else {
         // Si no existe, mensaje de error (lo resuelvo mediante url)
         // header("Location: ../index.html?errorea=1");
+<<<<<<< Updated upstream
         echo "<script> alert('Usuario y/o contraseña incorrectos');window.location='login.php';</script>";
+=======
+        echo "<script>
+            winale('Usuario y/o contraseña incorrectos');
+            tp('login.php');
+            </script>";
+>>>>>>> Stashed changes
         exit();
     }
 }
@@ -54,12 +62,18 @@ if(isset($_POST['registrarse'])){
 
     //condición de que si la consulta se ejecuta correctamente
     if($conn->query($sql) === true){
-        echo "<script> alert('Usuario nuevo guardado correctamente');window.location='crearCuenta.php';</script>";
+        echo "<script>
+        winale('Usuario nuevo guardado correctamente');
+        tp('crearCuenta.php');
+        </script>";
     }
 
     else{
     // mensaje de error con la base de datos
-        echo "<script> alert('Error');window.location='crearCuenta.php';</script>";
+        echo "<script>
+        winale('Error');
+        tp('crearCuenta.php');
+        </script>";
     }
 } // ALERTA ERROR ALERTA ERROR SI PONES EL MISMO DNI DOS VECES, LA WEB SE MUERE, HAY QUE CONTROLARLO
 
