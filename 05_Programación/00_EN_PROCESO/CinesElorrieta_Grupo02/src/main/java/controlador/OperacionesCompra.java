@@ -133,6 +133,7 @@ public class OperacionesCompra {
 				compra.guardarCompraEnBD();
 				if (Menu.siNo("¿Desea obtener una factura de su compra?") == 0)
 					compra.generarFactura();
+				MostrarMsg.despedida(cliente.getNomCliente());
 			}
 		}	
 		else 

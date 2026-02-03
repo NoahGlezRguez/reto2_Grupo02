@@ -12,13 +12,13 @@ public class Entrada {
 		return """
 				%-20s %25s
 				%-20s %25s
+				%-20s %24s€
 				%-20s %25s
 				%-20s %25s
-				%-20s %25s
-				""".formatted("Pelicula:", sesionEntrada.getPelicula().getNombrePeli(), 
+				""".formatted("Película:", sesionEntrada.getPelicula().getNombrePeli(), 
 						"Cant. Personas:", String.valueOf(numPersonas),
-						"Importe", String.valueOf(importe), 
-						"Fecha", sesionEntrada.getFecSesion(),
+						"Importe:", String.valueOf(importe), 
+						"Fecha de la sesión:", sesionEntrada.getFecSesion(),
 						"Hora inicio:", sesionEntrada.getHoraInicio()
 
 		);

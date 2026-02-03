@@ -217,6 +217,7 @@ public class Compra {
 	public void setComprador(Cliente comprador) {
 		this.comprador = comprador;
 	}
+	
 	/**
 	 * Devuelve la fecha y hora
 	 * 
@@ -247,6 +248,7 @@ public class Compra {
 		return """
 				----------------------------------------------
 				%-20s %25d
+				
 				%-20s %25s
 				%-20s %25s
 				%-20s %25s
@@ -255,10 +257,10 @@ public class Compra {
 
 				%s
 
-				%-20s %25s
-				%-20s %25s
+				%-20s %24s€
+				%-20s %24s€
 
-				%-20s %25s
+				%-20s %24s€
 				----------------------------------------------
 				""".formatted("Compra nº:", idCompra,
 						"Fecha:", fechahora[0], 
