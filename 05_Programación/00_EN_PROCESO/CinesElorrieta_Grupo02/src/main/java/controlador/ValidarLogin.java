@@ -26,12 +26,11 @@ public class ValidarLogin {
 		
 		Cliente iniciado = new Cliente();
 		
-		iniciado = ConsultarBD.Consultarlogin(dni, contraseña);
+		iniciado = OperacionesBD.Consultarlogin(dni, contraseña);
 		
 		if( iniciado!= null) {
-			System.out.println("\n===================================");
-			System.out.println("\tBienvenide "+iniciado.getNomCliente());
-			System.out.println("===================================");
+			MostrarMsg.operacionRealizada(4);
+			MostrarMsg.bienvenida(iniciado.getNomCliente());
 		}
 
 		return (iniciado);
@@ -48,11 +47,12 @@ public class ValidarLogin {
 		
 		Cliente nuevo = new Cliente(true);
 	
-		System.out.println("\tDatos introducidos:");
+		String pw = nuevo.pedirContraseña();
+		System.out.println("\t- Datos introducidos:");
 		System.out.println(nuevo.toString());
 		
 		if (Menu.siNo("Confirmar y guardar datos") == 0)
-			ConsultarBD.InsertarNuevoUsuario(nuevo);
+			OperacionesBD.InsertarNuevoUsuario(nuevo, pw);
 		
 		else {
 			System.out.println("\n\t...Operación cancelada...");

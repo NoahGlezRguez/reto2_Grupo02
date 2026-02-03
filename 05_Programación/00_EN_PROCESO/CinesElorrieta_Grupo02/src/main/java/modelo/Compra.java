@@ -1,9 +1,11 @@
 package modelo;
-import vista.*;
 import java.io.*;
 import java.util.ArrayList;
 
-import controlador.ConsultarBD;
+import controlador.OperacionesBD;
+import vista.MostrarMsg;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Compra {
@@ -23,22 +25,19 @@ public class Compra {
 	
 	public void agregarEntrada(Entrada nuevaEntrada) {
 		entradas.add(nuevaEntrada);
+		MostrarMsg.operacionRealizada(0);
 	}
 	
 	public void eliminarEntrada(int indiceEntrada) {
-		for (int i = 0; i < entradas.size(); i++) {
-			if(i == indiceEntrada) {
-				entradas.remove(i);
-				System.out.println("\n\t- Entrada eliminada del carrito satisfactoriamente.");//refactorizar esta linea
-			}
+		
+		if (indiceEntrada > 0 && indiceEntrada < entradas.size()) {
+			entradas.remove(indiceEntrada);
+			MostrarMsg.operacionRealizada(1);
 		}
+		else
+			MostrarMsg.errores(8);
 	}
 	
-	public void cancelarCompra() {
-		entradas.clear();
-	}
-	
-
 	public int conocerAforoCesta(int idSesion) {
 		int aforoCesta = 0;
 
@@ -50,9 +49,16 @@ public class Compra {
 	}
 
 	public void guardarCompraEnBD() {
-		ConsultarBD.insertarCompraEnBD(tipoCompra, descuento, importeTotal, comprador.getDni());
-		//setIDcompra = ConsultarBD.consultarCompraRealizada();
-		//ConsultarBD.insertarEntradasEnBD(entradas);
+		
+		precioCompra = (long)(calcularPrecioDeCompra() * 100) / 100;
+		porcenDescuento = calcularPorcenDescuento();
+		descuento = precioCompra * porcenDescuento;
+		descuento = (long)(descuento * 100) / 100;
+		importeTotal = (long)((precioCompra - descuento) * 100) / 100;
+		
+		OperacionesBD.insertarCompraEnBD(tipoCompra, descuento, importeTotal, comprador.getDni());
+		idCompra = OperacionesBD.consultarCompraRealizada();
+		OperacionesBD.insertarEntradasEnBD(entradas, idCompra);
 	}
 
 	public void mostrarCesta() {
@@ -72,14 +78,14 @@ public class Compra {
 				""";
 		
 		valores = """				
-					~ Precio de las entradas ·     ·     ·    %.2f€
+					~ Precio de las entradas ·     ·     ·    %8.2f€
 					
-					~ Descuento aplicable por promoción  ·    %.2f%%
+					~ Descuento aplicable por promoción  ·    %8.2f%%
 					
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					~ Coste final de su compra(con I.V.A. incluido): 	 
 					
-				        %.2f - %.2f  = ·     ·     ·     ·  %.2f€ 
+				        %-4.2f - %-4.2f  = ·     ·     ·     ·  %8.2f€ 
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				
 				""".formatted(precioCompra, porcenDescuento * 100, precioCompra, descuento, importeTotal);
@@ -165,23 +171,19 @@ public class Compra {
 		return entradas;
 	}
 	
+	
 	/**
 	 * escribe en un fichero y funciona, se utilizará para la factura
 	 * en el reto, tendrá que recibir un objeto compra como parámetro,
 	 * consultar con la bd que entradas pertenecen a esa compra, 
 	 * obtener los datos y dar formáto a la factura.
 	 */
-	private void generarFactura() {
+	public void generarFactura() {
 		
-		String ruta = "";
-		
-		String mensaje = MostrarMsg.factura(String.valueOf(idCompra),"fechaCompra", tipoCompra, 
-				comprador.getNomCliente(), comprador.getDni(), 
-				String.valueOf(descuento), String.valueOf(precioCompra), 
-				String.valueOf(importeTotal), entradas);
+		String ruta = "src/main/java/files/factura.txt";
 		
 		FileWriter fichero = null;
-		BufferedWriter buffer= null;
+		BufferedWriter buffer = null;
 		
 		try {
 			
@@ -189,9 +191,9 @@ public class Compra {
 			fichero = new FileWriter(ruta, true);
 			buffer = new BufferedWriter(fichero);
 			buffer.newLine();
-			buffer.write(mensaje);
+			buffer.write(factura());
 			buffer.newLine();
-			
+			MostrarMsg.operacionRealizada(5);
 			
 		}catch(IOException e) {
 			
@@ -210,6 +212,85 @@ public class Compra {
 			}
 		}
 		
+	}
+
+	public void setComprador(Cliente comprador) {
+		this.comprador = comprador;
+	}
+	
+	/**
+	 * Devuelve la fecha y hora
+	 * 
+	 * @return devuelve un array con fecha y hora
+	 */
+	public static String[] tiempoActual() {
+		String[] fechaHoraArray = new String[2];
+		LocalDateTime fechaHora = LocalDateTime.now();
+		fechaHoraArray[0] = fechaHora.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		fechaHoraArray[1] = fechaHora.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+	    return fechaHoraArray;
+	}
+	
+	
+	/**
+	 * Se encarga de generar la factura
+	 * 
+	 * @return la factura formateada
+	 */
+	private String factura() {
+		String[] fechahora = tiempoActual();
+		String formatoEuro = "€%.2f";
+
+		String descu = String.format(formatoEuro, descuento);
+		String importe = String.format(formatoEuro, precioCompra);
+		String impTotal = String.format(formatoEuro, importeTotal);
+
+		return """
+				----------------------------------------------
+				%-20s %25d
+				
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+
+				%s
+
+				%-20s %24s€
+				%-20s %24s€
+
+				%-20s %24s€
+				----------------------------------------------
+				""".formatted("Compra nº:", idCompra,
+						"Fecha:", fechahora[0], 
+						"Hora:", fechahora[1], 
+						"Plataforma:", tipoCompra, 
+						"Cliente:", comprador.getNomCliente(), 
+						"DNI:", comprador.getDni(),
+						recibirEntradas(entradas), 
+						"Descuento:", descu, 
+						"Importe:", importe, 
+						"Total:", impTotal);
+	}
+	
+	/**
+	 * Genera una cadena con toda la informacion de las entradas
+	 * @param listaEntradas lista de objetos {@link Entrada}
+	 * @return un String que contiene la informacion de todas las entradas
+	 */
+	private static String recibirEntradas(ArrayList<Entrada> listaEntradas) {
+		 StringBuilder resultado = new StringBuilder();
+		
+		for(int i = 0; i < listaEntradas.size(); i++) {
+			resultado.append(listaEntradas.get(i).toString());
+			
+			if (i < listaEntradas.size()-1) {
+				resultado.append("\n");
+			}			
+		}
+		
+		return resultado.toString();
 	}
 
 	
