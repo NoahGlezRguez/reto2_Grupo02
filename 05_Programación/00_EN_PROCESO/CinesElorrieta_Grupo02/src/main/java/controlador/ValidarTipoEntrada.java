@@ -101,43 +101,7 @@ public class ValidarTipoEntrada {
 				MostrarMsg.errores(0);
 			return (esCorrecto);
 		}
-	
-		
-		/**
-		 * Analiza un string que recibe por parámetro e indica si este solo contiene un número entero (positivo o negativo) o no.
-		 * Además, verificará si este número entra dentro de los parámetros de un int o no, dando por incorrecto cuando se desborda.
-		 * @param entrada - String a validar
-		 * @return true si es un número entero, false en caso contrario
-		 */
-		public static boolean checkSoloNumeroEntero(String entrada) {
 			
-			boolean esCorrecto = false;
-			
-			if (entrada != null && !entrada.isBlank()) {
-				entrada = entrada.trim();
-				esCorrecto = true;
-				
-				if (entrada.charAt(0) == '-' || entrada.charAt(0) == '+') 
-					entrada = entrada.substring(1);
-				
-				if (!checkNum(entrada)) 
-					esCorrecto = false;
-				else {
-					try {
-						Integer.parseInt(entrada);
-					} catch (NumberFormatException e) {
-						e.printStackTrace();
-						System.out.println("Error, el nº es muy grande...");//dar formato con msg de error
-						esCorrecto = false;
-					}
-				}
-			
-			}
-			else
-				System.out.println("Error, entrada vacia");//formatear con un msg de error
-			return (esCorrecto);
-		}
-		
 		/**
 		 * Analiza un string que recibe por parámetro e indica si este solo contiene dígitos y nada más.
 		 * 
@@ -147,6 +111,8 @@ public class ValidarTipoEntrada {
 		public static boolean checkNum(String entrada) {
 			
 			boolean esCorrecto = true;
+			
+			entrada = entrada.trim();
 			
 			try {
 				

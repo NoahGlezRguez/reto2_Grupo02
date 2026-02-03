@@ -16,7 +16,6 @@ public class Sala {
 	public Sala() {
 		
 	}
-	
 
 	public int getNumSala() {
 		return numSala;

@@ -48,12 +48,12 @@ public class Entrada {
 					~~~ Hora: 	%sh
 					~~~ Sala: 	%d
 					
-					~~~ Nº de personas ·     ·     ·     ·    %d
-					~~~ Precio de la sesión  ·     ·     ·    %.2f€
+					~~~ Nº de personas ·     ·     ·     ·    %8d
+					~~~ Precio de la sesión  ·     ·     ·    %8.2f€
 					
 					-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 					
-					~~~ Importe total de entrada   ·     ·    %.2f€
+					~~~ Importe total de entrada   ·     ·    %8.2f€
 					
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				""".formatted(tituloPeli, fecha, hora.substring(0, 5), sala, numPersonas, precio, importe);
@@ -61,7 +61,6 @@ public class Entrada {
 		System.out.println(entrada);
 	}
 	
-
 	public int getNumPersonas() {
 		return numPersonas;
 	}
@@ -76,6 +75,11 @@ public class Entrada {
 
 	public void setSesionEntrada(Sesion sesionEntrada) {
 		this.sesionEntrada = sesionEntrada;
+	}
+	
+	public void setImporte() {
+		importe = sesionEntrada.getPrecio() * numPersonas;
+		importe = (long)(importe * 100) / 100;
 	}
 
 }

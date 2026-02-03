@@ -18,7 +18,7 @@ public class Menu {
 	 */
 	public static int opciones(String titulo, String opciones[], String peticion) {
 		
-		int		seleccion = 0;
+		int		seleccion = -1;
 		boolean	esCorrecto;
 		String	entrada;
 		
@@ -32,9 +32,9 @@ public class Menu {
 			
 			System.out.printf("\n\t·····> %s: ", peticion);
 			
-			entrada = Main.teclado.nextLine();
+			entrada = Main.teclado.nextLine().trim();
 			
-			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+			if (ValidarTipoEntrada.checkNum(entrada)) {
 				
 				seleccion = Integer.parseInt(entrada);
 				
@@ -42,6 +42,8 @@ public class Menu {
 					//MostrarMensajeDeError.mostrarError(8);
 					esCorrecto = false;
 				}
+				else
+					seleccion--;
 			}
 			else 
 				esCorrecto = false;
@@ -50,7 +52,7 @@ public class Menu {
 		
 		System.out.println("\n-----------------------------------------------------------------------\n");
 		
-		return (seleccion - 1);
+		return (seleccion);
 	}
 	
 	//sirve para las decisiones de confirmacion
@@ -61,19 +63,19 @@ public class Menu {
 		String	entrada, menu = """
 		\n\t------> %s <<<<<<------
 		\t\t1.- Sí.\n\t\t2.- No.\n
-		\t·····> Introduzca su respuesta: """.formatted(peticion);
+		\t·····> Introduzca su respuesta:\t""".formatted(peticion);
 		
 		do {
 			esCorrecto = true;
 			System.out.print(menu);
-			entrada = Main.teclado.nextLine();
+			entrada = Main.teclado.nextLine().trim();
 			
-			if (ValidarTipoEntrada.checkSoloNumeroEntero(entrada)) {
+			if (ValidarTipoEntrada.checkNum(entrada)) {
 				
 				seleccion = Integer.parseInt(entrada);
 				
 				if ((seleccion < 1) || (seleccion > 2)) {
-					//MostrarMensajeDeError.mostrarError(8);
+					MostrarMsg.errores(8);
 					esCorrecto = false;
 				}
 			}
@@ -110,7 +112,7 @@ public class Menu {
 		String		fecha = null;
 		
 		fecha = """				
-			\n\tOpción nº %d:\t- Día %s/%s/%s.						
+			\n\tOpción nº %d:\t→ Día %s/%s/%s						
 			""".formatted(i, fechaOfertada.substring(8, 10), fechaOfertada.substring(5, 7), fechaOfertada.substring(0, 4));
 			
 		System.out.print(fecha);
@@ -122,7 +124,7 @@ public class Menu {
 		String		sesionDisponible = null;
 		
 		sesionDisponible = """				
-		\n\tOpción nº %d:\tHora %sh Sala %d - precio %.2f€.						
+		\n\tOpción nº %d:\tHora %sh Sala %d - Precio %.2f€						
 		""".formatted(i, duracion.substring(0, 5), sala, precio);
 		
 		System.out.print(sesionDisponible);
@@ -130,26 +132,28 @@ public class Menu {
 	
 	public static void pedirNumPersonas(Sesion sesionElegida, Compra compra) { 
 		
-		String	peticion = """
-				\t\t- Aforo actual disponible para esta sesión: %s asientos libres de %s.
-				\t\t\t<<<<Para volver atrás, introduzca -1 >>>>
-				\t\t- Introduzca su respuesta: """.formatted(sesionElegida.getAforoDisponible(), sesionElegida.getSala().getAforoSala());
+		String	info = """
+				\tAforo actual disponible para esta sesión:
+				\t  → %s asientos libres de %s
+				""".formatted(sesionElegida.getAforoDisponible(), sesionElegida.getSala().getAforoSala());
 		
-		sesionElegida.setAforoDisponible(ConsultarBD.consultarAforo(sesionElegida.getIdSesion(), compra));
+		sesionElegida.setAforoDisponible(OperacionesBD.consultarAforo(sesionElegida.getIdSesion(), compra));
 		
-		System.out.print(peticion);
+		System.out.print(info);
+		msgVolverAtras();
+		System.out.print("\t·····> Introduzca el nº de personas: ");
 			
 	}
 	
 	public static void cabeceraMenu(int tipoMenu, String tituloPeli, String fecha, String horaSesion) {
 		
-		String	lineaPeli = "\n\t\t[🎬] Película: ", fechaFormateada = null;
+		String	lineaPeli = "\n\t[🎬] Película → ", fechaFormateada = null;
 
 		if (fecha != null) 
 			fechaFormateada = "%s/%s/%s".formatted(fecha.substring(8, 10), fecha.substring(5, 7), fecha.substring(0, 4));
 		
 			
-		System.out.print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\t\t");
+		System.out.print("\n\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\t\t");
 		switch (tipoMenu) {
 			case 1:
 				System.out.println("Cartelera disponible\n");
@@ -158,13 +162,13 @@ public class Menu {
 				System.out.println("Fechas disponibles\n" + lineaPeli + tituloPeli);
 				break;
 			case 3:
-				System.out.println("Sesiones disponibles\n" + lineaPeli + tituloPeli + " - día " + fechaFormateada);
+				System.out.println("Sesiones disponibles\n" + lineaPeli + tituloPeli + " - "+ fechaFormateada);
 				break;
 			case 4:
 				System.out.println("""
-						Cantidad de personas para su entrada
+						RESERVA DE PLAZAS
 						%s %s
-						\t\tDía %s a las %sh
+						\t\t%s a las %sh
 						""".formatted(lineaPeli, tituloPeli, fechaFormateada, horaSesion));
 				break;
 		}
@@ -173,9 +177,10 @@ public class Menu {
 	
 	public static void msgVolverAtras() {
 		String msg = """
-			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --
-			\tPARA VOLVER ATRÁS introduzca:	-1.
-			\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --	""";
+			\n\n\n\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --
+			\tPara VOLVER ATRÁS introduzca:	-1
+			--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --	
+			""";
 		System.out.println(msg);
 	}
 	
