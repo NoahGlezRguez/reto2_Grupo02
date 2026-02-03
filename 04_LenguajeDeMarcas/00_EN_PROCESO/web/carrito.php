@@ -3,6 +3,7 @@
 <?php 
 include('./include/dbconnect.php');
 
+
 // Recuperamos el carrito
 if(!isset($_SESSION['carrito'])){
     $carrito = array();
@@ -11,6 +12,7 @@ else {
     $carrito = $_SESSION['carrito'];
 }
 
+$total = 0;
 // Metemos en el carrito lo nuevo
 $esta_sesion = array();
 $cantidad = 0;
@@ -61,37 +63,101 @@ foreach($carrito as $i => $sesion){
                 <p> Precio: ' . $rrftp['precio'] . '€</p>
                 <p> Cantidad: ' . $sesion[1] . '</p>
                 </div>';/*Corregir cantidad que al seleccionarla se pone la misma en todas las entradas*/
+
+                $total = $total + $rrftp['precio'];
         } 
     }
 
-    $sqlConfirm = "SELECT distinct IDPeli FROM pelicula where IDSesion in (".$sesion[0] ;
+   
 }
 // Aqui se guradarn todas las sesiones del carrito en un string para la consulta (●'◡'●)
 $sesiontoString='';
 foreach($carrito as $i => $sesion){
     if($i < count($carrito)-1){
-        $sesiontoString = $sesiontoString . "'".$sesion[0]."', ";
+        $sesiontoString = $sesiontoString .$sesion[0].", ";
     } else{
-        $sesiontoString = $sesiontoString . "'".$sesion[0]."'";
+        $sesiontoString = $sesiontoString .$sesion[0];
     }
 }
 
 echo $sesiontoString;
 
-if(!$valid){ 
+if(count($carrito)>0){
+    $sqlConfirm = "SELECT distinct IDPeli FROM sesion where IDSesion in (". $sesiontoString . ");";
+    $rowsids = $conn->query($sqlConfirm);
 
-    echo '<form method="post">
-            <inut disabled type="" value="" name="descuento"
-            <input disabled type="" value"" name="total">
-            <input type="submit" value="Pagar" name="pagar"/>
-            <input type="submit" value="Vaciar Carrito" name="vaciar"/>
-        </form>'; /* corregir vaciar carrito */ 
-        /* revisar */ 
+    $numrows  = $rowsids -> num_rows;
+    $descuento = 0;
+
+    if($numrows < 2){
+
+        $descuento = 0;
+        
+    }
+
+    else if($numrows == 2){
+
+        $descuento = 20;
+        $descuento = $total * ($descuento/100);
+        $total = $total - $descuento;
+    }
+
+    else{
+
+        $descuento = 30;
+        $descuento = $total * ($descuento/100);
+        $total = $total - $descuento;
+    }
+
+    
+
+
+
+    if(!$valid){ 
+
+        isset($_SESSION["dni"]);
+        echo '<form method="post">
+                <input type="hidden" value="web" name="plat">
+                <input disabled type="text" value="'. $_SESSION["dni"] .'" name="dni">
+                <label>Descuento: </label>
+                <input disabled type="number" value="'.$descuento.'" name="descuento">
+                <label>Total: </label>
+                <input disabled type="number" value="'.$total.'" name="total">
+                <input type="submit" value="Pagar" name="pagar"/>
+                <input type="submit" value="Vaciar Carrito" name="vaciar"/>
+            </form>'; /* corregir vaciar carrito */ 
+            /* revisar */ 
+        
+    }
 
 }
 
+
+
+//aquí guardo la compra 
 else if(isset($_POST['pagar'])){
     /* Aquí iría la lógica de pago*/
+
+    $dni = $_POST['dni'];
+    $plat = $_POST['plat'];
+    $desc = $_POST['descuento'];
+    $tot = $_POST['total'];
+
+    /*$sqlIdcom= "SELECT max(IDCompra)
+                FROM compra";
+
+    $idcmax = $conn->query($sqlIdcom);
+    $idcmax = $idcmax -> fetch_assoc();
+    $idcmax = $idcmax + 1;*/
+
+    $sqlcom = "INSERT INTO compra VALUES( null, null, '".$plat."', " . $desc . ", ". $tot .", ". $dni .");";
+    
+    if($conn->query($sqlcom)){
+
+        echo'<script> window.alert(holaaa);</script>';
+
+    }
+
     echo "<p>Pago realizado con éxito. ¡Gracias por su compra!</p>";
     $_SESSION['carrito'] = array();
     $carrito = array();

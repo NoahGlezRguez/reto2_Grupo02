@@ -78,6 +78,6 @@
           <li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
     }
 
-
+    
   ?>
 </ul>
