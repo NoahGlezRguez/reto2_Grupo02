@@ -2,8 +2,9 @@ package modelo;
 import vista.*;
 import java.io.*;
 import java.util.ArrayList;
-
 import controlador.ConsultarBD;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Compra {
@@ -171,14 +172,9 @@ public class Compra {
 	 * consultar con la bd que entradas pertenecen a esa compra, 
 	 * obtener los datos y dar formáto a la factura.
 	 */
-	private void generarFactura() {
+	public void generarFactura() {
 		
-		String ruta = "";
-		
-		String mensaje = MostrarMsg.factura(String.valueOf(idCompra),"fechaCompra", tipoCompra, 
-				comprador.getNomCliente(), comprador.getDni(), 
-				String.valueOf(descuento), String.valueOf(precioCompra), 
-				String.valueOf(importeTotal), entradas);
+		String ruta = "src/main/java/files/factura.txt";
 		
 		FileWriter fichero = null;
 		BufferedWriter buffer= null;
@@ -189,7 +185,7 @@ public class Compra {
 			fichero = new FileWriter(ruta, true);
 			buffer = new BufferedWriter(fichero);
 			buffer.newLine();
-			buffer.write(mensaje);
+			buffer.write(factura());
 			buffer.newLine();
 			
 			
@@ -210,6 +206,80 @@ public class Compra {
 			}
 		}
 		
+	}
+
+	/**
+	 * Devuelve la fecha y hora
+	 * 
+	 * @return devuelve un array con fecha y hora
+	 */
+	public static String[] tiempoActual() {
+		String[] fechaHoraArray = new String[2];
+		LocalDateTime fechaHora = LocalDateTime.now();
+		fechaHoraArray[0] = fechaHora.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		fechaHoraArray[1] = fechaHora.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+	    return fechaHoraArray;
+	}
+	
+	
+	/**
+	 * Se encarga de generar la factura
+	 * 
+	 * @return la factura formateada
+	 */
+	private String factura() {
+		String[] fechahora = tiempoActual();
+		String formatoEuro = "€%.2f";
+
+		String descu = String.format(formatoEuro, descuento);
+		String importe = String.format(formatoEuro, precioCompra);
+		String impTotal = String.format(formatoEuro, importeTotal);
+
+		return """
+				----------------------------------------------
+				%-20s %25d
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+
+				%s
+
+				%-20s %25s
+				%-20s %25s
+
+				%-20s %25s
+				----------------------------------------------
+				""".formatted("Compra nº:", idCompra,
+						"Fecha:", fechahora[0], 
+						"Hora:", fechahora[1], 
+						"Plataforma:", tipoCompra, 
+						"Cliente:", comprador.getNomCliente(), 
+						"DNI:", comprador.getDni(),
+						recibirEntradas(entradas), 
+						"Descuento:", descu, 
+						"Importe:", importe, 
+						"Total:", impTotal);
+	}
+	
+	/**
+	 * Genera una cadena con toda la informacion de las entradas
+	 * @param listaEntradas lista de objetos {@link Entrada}
+	 * @return un String que contiene la informacion de todas las entradas
+	 */
+	private static String recibirEntradas(ArrayList<Entrada> listaEntradas) {
+		 StringBuilder resultado = new StringBuilder();
+		
+		for(int i = 0; i < listaEntradas.size(); i++) {
+			resultado.append(listaEntradas.get(i).toString());
+			
+			if (i < listaEntradas.size()-1) {
+				resultado.append("\n");
+			}			
+		}
+		
+		return resultado.toString();
 	}
 
 	
