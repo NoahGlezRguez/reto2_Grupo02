@@ -7,29 +7,22 @@ public class Entrada {
 	Sesion	sesionEntrada = new Sesion();
 
 	
-	@Override //toString para utilizado al imprimir la factura 
+	@Override // toString para utilizado al imprimir la factura
 	public String toString() {
-		
-		importe = (long)(importe * 100) / 100;
-		
-		return 
-				"""
-				- - - - - - - - - - - - - - - -
-				Pelicula:           	%15s
-				Cant. Personas:     	%15s
-				Importe:         	%15s€
-				Fecha:              	%15s
-				Hora inicio:        	%15s
-				- - - - - - - - - - - - - - - - 
-				""".formatted(
-						sesionEntrada.getPelicula().getNombrePeli(),
-						String.valueOf(numPersonas),
-						String.valueOf(importe),
-						sesionEntrada.getFecSesion(),
-						sesionEntrada.getHoraInicio()
-						
-						);
-		
+		return """
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				%-20s %25s
+				""".formatted("Pelicula:", sesionEntrada.getPelicula().getNombrePeli(), 
+						"Cant. Personas:", String.valueOf(numPersonas),
+						"Importe", String.valueOf(importe), 
+						"Fecha", sesionEntrada.getFecSesion(),
+						"Hora inicio:", sesionEntrada.getHoraInicio()
+
+		);
+
 	}
 
 	public Entrada() {
@@ -55,12 +48,12 @@ public class Entrada {
 					~~~ Hora: 	%sh
 					~~~ Sala: 	%d
 					
-					~~~ Nº de personas ·     ·     ·     ·    %8d
-					~~~ Precio de la sesión  ·     ·     ·    %8.2f€
+					~~~ Nº de personas ·     ·     ·     ·    %d
+					~~~ Precio de la sesión  ·     ·     ·    %.2f€
 					
 					-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 					
-					~~~ Importe total de entrada   ·     ·    %8.2f€
+					~~~ Importe total de entrada   ·     ·    %.2f€
 					
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				""".formatted(tituloPeli, fecha, hora.substring(0, 5), sala, numPersonas, precio, importe);
@@ -68,6 +61,7 @@ public class Entrada {
 		System.out.println(entrada);
 	}
 	
+
 	public int getNumPersonas() {
 		return numPersonas;
 	}
@@ -82,11 +76,6 @@ public class Entrada {
 
 	public void setSesionEntrada(Sesion sesionEntrada) {
 		this.sesionEntrada = sesionEntrada;
-	}
-	
-	public void setImporte() {
-		importe = sesionEntrada.getPrecio() * numPersonas;
-		importe = (long)(importe * 100) / 100;
 	}
 
 }

@@ -1,5 +1,7 @@
 package vista;
+import java.util.ArrayList;
 
+import modelo.*;
 public class MostrarMsg {
 
 	public static void bienvenida() {
@@ -9,35 +11,23 @@ public class MostrarMsg {
 			*                                                                     *
 			*   ###############################################################   *
 			*   #                                                             #   *
-			*   #   ★☆★         ¡BIENVENIDX A CINES ELORRIETA!         ★☆★  #   *
+			*   #   ★☆★         ¡BIENVENIDX A CINES ELORRIETA!	     ★☆★  #   *
 			*   #                                                             #   *
-			*   #                Donde experimentar nuevos mundos...          #   *
+			*   #                Donde experimentar nuevos mundos...	  #   *
 			*   #              desde la más cómoda de las butacas:.           #   *
 			*   #                                                             #   *
 			*   ###############################################################   *
 			*                                                                     *
-			*            [🎥]  [🎞️]  [🎬]  [🎞️]  [📽️]  [🎞️]  [🎦]  [📽️]    	      *
+			*            [🎥]  [🎞️]  [🎬]  [🎞️]  [📽️]  [🎞️]  [🎦]  [📽️]             *
 			*                                                                     *
 			*              → Pulsa la tecla Enter para comenzar ←                 *
 			*                                                                     *
 			***********************************************************************
 				        		""";
         
-        System.out.print("\n".repeat(5) + a);        
-	}
-	
-	public static void bienvenida(String nombreCliente) {
-        
-        String a = """
-			\n\n***********************************************************************
-			                 ★☆★                  
-        		     		     	¡Bienvenide %s!         
-			                 ★☆★         										
-			***********************************************************************\n\n
-				        		""".formatted(nombreCliente);
-        
         System.out.print(a);        
 	}
+	
 	
 	public static void despedida() {
         
@@ -45,32 +35,13 @@ public class MostrarMsg {
 			***********************************************************************
 			*                                                                     *
 			*   ###############################################################   *
-			*   #    		         ¡HASTA LA PRÓXIMA!    	       	          #   *
+			*   #    		¡HASTA LA PRÓXIMA!     	       	          #   *
 			*   ###############################################################   *
 			*                                                                     *
 			*            [🎥]  [🎞️]  [🎬]  [🎞️]  [📽️]  [🎞️]  [🎦]  [📽️]             *
 			*                                                                     *
 			***********************************************************************
 				        		""";
-        
-        System.out.print(a + "\n".repeat(10));
-
-	}
-	
-	
-	public static void despedida(String nombreCliente) {
-        
-        String a = """
-			***********************************************************************
-			*                                                                     *
-			*   ###############################################################   *
-        		     		  ¡HASTA LA PRÓXIMA, %s!     	       	 
-			*   ###############################################################   *
-			*                                                                     *
-			*            [🎥]  [🎞️]  [🎬]  [🎞️]  [📽️]  [🎞️]  [🎦]  [📽️]             *
-			*                                                                     *
-			***********************************************************************
-				        		""".formatted(nombreCliente);
         
         System.out.print(a + "\n".repeat(10));
 
@@ -94,48 +65,55 @@ public class MostrarMsg {
 	 * @param num ID del error
 	 * @return String mensaje  
 	 */
-	public static void errores(int num) {
-				
-		String [] msg = {
-				"no se ha podido establecer conexión con la base de datos",
-				"no se ha podido procesar sus datos, pruebe más tarde...",
-				"ya no quedan sesiones con aforo el día seleccionado",
-				"formato no válido",
-				"el usuario no existe",
-				"el usuario ya existe",
-				"usuario y/o contraseña incorrecto/s, prueba otra vez",
-				"debe introducir mínimo 8 caracteres",
-				"opción no válida",
-				"SRDFÑFGLIHDPKFGUHWOERUGHPEAROUGHPQAEORUGHQEPOR",
-				"el formato introducido es muy largo",
-				"no has introducido nada",
-				"ahora mismo no hay nada en su carrito",
-				"no hay cartelera disponible ahora mismo, lo sentimos",
-				"debe ser mínimo una persona",
-				"ha excedido del aforo disponible"
-			};
+	public static String errores(int num) {
+		/*
+		 * codigos de error y su significado:
+		    0 Ningún dato introducido, por favor inténtelo de nuevo
+			1 Solo se permiten hasta 8 caracteres, por favor inténtelo de nuevo
+			2 Inserte solamente letras, por favor
+			3 Inserte un número entero positivo, por favor
+			4 Inserte solamente caracteres alfanuméricos, por favor
+			5 Inserte un nº decimal positivo, por favor
+			7 Usuario y/o contraseña incorrectos, por favor inténtelo de nuevo
+			8 Opción incorrecta, por favor inténtelo de nuevo
+			13 El nombre que intenta asignar no tiene letras, pruebe con otro, por favor
 			
-		String msgError = """
-		\n\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-		\tError → %s
-		//////////////////////////////////////////////////////////\n\n
-		""".formatted(msg[num]);
-	
-		System.out.println(msgError);
-
+			dejé esto aquí por si lo quereís modificar en el futuro pero personalmente
+			creo que "formato no válido" incluye varias opciones
+		 * 
+		 * */
+		
+		String linea = "=============================\n";
+		
+		String [] error = {
+				
+				linea+"\tError, formato no válido\n"+linea,
+				linea+"\tError, el usuario no existe\n"+linea,
+				linea+"\tError, el usuario ya existe\n"+linea,
+				linea+"\tError en la conexión\n"+linea,
+				linea+"\tUsuario y/o contraseña incorrectos, por favor inténtelo de nuevo\n"+linea,
+				linea+"\tError, debe introducir al menos 8 caracteres\n"+linea,
+				linea+"\tPor favor seleccione un opción válida\n"+linea,
+				linea+"\tPor favor introduzca un valor positivo\n"+linea,
+				linea+"\tError, el formato introducido es muy largo\n"+linea
+				
+				};
+		
+		return error[num];
+		
 	}
 	
 	public static void mensajeSignIn() {
 		
 		String msg = 
-				"\n\n======================= Inicio de sesion obligatorio =======================\n";
+				"===================================\n\tInicio de sesion\n===================================";
 		System.out.println(msg);
 	}
 	
 	public static void mensajeSignUp() {
 		
 		String msg = 
-				"\n\n======================= Creación de un nuevo usuario =======================\n";
+				"===================================\n\tCrear nueva cuenta\n===================================";
 		System.out.println(msg);
 	}
 	
@@ -152,29 +130,18 @@ public class MostrarMsg {
 	 * @param num ID del mensaje 
 	 * @return String mensaje 
 	 */
-
-	
-	
-	//^^^^^^^^^CORREGIR LA DOC DE LOS METODOS^^^^^^^^^^^^^^
-
-	public static void operacionRealizada(int indice) {
-		String msg[] = {
-			"Se ha añadido una entrada a su cesta satisfactoriamente",
-			"Se ha eliminado una entrada de su cesta satisfactoriamente",
-			"Se ha realizado la compra satisfactoriamente",
-			"Se ha creado la nueva cuenta satisfactoriamente",
-			"Se ha iniciado sesión satisfactoriamente",	
-			"Se ha generado su factura satisfactoriamente"
-				
+	public static String msgBD(int num){
+		
+		String [] msg = {
+			"\t--> Error en la conexión\n",
+			"\t--> Error en los datos\n",
+			"\t--> Nuevo usuario guardado correctamente",
+			"\t--> No quedan sesiones con aforo el día seleccionado",
+			"\t--> Se ha realizado la compra satisfactoriamente"
 		};
 		
-		String	output = """
-				\n\n····························································
-				   - - - -> %s
-				····························································\n\n
-				""".formatted(msg[indice]);
-		
-		System.out.println(output);
+		return msg[num];
 	}
+	
 	
 }
