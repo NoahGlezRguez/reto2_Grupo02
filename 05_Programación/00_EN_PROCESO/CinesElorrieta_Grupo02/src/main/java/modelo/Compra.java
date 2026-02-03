@@ -254,11 +254,15 @@ public class Compra {
 						importeTotal);
 	}
 	
-	private static String recibirEntradas(ArrayList<Entrada> entrada) {
+	private static String recibirEntradas(ArrayList<Entrada> listaEntradas) {
 		 StringBuilder resultado = new StringBuilder();
 		
-		for(int i = 0; i<entrada.size(); i++) {
-			resultado.append(entrada.get(i).toString());
+		for(int i = 0; i < listaEntradas.size(); i++) {
+			resultado.append(listaEntradas.get(i).toString());
+			
+			if (i < listaEntradas.size()-1) {
+				resultado.append("\n");
+			}			
 		}
 		
 		return resultado.toString();
