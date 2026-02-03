@@ -97,22 +97,24 @@ public class MostrarMsg {
 	public static void errores(int num) {
 				
 		String [] msg = {
-				"no se ha podido establecer conexión con la base de datos",
-				"no se ha podido procesar sus datos, pruebe más tarde...",
-				"ya no quedan sesiones con aforo el día seleccionado",
-				"formato no válido",
-				"el usuario no existe",
-				"el usuario ya existe",
-				"usuario y/o contraseña incorrecto/s, prueba otra vez",
-				"debe introducir mínimo 8 caracteres",
-				"opción no válida",
-				"SRDFÑFGLIHDPKFGUHWOERUGHPEAROUGHPQAEORUGHQEPOR",
-				"el formato introducido es muy largo",
-				"no has introducido nada",
-				"ahora mismo no hay nada en su carrito",
-				"no hay cartelera disponible ahora mismo, lo sentimos",
-				"debe ser mínimo una persona",
-				"ha excedido del aforo disponible"
+				"no se ha podido establecer conexión con la base de datos",//0
+				"no se ha podido procesar sus datos, pruebe más tarde...",//1
+				"ya no quedan sesiones con aforo el día seleccionado",//2
+				"formato no válido",//3
+				"el usuario no existe",//4
+				"el usuario ya existe",//5
+				"usuario y/o contraseña incorrecto/s, prueba otra vez",//6
+				"debe introducir mínimo 8 caracteres",//7
+				"opción no válida",//8
+				"SRDFÑFGLIHDPKFGUHWOERUGHPEAROUGHPQAEORUGHQEPOR",//9
+				"el formato introducido es muy largo",//10
+				"no has introducido nada",//11
+				"ahora mismo no hay nada en su carrito",//12
+				"no hay cartelera disponible ahora mismo, lo sentimos",//13
+				"debe ser mínimo una persona",//14
+				"ha excedido del aforo disponible",//15
+				"no se ha encontrado el archivo con la info de conexión con la BBDD",//16
+				"ha ocurrido un error al intentar leer el archivo"//17
 			};
 			
 		String msgError = """

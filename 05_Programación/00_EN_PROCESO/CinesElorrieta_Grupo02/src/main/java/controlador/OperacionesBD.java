@@ -1,7 +1,6 @@
 package controlador;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -10,6 +9,11 @@ import vista.*;
 
 public class OperacionesBD {
 
+	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
+	 * conectar con la bbdd
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+	
+	
 	/**
 	 * <p>este método lee los datos de el fichero <b>ipConfig.txt</b>
 	 * y los guarda en un array de la siguiente forma:</p></br>
@@ -48,11 +52,15 @@ public class OperacionesBD {
 			
 			
 			
-		}catch(Exception e) {
+		}catch(FileNotFoundException e) {
 			
-			//rellenar
+			MostrarMsg.errores(16);
 			
-		}finally {
+		} catch (IOException  e2){
+			MostrarMsg.errores(17);
+		}
+		
+		finally {
 			
 			try {
 				
@@ -86,6 +94,12 @@ public class OperacionesBD {
 		return (conexion);
 	}
 
+	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
+	 * consulta de datos
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+	
+	
+	
 	// consultar y mostrar cartelera sin volcar los datos en memoria, solo se
 	// guardan los idPelis
 	public static ArrayList<Integer> consultarCartelera() {
@@ -139,53 +153,7 @@ public class OperacionesBD {
 		return (idPelis);
 	}
 
-	// para volcar en memoria los datos de la pelicula seleccionada
-	public static Pelicula consultarPeliculaElegida(int idPeliElegida) {
 
-		String consulta = """
-				select p.NomPeli, p.duracion, g.nomgen
-				from pelicula p join genero g on p.idgen = g.idgen
-				where p.IDPeli = ?""";
-		Pelicula peliculaElegida = new Pelicula();
-
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		ResultSet result = null;
-
-		try {
-			conexion = OperacionesBD.conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-
-			sentencia.setInt(1, idPeliElegida);
-			result = sentencia.executeQuery();
-
-			result.next();
-			peliculaElegida.setIdPeli(idPeliElegida);
-			peliculaElegida.setNombrePeli(result.getString("NomPeli"));
-			peliculaElegida.setGenero(result.getString("NomGen"));
-			peliculaElegida.setDuracion(result.getInt("Duracion"));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		} finally {
-
-			try {
-				if (result != null)
-					result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-		return (peliculaElegida);
-	}
 
 	// consultar, mostrar y guardar fechas de la feli seleccionada
 	public static ArrayList<String> consultarFechas(Pelicula peliculaElegida) {
@@ -460,6 +428,129 @@ public class OperacionesBD {
 		return (aforoSala);
 	}
 
+
+
+	
+	/**
+	 * <b>validador con la DB</b>
+	 * 
+	 * @param String cadena a validar, String tipo de dato
+	 *               <p>
+	 *               Este método se conecta con la base de datos y valida que el
+	 *               dato introducido no exista para evitar errores en los campos
+	 *               "unique"
+	 *               </p>
+	 * @return boolean true = válido, false = inválido
+	 */
+	public static boolean validarExistencia(String cadena, String atributo) {
+
+		boolean valido = true;
+		Connection conexion = null;
+		PreparedStatement sentencia = null;
+		ResultSet result = null;
+		String consulta = """
+					select ?
+					from cliente
+					where ? = ?
+				""";
+
+		try {
+
+			conexion = conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+			
+			sentencia.setString(1, atributo);
+			sentencia.setString(2, atributo);
+			sentencia.setString(3, cadena);
+			
+			result = sentencia.executeQuery();
+
+			if (result.next()) {
+
+				valido = false;
+				MostrarMsg.errores(5);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		} finally {
+			
+			try {
+				if (result != null)
+					result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return valido;
+
+	}
+
+	
+
+
+		
+	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
+	 * obtencion de datos
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+	
+	// para volcar en memoria los datos de la pelicula seleccionada
+	public static Pelicula consultarPeliculaElegida(int idPeliElegida) {
+
+		String consulta = """
+				select p.NomPeli, p.duracion, g.nomgen
+				from pelicula p join genero g on p.idgen = g.idgen
+				where p.IDPeli = ?""";
+		Pelicula peliculaElegida = new Pelicula();
+
+		Connection conexion = null;
+		PreparedStatement sentencia = null;
+		ResultSet result = null;
+
+		try {
+			conexion = OperacionesBD.conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+
+			sentencia.setInt(1, idPeliElegida);
+			result = sentencia.executeQuery();
+
+			result.next();
+			peliculaElegida.setIdPeli(idPeliElegida);
+			peliculaElegida.setNombrePeli(result.getString("NomPeli"));
+			peliculaElegida.setGenero(result.getString("NomGen"));
+			peliculaElegida.setDuracion(result.getInt("Duracion"));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		} finally {
+
+			try {
+				if (result != null)
+					result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return (peliculaElegida);
+	}
+	
 	/**
 	 * 
 	 * @return este método consulta el login
@@ -524,7 +615,158 @@ public class OperacionesBD {
 		}
 		return consultado;
 	}
+	
+	// consultar y volcar datos de una sesion en concreto
+	public static Sesion consultarSesionElegida(int idSesionElegida) {
+		String consulta = """
+					select *
+					from sesion
+					where IDSesion = ?
+				""";
+		Sesion sesionElegida = new Sesion();
 
+		Connection conexion = null;
+		PreparedStatement sentencia = null;
+		ResultSet result = null;
+
+		try {
+			conexion = OperacionesBD.conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+
+			sentencia.setInt(1, idSesionElegida);
+			result = sentencia.executeQuery();
+
+			result.next();
+
+			sesionElegida.setIdSesion(idSesionElegida);
+			sesionElegida.setFecSesion(result.getString("fec"));
+			sesionElegida.setHoraInicio(result.getString("hora_ini"));
+			sesionElegida.setHoraFin(result.getString("hora_fin"));
+			sesionElegida.setPrecio(result.getDouble("precio"));
+			sesionElegida.setSalaSesion(result.getInt("NumSala"));
+			sesionElegida.setPeliculaSesion(result.getInt("IDPeli"));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		} finally {
+
+			try {
+				if (result != null)
+					result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return (sesionElegida);
+	}
+
+	public static Sala consultarSala(int IdSesion) {
+		Sala sala = new Sala();
+		String consulta = """
+					select sa.*
+					from sala sa join sesion se on sa.numsala = se.numsala
+					where IDSesion = ?
+				""";
+
+		Connection conexion = null;
+		PreparedStatement sentencia = null;
+		ResultSet result = null;
+		try {
+			conexion = OperacionesBD.conectarConBD();
+			sentencia = conexion.prepareStatement(consulta);
+
+			sentencia.setInt(1, IdSesion);
+			result = sentencia.executeQuery();
+
+			result.next();
+
+			sala.setNumSala(result.getInt("numSala"));
+			sala.setAforoSala(result.getInt("aforo"));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		}  finally {
+
+			try {
+				if (result != null)
+					result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		return (sala);
+	}
+
+	public static int consultarCompraRealizada() {
+		
+		int idCompra = -1;
+		
+		String consulta = """
+					select idCompra
+					from compra
+					order by FecCompra desc
+					limit 1
+				""";
+
+		Connection conexion = null;
+		Statement sentencia = null;
+		ResultSet result = null;
+		try {
+			conexion = OperacionesBD.conectarConBD();
+			sentencia = conexion.createStatement();
+
+
+			result = sentencia.executeQuery(consulta);
+
+			result.next();
+			idCompra = result.getInt("IDCompra");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} catch (NullPointerException e2) {
+			System.err.println(e2.getMessage());
+		} finally {
+
+			try {
+				if (result != null)
+					result.close();
+				if (sentencia != null)
+					sentencia.close();
+				if (conexion != null)
+					conexion.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		return (idCompra);
+	}
+	
+	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
+	 * insersiones
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+	
 	public static void insertarEntradasEnBD(ArrayList<Entrada> entradas, int idCompra) {
 		
 		Connection conexion = null;
@@ -674,220 +916,4 @@ public class OperacionesBD {
 			}
 		}
 	}
-
-	
-	
-	/**
-	 * <b>validador con la DB</b>
-	 * 
-	 * @param String cadena a validar, String tipo de dato
-	 *               <p>
-	 *               Este método se conecta con la base de datos y valida que el
-	 *               dato introducido no exista para evitar errores en los campos
-	 *               "unique"
-	 *               </p>
-	 * @return boolean true = válido, false = inválido
-	 */
-	public static boolean validarExistencia(String cadena, String atributo) {
-
-		boolean valido = true;
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		ResultSet result = null;
-		String consulta = """
-					select ?
-					from cliente
-					where ? = ?
-				""";
-
-		try {
-
-			conexion = conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-			
-			sentencia.setString(1, atributo);
-			sentencia.setString(2, atributo);
-			sentencia.setString(3, cadena);
-			
-			result = sentencia.executeQuery();
-
-			if (result.next()) {
-
-				valido = false;
-				MostrarMsg.errores(5);
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		} finally {
-			
-			try {
-				if (result != null)
-					result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return valido;
-
-	}
-
-	
-
-	// consultar y volcar datos de una sesion en concreto
-	public static Sesion consultarSesionElegida(int idSesionElegida) {
-		String consulta = """
-					select *
-					from sesion
-					where IDSesion = ?
-				""";
-		Sesion sesionElegida = new Sesion();
-
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		ResultSet result = null;
-
-		try {
-			conexion = OperacionesBD.conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-
-			sentencia.setInt(1, idSesionElegida);
-			result = sentencia.executeQuery();
-
-			result.next();
-
-			sesionElegida.setIdSesion(idSesionElegida);
-			sesionElegida.setFecSesion(result.getString("fec"));
-			sesionElegida.setHoraInicio(result.getString("hora_ini"));
-			sesionElegida.setHoraFin(result.getString("hora_fin"));
-			sesionElegida.setPrecio(result.getDouble("precio"));
-			sesionElegida.setSalaSesion(result.getInt("NumSala"));
-			sesionElegida.setPeliculaSesion(result.getInt("IDPeli"));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		} finally {
-
-			try {
-				if (result != null)
-					result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-		return (sesionElegida);
-	}
-
-	public static Sala consultarSala(int IdSesion) {
-		Sala sala = new Sala();
-		String consulta = """
-					select sa.*
-					from sala sa join sesion se on sa.numsala = se.numsala
-					where IDSesion = ?
-				""";
-
-		Connection conexion = null;
-		PreparedStatement sentencia = null;
-		ResultSet result = null;
-		try {
-			conexion = OperacionesBD.conectarConBD();
-			sentencia = conexion.prepareStatement(consulta);
-
-			sentencia.setInt(1, IdSesion);
-			result = sentencia.executeQuery();
-
-			result.next();
-
-			sala.setNumSala(result.getInt("numSala"));
-			sala.setAforoSala(result.getInt("aforo"));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		}  finally {
-
-			try {
-				if (result != null)
-					result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		return (sala);
-	}
-
-	public static int consultarCompraRealizada() {
-		
-		int idCompra = -1;
-		
-		String consulta = """
-					select idCompra
-					from compra
-					order by FecCompra desc
-					limit 1
-				""";
-
-		Connection conexion = null;
-		Statement sentencia = null;
-		ResultSet result = null;
-		try {
-			conexion = OperacionesBD.conectarConBD();
-			sentencia = conexion.createStatement();
-
-
-			result = sentencia.executeQuery(consulta);
-
-			result.next();
-			idCompra = result.getInt("IDCompra");
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-		} catch (NullPointerException e2) {
-			System.err.println(e2.getMessage());
-		} finally {
-
-			try {
-				if (result != null)
-					result.close();
-				if (sentencia != null)
-					sentencia.close();
-				if (conexion != null)
-					conexion.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		return (idCompra);
-	}
-		
 }

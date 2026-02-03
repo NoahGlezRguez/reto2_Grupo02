@@ -1,5 +1,7 @@
 package controlador;
 
+import java.util.ArrayList;
+
 import vista.*;
 
 /**
@@ -28,79 +30,13 @@ public class ValidarTipoEntrada {
 				if (!esCorrecto)
 					MostrarMsg.errores(2);
 			}
-			else
-				MostrarMsg.errores(0);
-			return (esCorrecto);
-		}
-		
-		/**
-		 * Valida que la entrada sea alfanumérica (letras y números, y espacios o tabulaciones).
-		 * @param entrada - String a validar introducida por el usuario.
-		 * @return true si solo contiene letras, números y espacios o tabulaciones, false en caso contrario
-		 */
-		public static boolean checkSoloAlfanumerico(String entrada) {
-			boolean esCorrecto = true;
-
-			if(entrada != null && !entrada.isBlank()) {
-				entrada = entrada.trim();
-				for (int i = 0; i < entrada.length(); i++) {
-					if (!Character.isLetterOrDigit(entrada.charAt(i)) && entrada.charAt(i) != ' ' && entrada.charAt(i) != '\t') 
-						esCorrecto = false;
-				}
-				if (!esCorrecto)
-					MostrarMsg.errores(4);
+			else {
+				MostrarMsg.errores(3);
+				esCorrecto = false;
 			}
-			else
-				MostrarMsg.errores(0);
 			return (esCorrecto);
 		}
-		
-			
-		/**
-		 * Permite dígitos y un único punto decimal como separador.
-		 * 
-		 * @param entrada - String a validar
-		 * @return true si es un número decimal válido, false en caso contrario
-		 */
-		public static boolean checkSoloNumeroDecimal(String entrada) {
-			
-			boolean esCorrecto = true;
-			boolean	hayNums = false;
-			int		numPuntos = 0;
 
-			if(entrada != null && !entrada.isBlank()) {
-				entrada = entrada.trim();
-				for (int i = 0; i < entrada.length(); i++) {
-					
-					if (Character.isDigit(entrada.charAt(i)))
-						hayNums = true;
-					
-					else if (entrada.charAt(i) == '.') {
-						
-						numPuntos++;
-						
-						if (numPuntos > 1) {
-							esCorrecto = false;
-							MostrarMsg.errores(5);
-							return (esCorrecto);
-						}
-					}
-					else {
-						esCorrecto = false;
-						MostrarMsg.errores(5);
-						return (esCorrecto);
-					}		
-				}
-				
-				if (!hayNums) {
-					MostrarMsg.errores(5);
-					return (hayNums);
-				}
-			}
-			else
-				MostrarMsg.errores(0);
-			return (esCorrecto);
-		}
 			
 		/**
 		 * Analiza un string que recibe por parámetro e indica si este solo contiene dígitos y nada más.
@@ -115,16 +51,50 @@ public class ValidarTipoEntrada {
 			entrada = entrada.trim();
 			
 			try {
-				
 				Integer.parseInt(entrada);
 				
 			}catch(Exception e) {
-				
 				esCorrecto = false;
-				
 			}
 			
 			return (esCorrecto);
+	}
+		
+		
+		//pide un nº de opcion del menu mostrado previamente, valida si es una opcion dentro de las posibles o si es la de volver
+		//si es incorrecto, vuelve a pedir el dato
+		//cuando es correcto, devuelve la opcion que ha elegido y que es correcta
+	public static <TipoDeArrayList> int opcionCorrecta(String peticion, ArrayList<TipoDeArrayList> arrayObjetos) {
+		String				entrada = null;
+		int					seleccionIndice = 0;
+		boolean				esCorrecto;
+		
+		do {
+			esCorrecto = true;
+			System.out.print(peticion);
+			entrada = Main.teclado.nextLine().trim();
+			
+			if (ValidarTipoEntrada.checkNum(entrada)) {
+				seleccionIndice = Integer.parseInt(entrada);
+				if ((seleccionIndice < 1 || seleccionIndice > arrayObjetos.size()) && (seleccionIndice != -1)) {
+					esCorrecto = false;
+					MostrarMsg.errores(8);
+				}
+				else if (seleccionIndice == -1) 
+					System.out.println("\n\t...Volviendo atrás..." + "\n".repeat(8));
+				else // opcion correcta:
+					seleccionIndice--;//se ajusta al indice real, que empezaria en 0 en vez de 1
+			}
+			else {
+				MostrarMsg.errores(8);
+				esCorrecto = false;
+			}
+			
+		} while (!esCorrecto);
+		
+		System.out.println("\n-----------------------------------------------------------------------\n");
+		
+		return (seleccionIndice);
 	}
 		
 }

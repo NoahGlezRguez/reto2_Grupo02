@@ -149,7 +149,7 @@ public class OperacionesCompra {
 	 * 
 	 * @return false en caso de que haya terminado adecuadamente, y true si se ha cancelado el proceso de compra en algún punto.
 	 */
-	public static Entrada comprarEntradas(Compra compra) {
+	private static Entrada comprarEntradas(Compra compra) {
 		
 		Entrada		nuevaEntrada = null;
 		
@@ -217,7 +217,7 @@ public class OperacionesCompra {
 		cartelera = OperacionesBD.consultarCartelera();
 		
 		if (cartelera.size() > 0) {
-			indiceEnCartelera = opcionCorrecta("\n\t·····> Introduzca el nº de la película: ", cartelera); //lo que introduce el usuario, ya validado
+			indiceEnCartelera = ValidarTipoEntrada.opcionCorrecta("\n\t·····> Introduzca el nº de la película: ", cartelera); //lo que introduce el usuario, ya validado
 			//si no quiere volver atras:
 			if (indiceEnCartelera != -1) {
 				idPeliElegida = cartelera.get(indiceEnCartelera);
@@ -238,7 +238,7 @@ public class OperacionesCompra {
 		int					seleccionIndice = 0;
 		
 		fechas = OperacionesBD.consultarFechas(peliculaElegida);
-		seleccionIndice = opcionCorrecta("\n\t·····> Introduzca el nº de la fecha que le interesa: ", fechas);
+		seleccionIndice = ValidarTipoEntrada.opcionCorrecta("\n\t·····> Introduzca el nº de la fecha que le interesa: ", fechas);
 		
 		if (seleccionIndice != -1) 
 			fechaElegida = fechas.get(seleccionIndice); 		
@@ -254,7 +254,7 @@ public class OperacionesCompra {
 		
 		idSesiones = OperacionesBD.consultarSesionesConAforoDisponible(peliculaElegida, fechaElegida, compra);
 		if (!idSesiones.isEmpty()) {
-			indiceSesionElegida = opcionCorrecta("\n\t·····> Introduzca el nº de la sesión que le interesa: ", idSesiones);
+			indiceSesionElegida = ValidarTipoEntrada.opcionCorrecta("\n\t·····> Introduzca el nº de la sesión que le interesa: ", idSesiones);
 			
 			if (indiceSesionElegida != -1) {
 				idSesionElegida = idSesiones.get(indiceSesionElegida);
@@ -267,42 +267,7 @@ public class OperacionesCompra {
 		return (sesionElegida);
 	}
 	
-	
-	//pide un nº de opcion del menu mostrado previamente, valida si es una opcion dentro de las posibles o si es la de volver
-	//si es incorrecto, vuelve a pedir el dato
-	//cuando es correcto, devuelve la opcion que ha elegido y que es correcta
-	private static <TipoDeArrayList> int opcionCorrecta(String peticion, ArrayList<TipoDeArrayList> arrayObjetos) {
-		String				entrada = null;
-		int					seleccionIndice = 0;
-		boolean				esCorrecto;
-		
-		do {
-			esCorrecto = true;
-			System.out.print(peticion);
-			entrada = Main.teclado.nextLine().trim();
-			
-			if (ValidarTipoEntrada.checkNum(entrada)) {
-				seleccionIndice = Integer.parseInt(entrada);
-				if ((seleccionIndice < 1 || seleccionIndice > arrayObjetos.size()) && (seleccionIndice != -1)) {
-					esCorrecto = false;
-					MostrarMsg.errores(8);
-				}
-				else if (seleccionIndice == -1) 
-					System.out.println("\n\t...Volviendo atrás..." + "\n".repeat(8));
-				else // opcion correcta:
-					seleccionIndice--;//se ajusta al indice real, que empezaria en 0 en vez de 1
-			}
-			else {
-				MostrarMsg.errores(8);
-				esCorrecto = false;
-			}
-			
-		} while (!esCorrecto);
-		
-		System.out.println("\n-----------------------------------------------------------------------\n");
-		
-		return (seleccionIndice);
-	}
+
 	
 	/**
 	 * 
