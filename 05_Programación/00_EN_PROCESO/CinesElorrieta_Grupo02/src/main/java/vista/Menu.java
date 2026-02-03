@@ -39,7 +39,7 @@ public class Menu {
 				seleccion = Integer.parseInt(entrada);
 				
 				if ((seleccion < 1) || (seleccion > opciones.length)) {
-					//MostrarMensajeDeError.mostrarError(8);
+					MostrarMsg.errores(8);
 					esCorrecto = false;
 				}
 				else
