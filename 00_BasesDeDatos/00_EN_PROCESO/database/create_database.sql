@@ -1,6 +1,6 @@
 /*drop database if exists cine_elorrieta; */
 create database cine_elorrieta;
-
+/*Falta el collate */
 use cine_elorrieta;
 
 create table Cine(
@@ -47,13 +47,13 @@ create table sesion(
 
 
 create table Cliente(
-
-	DNI varchar(9) primary key,
+	/* se cambió DNI a char porque siempre es de 9*/
+	DNI char(9) primary key,
     NomCli varchar (20) not null,
     Ape varchar (20) not null,
     mail varchar(100) unique not null,
     userpassword varchar(255) not null
-
+	/* con el hash podemos limitarlo a 32 creo ? */
 );
 
 
@@ -65,7 +65,7 @@ create table Compra(
     plataforma enum ('web','app') not null, 
     descuento decimal (5,2) not null, 
     total decimal(4,2) not null,
-	DNI varchar(9) not null,
+	DNI char(9) not null, /*cambiado a char aquí también*/
     constraint FK_Cliente_Compra foreign key (DNI) references Cliente (DNI) on update cascade on delete cascade
     
 );
@@ -241,15 +241,16 @@ insert into compra values(3, current_timestamp, 'web', 20.00, 11.60, '12345678A'
 insert into compra values(4, current_timestamp, 'app', 30.00, 16.31, '12345678B');
 insert into compra values(5, current_timestamp, 'web', 0.00, 8.00, '21321265A');
 insert into compra values(6, current_timestamp, 'app', 20.00, 13.28, '54769853Ñ');
-/*-----------VERIFICAR----------------*/
 
 /*----------------- fin de insert de compra -------------------*/
+
 /*--------------------- insert de entrada ---------------*/
+
 insert into entrada values(1, 1, 6.30, 15, 1);
 insert into entrada values(2, 2, 16.00, 21, 2);
 insert into entrada values(3, 2, 16.00, 36, 2);
 
-/*-----------VERIFICAR----------------*/
+
 
 
 insert into entrada values
