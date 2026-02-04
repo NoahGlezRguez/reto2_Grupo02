@@ -1,8 +1,9 @@
 <!-- header -->
 <!-- https://www.php.net/manual/en/function.require.php-->
 <?php $tit="Hogar";?>
+
 <?php include('./include/dbconnect.php');?>
-<?php require('./include/header.php');?>
+<?php $active = "class='menlisel'"; require('./include/header.php');?>
 
     <main>
         <!-- this area is the one the you will work with -->

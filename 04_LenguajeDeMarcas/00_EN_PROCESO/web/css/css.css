@@ -3,13 +3,14 @@
     list-style: none;
     justify-content: center;
     align-items: center;
-    height: 60px;
+
     background-color: #f0f0f0;
     width: 100%;
     margin: 0px;
     margin-bottom: 3em;
     padding: 0;
     border-radius: 0 0 1em 1em;
+    flex-wrap: wrap;
 }
 
 .menu li .CerSes {
@@ -28,13 +29,19 @@
     height: 100%;
     color: #333;
     font-weight: bold;
-    padding: 0px 15px;
     transition: background-color 0.3s, color 0.3s;
     height: 100%;
     display: flex;
     align-items: center;
-    border-radius: 5px;   
-  
+    border-radius: 5px; 
+    margin: 0;
+    width: 8rem;  
+
+    justify-content: center;
+}
+
+.menu li a{
+    height: 4rem;
 }
 .menu li a:hover {
     background-color: rgba(24, 134, 121, 0.654);
@@ -82,6 +89,9 @@
         align-items: center;
         justify-content: center;
         width: 100%;
+    }
+    .menu li a{
+    height: 2rem;
     }
 
     header{
@@ -255,8 +265,6 @@ header div{
 }
 
 #parrafotitulo{
-
-    
     display: flex;
     background-color: #e4d8e11f;
     box-shadow: #33333341 0px 3px 5px;  
@@ -276,9 +284,7 @@ header div{
 }
 
 .img img{
-
     max-width: 90%;
-
 }
 
 .titulopeli{
@@ -579,4 +585,10 @@ header div{
 
 .red{
     color: red;
+}
+
+#pImg{
+
+    padding: 3rem;
+   
 }
