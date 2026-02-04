@@ -99,12 +99,12 @@ if(isset($_POST['pagar'])){
     if( !$valid){
         $_SESSION['carrito'] = array();
          $carrito = array();
-        echo'<script> window.alert("Compra realizada correctamente");</script>';
+        echo'<script> winale("Compra realizada correctamente");</script>';
         
      
     }
     else{
-       echo'<script> window.alert("error en los datos");</script>'; 
+       echo'<script> winale("error en los datos");</script>'; 
     }
 }
 
