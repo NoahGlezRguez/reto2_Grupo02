@@ -90,12 +90,17 @@
                             }
                             
                             echo "</select><br><br>";
-
+                            
                         if(!$valid){
                             echo "<input type='submit' class='botonchachipiruli' value='Reservar' name='resbot'/></form>";
                         }
+
+                       
+
                         else{
-                            echo "<P class='red'> Los sentimos, el aforo está agotado.</P>";
+                            echo "<P id='red'> </P>";
+                            echo "
+                                <script> anadirMensaje('red', 'Los sentimos, el aforo está agotado.')</script>";
                         }
 
                         echo "</div>"; /* aquí en el select se debe consultar el aforo disponible para cada sesión */
