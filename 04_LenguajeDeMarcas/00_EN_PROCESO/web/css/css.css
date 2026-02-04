@@ -47,6 +47,12 @@
     
 }
 
+#megacardiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 /*--------------------------------------------------------*/
 
 /* Responsive Design for mobiles phones */
@@ -512,12 +518,17 @@ header div{
     justify-content: center;
     flex-direction: column;
     box-shadow: #0000003f 0em 2em 2em;
-    background-color: rgb(255, 255, 255);
-    border-radius: 5em;
+    background-color: rgb(255, 244, 247);
+    border-radius: 2em;
+    border: solid rgb(102, 64, 83) 0.2em;
     width: 15em;
     height: auto;
     padding: 1em;
     margin: 1em;
+}
+
+#boomshakalaka {
+    justify-self: center;
 }
 
 .sesdiv form {

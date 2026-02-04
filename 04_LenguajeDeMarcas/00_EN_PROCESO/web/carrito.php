@@ -106,9 +106,6 @@ if(isset($_POST['pagar'])){
     else{
        echo'<script> window.alert("error en los datos");</script>'; 
     }
-
-    
-   
 }
 
 // Añadimos el header
@@ -119,8 +116,8 @@ require('./include/header.php');
 
 //el valid es para verificar si entra en la sesión, es decir si el carrito tiene algo para mostrar los botones de pagar y vaciar
 $valid = true;
+echo '<div id="megacardiv">';
 foreach($carrito as $i => $sesion){
-    echo 'Esta sesion: ' . $sesion[0] . ' y la cantidad es ' . $sesion[1] . '<br>';
     $sqlses = "SELECT * FROM sesion where IDSesion=". $sesion[0] .";";
     $result = $conn->query($sqlses);
 
@@ -132,7 +129,7 @@ foreach($carrito as $i => $sesion){
             $valid = false; //valid diciendo que pasó por aquí
             $importe =  $rrftp['precio'] * $sesion[1];
             echo'<div class="sesdiv">' .
-                '<p> Pelicula: '. $rowpe['NomPeli'] .'</p>
+                '<h1>'. $rowpe['NomPeli'] .'</h1>
                 <p> Fecha: '. $rrftp['fec'] .'</p>
                 <p> Horario: '. $rrftp['hora_ini']. ' - ' . $rrftp['hora_fin'] .'</p>
                 <p> Sala: ' . $rrftp['NumSala'] . '</p>
@@ -143,9 +140,8 @@ foreach($carrito as $i => $sesion){
                 $total = $total + $importe;
         } 
     }
-
-   
 }
+echo '</div>';
 // Aqui se guradarn todas las sesiones del carrito en un string para la consulta (●'◡'●)
 $sesiontoString='';
 foreach($carrito as $i => $sesion){
@@ -155,10 +151,6 @@ foreach($carrito as $i => $sesion){
         $sesiontoString = $sesiontoString .$sesion[0];
     }
 }
-
-// esto será eliminado después de probar
-// solo es para ver si se escribe bien la sesión a string
-echo $sesiontoString;
 
 //cálculo del descuento 
 if(count($carrito)>0){
@@ -200,7 +192,7 @@ if(count($carrito)>0){
         isset($_SESSION["dni"]);
         // aquí el uso de reandoly para que no se pueda modificar el valor del dni, descuento y total
         // antes se usaba el disabled pero no se enviaba el valor por post al php
-        echo '<form method="post">
+        echo '<form method="post" id="boomshakalaka">
 
                 <input type="hidden" value="web" name="plat">
                 <input  readonly type="text" value="'. $_SESSION["dni"] .'" name="dnii">
