@@ -1,6 +1,6 @@
 /*drop database if exists cine_elorrieta; */
 create database cine_elorrieta;
-
+/*Falta el collate */
 use cine_elorrieta;
 
 create table Cine(
@@ -47,13 +47,13 @@ create table sesion(
 
 
 create table Cliente(
-
-	DNI varchar(9) primary key,
+	/* se cambió DNI a char porque siempre es de 9*/
+	DNI char(9) primary key,
     NomCli varchar (20) not null,
     Ape varchar (20) not null,
     mail varchar(100) unique not null,
     userpassword varchar(255) not null
-
+	/* con el hash podemos limitarlo a 32 creo ? */
 );
 
 
@@ -63,9 +63,9 @@ create table Compra(
 	IDCompra int unsigned auto_increment primary key,
     FecCompra timestamp default current_timestamp not null,
     plataforma enum ('web','app') not null, 
-    descuento decimal (10, 2) not null, 
-    total decimal(10, 2) not null,
-	DNI varchar(9) not null,
+    descuento decimal (5,2) not null, 
+    total decimal(4,2) not null,
+	DNI char(9) not null, /*cambiado a char aquí también*/
     constraint FK_Cliente_Compra foreign key (DNI) references Cliente (DNI) on update cascade on delete cascade
     
 );
@@ -76,7 +76,7 @@ create table Entrada(
 
 	IDEntrada int unsigned auto_increment primary key,
     CantPersonas int unsigned not null,
-    importe decimal(10,2) not null, 
+    importe decimal(4,2) not null, 
     IDSesion int unsigned not null,
     IDCompra int unsigned not null,
     constraint FK_Sesion_Entrada foreign key (IDSesion) references Sesion(IDSesion) on update cascade on delete cascade,
@@ -241,15 +241,16 @@ insert into compra values(3, current_timestamp, 'web', 20.00, 11.60, '12345678A'
 insert into compra values(4, current_timestamp, 'app', 30.00, 16.31, '12345678B');
 insert into compra values(5, current_timestamp, 'web', 0.00, 8.00, '21321265A');
 insert into compra values(6, current_timestamp, 'app', 20.00, 13.28, '54769853Ñ');
-/*-----------VERIFICAR----------------*/
 
 /*----------------- fin de insert de compra -------------------*/
+
 /*--------------------- insert de entrada ---------------*/
+
 insert into entrada values(1, 1, 6.30, 15, 1);
 insert into entrada values(2, 2, 16.00, 21, 2);
 insert into entrada values(3, 2, 16.00, 36, 2);
 
-/*-----------VERIFICAR----------------*/
+
 
 
 insert into entrada values
@@ -283,9 +284,8 @@ insert into entrada values
 
 
 /*--------------------- fin de insert de entrada ---------------*/
-select fec, idsesion, hora_ini, numsala, precio 
-from sesion
-where idpeli = 3 and fec = '2026-02-12';
+
+
 
 /* ---------------- consultas para comprobar la base de datos + consultas de ayuda para program ------------------*/
 
@@ -374,10 +374,11 @@ limit 3;
 /* ● Datos de los clientes a los que se les ha aplicado mayores descuentos en sus
 compras. */
  
- select DNI, NomCli, Ape, mail, /*sum(descuento) as descuento_total_suma*/ descuento
- from cliente natural join compra;
- /*group by DNI
- order by sum(descuento) desc;*/
+ select DNI, NomCli, Ape, mail, sum(descuento) as descuento_total_suma
+ from cliente natural join compra
+ group by descuento
+ order by sum(descuento) desc
+ limit 3;
  
  /*● Datos de los clientes que han adquirido mayor número de entradas.*/
 

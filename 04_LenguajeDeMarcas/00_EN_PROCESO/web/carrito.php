@@ -26,8 +26,11 @@ if (isset($_POST['idses']) && isset($_POST['resbot'])){
     else{
         $cantidad = 1;
     }
-    $esta_sesion[] = $idses;   //guardamos para esa sesion esa cantidad // si no se pone por defecto 1 no funciona bien
+    //usamos un array bidimensaional para guardar las sesiones y la cantidad de personas
+    // para esa sesión
+    $esta_sesion[] = $idses;   
     $esta_sesion[] = $cantidad;
+
     if($esta_sesion != null){
         $carrito[] = $esta_sesion;
     }
@@ -40,6 +43,8 @@ if(isset($_POST['vaciar'])){
     // Volcamos a la sesión el contenido actual del Carrito
     $_SESSION['carrito'] = $carrito;
 }
+
+$valid = true;
 
 if(isset($_POST['pagar'])){
     /* Aquí iría la lógica de pago*/
@@ -77,15 +82,17 @@ if(isset($_POST['pagar'])){
             $import = $sesion[1] * $rrftp['precio'];
 
             $sqlEntradas = "INSERT INTO entrada VALUES(NULL, ".$sesion[1].", " . $import . ", ". $sesion[0] .", ".$idcmax. ");";
-            $conn->query($sqlEntradas);
-
+            
+            if(!$conn->query($sqlEntradas)){
+                $valid = false;
+            }
            
         }
 
     }
 
     /* si se ejecuta la inserción de compra y también la de entradas correctamente*/
-    if($sqlcom->execute() && $conn->query($sqlEntradas)){
+    if($sqlcom->execute() && $valid){
         $_SESSION['carrito'] = array();
          $carrito = array();
         echo'<script> window.alert("Compra realizada correctamente");</script>';
@@ -145,14 +152,17 @@ foreach($carrito as $i => $sesion){
     }
 }
 
-
+// esto será eliminado después de probar
+// solo es para ver si se escribe bien la sesión a string
 echo $sesiontoString;
 
 //cálculo del descuento 
 if(count($carrito)>0){
+
     $sqlConfirm = "SELECT distinct IDPeli FROM sesion where IDSesion in (". $sesiontoString . ");";
     $rowsids = $conn->query($sqlConfirm);
 
+    //cuenta el número de filas distintas que hay en la consulta
     $numrows  = $rowsids -> num_rows;
     $descuento = 0;
 
@@ -165,6 +175,7 @@ if(count($carrito)>0){
     else if($numrows == 2){
 
         $descuento = 20;
+        //se calcula el descuento en función del total
         $descuento = $total * ($descuento/100);
         $total = $total - $descuento;
     }
@@ -183,7 +194,10 @@ if(count($carrito)>0){
     if(!$valid){ 
 
         isset($_SESSION["dni"]);
+        // aquí el uso de reandoly para que no se pueda modificar el valor del dni, descuento y total
+        // antes se usaba el disabled pero no se enviaba el valor por post al php
         echo '<form method="post">
+
                 <input type="hidden" value="web" name="plat">
                 <input  readonly type="text" value="'. $_SESSION["dni"] .'" name="dnii">
                 <label name=""> Descuento: </label>
@@ -192,6 +206,7 @@ if(count($carrito)>0){
                 <input readonly type="number" value="'.$total.'" name="total">
                 <input type="submit" value="Pagar" name="pagar"/>
                 <input type="submit" value="Vaciar Carrito" name="vaciar"/>
+
             </form>'; 
     }
 
