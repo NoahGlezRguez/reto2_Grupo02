@@ -76,6 +76,7 @@ if(isset($_POST['registrarse'])){
         </script>";
     }
 } // ALERTA ERROR ALERTA ERROR SI PONES EL MISMO DNI DOS VECES, LA WEB SE MUERE, HAY QUE CONTROLARLO
+    // no se ha controlado porque la página se creó extra sin que lo pidieran y quedamos cortos de tiempo
 
 // Cerrar conexion
 $conn->close();

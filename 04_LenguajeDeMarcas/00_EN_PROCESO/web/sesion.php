@@ -48,6 +48,7 @@
         if(isset($_POST['recogersesion']) && isset($_POST['fecsel'])){
             $fecseleccionada = $_POST['fecsel'];
             $sqlfec = "SELECT fec FROM sesion s JOIN pelicula p ON s.IDPeli = p.IDPeli WHERE p.IDPeli='$idpe' AND fec='$fecseleccionada';";
+
             $resluet = $conn->query($sqlfec);
 
             while($row = $resluet->fetch_assoc()){
@@ -81,13 +82,27 @@
                             <input type='hidden' name='idses' value='". $rowf['IDsesion'] ."'/>
                             <label> Cantidad de entradas: </label>
                             <select name='cantidad'>";
-                            
+                            $valid = true;
                             for($i = 1; $i <= $rowAforo['aforo_disponible']; $i++){
                                 echo "<option value='$i'>$i</option>";
+                                if($i>1){$valid= false;}
+                                
                             }
                             
-                            echo "</select><br><br>
-                            <input type='submit' class='botonchachipiruli' value='Reservar' name='resbot'/></form>";
+                            echo "</select><br><br>";
+                            
+                        if(!$valid){
+                            echo "<input type='submit' class='botonchachipiruli' value='Reservar' name='resbot'/></form>";
+                        }
+
+                       
+
+                        else{
+                            echo "<P id='red'> </P>";
+                            echo "
+                                <script> anadirMensaje('red', 'Los sentimos, el aforo está agotado.')</script>";
+                        }
+
                         echo "</div>"; /* aquí en el select se debe consultar el aforo disponible para cada sesión */
                     }
                 echo "</details></div> </div>";
