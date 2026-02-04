@@ -26,8 +26,11 @@ if (isset($_POST['idses']) && isset($_POST['resbot'])){
     else{
         $cantidad = 1;
     }
-    $esta_sesion[] = $idses;   //guardamos para esa sesion esa cantidad // si no se pone por defecto 1 no funciona bien
+    //usamos un array bidimensaional para guardar las sesiones y la cantidad de personas
+    // para esa sesión
+    $esta_sesion[] = $idses;   
     $esta_sesion[] = $cantidad;
+
     if($esta_sesion != null){
         $carrito[] = $esta_sesion;
     }
@@ -40,6 +43,8 @@ if(isset($_POST['vaciar'])){
     // Volcamos a la sesión el contenido actual del Carrito
     $_SESSION['carrito'] = $carrito;
 }
+
+$valid = true;
 
 if(isset($_POST['pagar'])){
     /* Aquí iría la lógica de pago*/
@@ -62,6 +67,10 @@ if(isset($_POST['pagar'])){
      $sqlIdcom= "SELECT max(IDCompra) as num
                 FROM compra";
 
+    if($sqlcom->execute()){
+        $valid =false;
+    }
+
     $idcmax = $conn->query($sqlIdcom);
     $row= $idcmax -> fetch_assoc();
     $idcmax = $row['num'];
@@ -77,15 +86,17 @@ if(isset($_POST['pagar'])){
             $import = $sesion[1] * $rrftp['precio'];
 
             $sqlEntradas = "INSERT INTO entrada VALUES(NULL, ".$sesion[1].", " . $import . ", ". $sesion[0] .", ".$idcmax. ");";
-            $conn->query($sqlEntradas);
-
+            
+            if(!$conn->query($sqlEntradas)){
+                $valid = false;
+            }
            
         }
 
     }
 
     /* si se ejecuta la inserción de compra y también la de entradas correctamente*/
-    if($sqlcom->execute() && $conn->query($sqlEntradas)){
+    if( !$valid){
         $_SESSION['carrito'] = array();
          $carrito = array();
         echo'<script> window.alert("Compra realizada correctamente");</script>';
@@ -95,9 +106,6 @@ if(isset($_POST['pagar'])){
     else{
        echo'<script> window.alert("error en los datos");</script>'; 
     }
-
-    
-   
 }
 
 // Añadimos el header
@@ -108,8 +116,8 @@ require('./include/header.php');
 
 //el valid es para verificar si entra en la sesión, es decir si el carrito tiene algo para mostrar los botones de pagar y vaciar
 $valid = true;
+echo '<div id="megacardiv">';
 foreach($carrito as $i => $sesion){
-    echo 'Esta sesion: ' . $sesion[0] . ' y la cantidad es ' . $sesion[1] . '<br>';
     $sqlses = "SELECT * FROM sesion where IDSesion=". $sesion[0] .";";
     $result = $conn->query($sqlses);
 
@@ -121,7 +129,7 @@ foreach($carrito as $i => $sesion){
             $valid = false; //valid diciendo que pasó por aquí
             $importe =  $rrftp['precio'] * $sesion[1];
             echo'<div class="sesdiv">' .
-                '<p> Pelicula: '. $rowpe['NomPeli'] .'</p>
+                '<h1>'. $rowpe['NomPeli'] .'</h1>
                 <p> Fecha: '. $rrftp['fec'] .'</p>
                 <p> Horario: '. $rrftp['hora_ini']. ' - ' . $rrftp['hora_fin'] .'</p>
                 <p> Sala: ' . $rrftp['NumSala'] . '</p>
@@ -132,9 +140,8 @@ foreach($carrito as $i => $sesion){
                 $total = $total + $importe;
         } 
     }
-
-   
 }
+echo '</div>';
 // Aqui se guradarn todas las sesiones del carrito en un string para la consulta (●'◡'●)
 $sesiontoString='';
 foreach($carrito as $i => $sesion){
@@ -145,14 +152,13 @@ foreach($carrito as $i => $sesion){
     }
 }
 
-
-echo $sesiontoString;
-
 //cálculo del descuento 
 if(count($carrito)>0){
+
     $sqlConfirm = "SELECT distinct IDPeli FROM sesion where IDSesion in (". $sesiontoString . ");";
     $rowsids = $conn->query($sqlConfirm);
 
+    //cuenta el número de filas distintas que hay en la consulta
     $numrows  = $rowsids -> num_rows;
     $descuento = 0;
 
@@ -165,6 +171,7 @@ if(count($carrito)>0){
     else if($numrows == 2){
 
         $descuento = 20;
+        //se calcula el descuento en función del total
         $descuento = $total * ($descuento/100);
         $total = $total - $descuento;
     }
@@ -183,7 +190,10 @@ if(count($carrito)>0){
     if(!$valid){ 
 
         isset($_SESSION["dni"]);
-        echo '<form method="post">
+        // aquí el uso de reandoly para que no se pueda modificar el valor del dni, descuento y total
+        // antes se usaba el disabled pero no se enviaba el valor por post al php
+        echo '<form method="post" id="boomshakalaka">
+
                 <input type="hidden" value="web" name="plat">
                 <input  readonly type="text" value="'. $_SESSION["dni"] .'" name="dnii">
                 <label name=""> Descuento: </label>
@@ -192,6 +202,7 @@ if(count($carrito)>0){
                 <input readonly type="number" value="'.$total.'" name="total">
                 <input type="submit" value="Pagar" name="pagar"/>
                 <input type="submit" value="Vaciar Carrito" name="vaciar"/>
+
             </form>'; 
     }
 
