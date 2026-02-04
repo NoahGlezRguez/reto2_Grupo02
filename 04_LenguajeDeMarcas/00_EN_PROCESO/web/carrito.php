@@ -62,8 +62,6 @@ if(isset($_POST['pagar'])){
 
      $sqlcom->bind_param("sdds", $plat, $desc, $tot, $dni);
 
-
-
      $sqlIdcom= "SELECT max(IDCompra) as num
                 FROM compra";
 
@@ -100,8 +98,6 @@ if(isset($_POST['pagar'])){
         $_SESSION['carrito'] = array();
          $carrito = array();
         echo'<script> window.alert("Compra realizada correctamente");</script>';
-        
-     
     }
     else{
        echo'<script> window.alert("error en los datos");</script>'; 
@@ -130,6 +126,7 @@ foreach($carrito as $i => $sesion){
             $importe =  $rrftp['precio'] * $sesion[1];
             echo'<div class="sesdiv">' .
                 '<h1>'. $rowpe['NomPeli'] .'</h1>
+                <p> Cine: Elorrieta Cines :0 </p>
                 <p> Fecha: '. $rrftp['fec'] .'</p>
                 <p> Horario: '. $rrftp['hora_ini']. ' - ' . $rrftp['hora_fin'] .'</p>
                 <p> Sala: ' . $rrftp['NumSala'] . '</p>
@@ -192,18 +189,20 @@ if(count($carrito)>0){
         isset($_SESSION["dni"]);
         // aquí el uso de reandoly para que no se pueda modificar el valor del dni, descuento y total
         // antes se usaba el disabled pero no se enviaba el valor por post al php
-        echo '<form method="post" id="boomshakalaka">
+        echo '<div id="boomshakalaka">
+                <form method="post">
 
                 <input type="hidden" value="web" name="plat">
-                <input  readonly type="text" value="'. $_SESSION["dni"] .'" name="dnii">
+                <input readonly type="hidden" value="'. $_SESSION["dni"] .'" name="dnii">
                 <label name=""> Descuento: </label>
-                <input  readonly type="number" value="'.$descuento.'" name="descuento">
+                <input readonly type="number" value="'.$descuento.'" name="descuento"> <br>
                 <label>Total: </label>
-                <input readonly type="number" value="'.$total.'" name="total">
-                <input type="submit" value="Pagar" name="pagar"/>
-                <input type="submit" value="Vaciar Carrito" name="vaciar"/>
+                <input readonly type="number" value="'.$total.'" name="total"> <br>
+                <input type="submit" value="Pagar" name="pagar" class="botonchachipiruli"/> <br>
+                <input type="submit" value="Vaciar Carrito" name="vaciar" class="botonchachipiruli"/>
 
-            </form>'; 
+            </form>
+            </div>'; 
     }
 
 }
