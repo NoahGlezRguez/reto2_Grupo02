@@ -3,10 +3,13 @@
 <?php require('./include/header.php');?>
 
     <main>  
-        <!-- this area is the one the you will work with -->
+       
         <h2 class="subtitulo">Registro de nuevo usuario</h2>
        
         <div class="Loginform">
+            <!-- ya que en la web no había que poderse "crear una cuenta" 
+             no nos hemos enfocado en esto y no se realizan validaciones
+             aunque funciona si introduces los datos correctamente-->
             <form action="conexion.php" method="post">
 
                 <label>Nombre:</label>
