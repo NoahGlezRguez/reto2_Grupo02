@@ -4,9 +4,18 @@ import java.sql.*;
 import modelo.*;
 import vista.*;
 
+/**
+ * Contiene los métodos necesarios para consultar y obtener datos para
+ * almacenarlos en memoria durante la ejecucion del programa.
+ */
 public class ObtenerDatosBD {
 
-	// para volcar en memoria los datos de la pelicula seleccionada
+	/**
+	 * Guarda los datos de la pelicula seleccionada por el usuario a traves
+	 * de una consulta
+	 * @param idPeliElegida - id de la pelicula seleccionada
+	 * @return - objeto de la pelicula con todos sus datos
+	 */
 	public static Pelicula consultarPeliculaElegida(int idPeliElegida) {
 
 		String consulta = """
@@ -119,7 +128,12 @@ public class ObtenerDatosBD {
 		return consultado;
 	}
 	
-	// consultar y volcar datos de una sesion en concreto
+	/**
+	 * Consulta y vuelca los datos de la sesion elegida por el usuario
+	 * en un objeto sesion
+	 * @param idSesionElegida - id de la sesion que se desea consultar
+	 * @return objeto sesion con todos los datos asignados
+	 */
 	public static Sesion consultarSesionElegida(int idSesionElegida) {
 		String consulta = """
 					select *
@@ -171,6 +185,11 @@ public class ObtenerDatosBD {
 		return (sesionElegida);
 	}
 
+	/**
+	 * 
+	 * @param IdSesion
+	 * @return
+	 */
 	public static Sala consultarSala(int IdSesion) {
 		Sala sala = new Sala();
 		String consulta = """
