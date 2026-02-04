@@ -35,7 +35,7 @@
   <header>
     <div id="logoMobile">
       <a href="index.php"><img src="img/logo.png" alt="Cines Elorrieta Logo" class="logoheader" /></a>
-      <h1 class="title">
+      <h1 id="title">
         Elorrieta <br />
         Web
       </h1>

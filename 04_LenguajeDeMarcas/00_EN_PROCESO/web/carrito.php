@@ -97,10 +97,12 @@ if(isset($_POST['pagar'])){
     if( !$valid){
         $_SESSION['carrito'] = array();
          $carrito = array();
-        echo'<script> window.alert("Compra realizada correctamente");</script>';
+        echo'<script> winale("Compra realizada correctamente");</script>';
+        
+     
     }
     else{
-       echo'<script> window.alert("error en los datos");</script>'; 
+       echo'<script> winale("error en los datos");</script>'; 
     }
 }
 
@@ -113,7 +115,6 @@ require('./include/header.php');
 
 //el valid es para verificar si entra en la sesión, es decir si el carrito tiene algo para mostrar los botones de pagar y vaciar
 $valid = true;
-echo '<h1 class="title">Carrito</h1>';
 echo '<div id="megacardiv">';
 foreach($carrito as $i => $sesion){
     $sqlses = "SELECT * FROM sesion where IDSesion=". $sesion[0] .";";
@@ -128,7 +129,7 @@ foreach($carrito as $i => $sesion){
             $importe =  $rrftp['precio'] * $sesion[1];
             echo'<div class="sesdiv">' .
                 '<h1>'. $rowpe['NomPeli'] .'</h1>
-                <p> Cine: Elorrieta Cines</p>
+                <p> Cine: Elorrieta Cines :0 </p>
                 <p> Fecha: '. $rrftp['fec'] .'</p>
                 <p> Horario: '. $rrftp['hora_ini']. ' - ' . $rrftp['hora_fin'] .'</p>
                 <p> Sala: ' . $rrftp['NumSala'] . '</p>

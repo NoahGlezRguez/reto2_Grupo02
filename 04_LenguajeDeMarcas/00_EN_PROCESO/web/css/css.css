@@ -7,7 +7,6 @@
     background-color: #f0f0f0;
     width: 100%;
     margin: 0px;
-    margin-bottom: 3em;
     padding: 0;
     border-radius: 0 0 1em 1em;
     flex-wrap: wrap;
@@ -179,11 +178,10 @@ header{
     margin: 1em;
 }
 
-.title {
+#titulo, #title {
     color: #0c4600; font-style: italic; font-size: 4em;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin: 0%;
-    justify-self: center;
 }
 
 header div{
@@ -529,7 +527,7 @@ header div{
     box-shadow: #0000003f 0em 2em 2em;
     background-color: rgb(255, 244, 247);
     border-radius: 2em;
-    border: solid rgba(241, 181, 210, 0.301) 0.2em;
+    border: solid rgb(102, 64, 83) 0.2em;
     width: 15em;
     height: auto;
     padding: 1em;
@@ -546,7 +544,6 @@ header div{
     flex-direction: row;
     padding: 1em;
     background-color: rgb(255, 215, 222);
-    margin: 2em;
 }
 
 #boomshakalaka * {
@@ -565,25 +562,7 @@ header div{
     justify-content: center;
 }
 
-.adolf {
-    border-radius: 1em;
-    padding: 2em;
-    background-color: rgba(255, 215, 222, 0.568);
-    width: 25em;
-    max-width: 70%;
-    display: flex;
-    justify-content: center; justify-items: center;
-    flex-direction: column;
-}
-
-.cinefechaform{
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    justify-content: center;
-}
-
-.red{
+#red{
     color: red;
 }
 
