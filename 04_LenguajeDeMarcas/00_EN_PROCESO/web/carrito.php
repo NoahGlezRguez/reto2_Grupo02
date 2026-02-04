@@ -108,6 +108,7 @@ if(isset($_POST['pagar'])){
 
 // Añadimos el header
 $tit="Mi Carrito";
+$active4 = "class='menlisel'";
 require('./include/header.php');
 
 // De aqui para abajo va la parte visual de la pagina
