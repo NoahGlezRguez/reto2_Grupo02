@@ -9,9 +9,17 @@ import modelo.Cliente;
 import modelo.Entrada;
 import vista.MostrarMsg;
 
+/**
+ * Contiene métodos que guardan datos que había en memoria, en la base de datos
+ */
 public class InsertarDatosBD {
 
-public static void insertarEntradas(ArrayList<Entrada> entradas, int idCompra) {
+	/**
+	 * Las entradas añadidas en el proceso de compra se almacenan en la base de datos
+	 * @param entradas - entradas que hay que almacenar
+	 * @param idCompra - id de la compra actual
+	 */
+	public static void insertarEntradas(ArrayList<Entrada> entradas, int idCompra) {
 		
 		Connection conexion = null;
 		PreparedStatement sentencia = null;
@@ -56,6 +64,13 @@ public static void insertarEntradas(ArrayList<Entrada> entradas, int idCompra) {
 		}		
 	}
 	
+	/**
+	 * Guarda todos los datos de la compra actual en la base de datos. 
+	 * @param plataforma - tipo de compra
+	 * @param descuento - importe descontado del total
+	 * @param total - importe completo 
+	 * @param dni - dni del cliente dueño de esa compra
+	 */
 	public static void insertarCompra(String plataforma, double descuento,
 									double total, String dni) {
 		Connection conexion = null;
@@ -101,12 +116,9 @@ public static void insertarEntradas(ArrayList<Entrada> entradas, int idCompra) {
 	
 	
 	/**
-	 * este método inserta un nuevo cliente en la BD
-	 * 
-	 * @param Objeto Cliente
-	 * @return boolean <br>
-	 *         <b>true</b> inserción correcta <br>
-	 *         <b>false </b> error de comunicación
+	 * Este método inserta un nuevo cliente en la BD con todos sus datos.
+	 * @param consultado - cliente nuevo que hay que almacenar en la bd
+	 * @param pw - contraseña que ha introducido
 	 */
 	public static void InsertarNuevoUsuario(Cliente consultado, String pw) {
 
