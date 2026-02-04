@@ -50,11 +50,10 @@ public class Compra {
 
 	public void guardarCompraEnBD() {
 		
-		precioCompra = (long)(calcularPrecioDeCompra() * 100) / 100;
+		precioCompra = calcularPrecioDeCompra();
 		porcenDescuento = calcularPorcenDescuento();
 		descuento = precioCompra * porcenDescuento;
-		descuento = (long)(descuento * 100) / 100;
-		importeTotal = (long)((precioCompra - descuento) * 100) / 100;
+		importeTotal = precioCompra - descuento;
 		
 		InsertarDatosBD.insertarCompra(tipoCompra, descuento, importeTotal, comprador.getDni());
 		idCompra = ObtenerDatosBD.consultarCompraRealizada();
@@ -69,7 +68,6 @@ public class Compra {
 		porcenDescuento = calcularPorcenDescuento();
 		descuento = precioCompra * porcenDescuento;
 		importeTotal = precioCompra - descuento;
-		
 		
 		cabecera = """
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -139,26 +137,13 @@ public class Compra {
 		
 		if (!entradas.isEmpty()) {
 			for (int i = 0; i < entradas.size(); i++) {
-				precioTotal += calcularPrecioDeEntrada(entradas.get(i));
+				precioTotal += entradas.get(i).getImporte();
 			}
 		}
 		
 		return (precioTotal);
 	}
-	
-	private double calcularPrecioDeEntrada(Entrada entrada) {
-		
-		double precioSesion;
-		double precioEntrada = 0;
-		
-		if (entrada != null) {
-			precioSesion = entrada.getSesionEntrada().getPrecio();
-			precioEntrada = precioSesion * entrada.getNumPersonas();
-		}
-		
-		return (precioEntrada);
-	}
-				
+					
 	public int getIdCompra() {
 		return idCompra;
 	}

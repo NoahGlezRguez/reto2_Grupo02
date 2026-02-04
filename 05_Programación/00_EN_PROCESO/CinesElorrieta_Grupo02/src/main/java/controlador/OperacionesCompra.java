@@ -29,7 +29,6 @@ public class OperacionesCompra {
 			case 0:
 				nuevaEntrada = comprarEntradas(compra);
 				if (nuevaEntrada != null) {
-					nuevaEntrada.setImporte();
 					compra.agregarEntrada(nuevaEntrada);
 				}
 				break;
@@ -200,6 +199,7 @@ public class OperacionesCompra {
 						if (Menu.siNo("¿Confirma añadir esta entrada?\n\t\t...Al elegir 'No', se perderán los datos seleccionados...") == 1)
 							nuevaEntrada = null;	
 						faseDeCompra++;
+						nuevaEntrada.setImporte();
 					}
 					break;
 			}

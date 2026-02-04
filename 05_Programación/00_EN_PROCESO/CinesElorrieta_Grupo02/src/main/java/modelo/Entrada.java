@@ -17,7 +17,7 @@ public class Entrada {
 				%-20s %25s
 				""".formatted("Película:", sesionEntrada.getPelicula().getNombrePeli(), 
 						"Cant. Personas:", String.valueOf(numPersonas),
-						"Importe:", String.valueOf(importe), 
+						"Importe:", String.format("%.2f", importe), 
 						"Fecha de la sesión:", sesionEntrada.getFecSesion(),
 						"Hora inicio:", sesionEntrada.getHoraInicio()
 
@@ -80,6 +80,9 @@ public class Entrada {
 
 	public void setImporte() {
 		importe = sesionEntrada.getPrecio() * numPersonas;
-		importe = (long)(importe * 100) / 100;
+	}
+	
+	public double getImporte() {
+		return (importe);
 	}
 }
