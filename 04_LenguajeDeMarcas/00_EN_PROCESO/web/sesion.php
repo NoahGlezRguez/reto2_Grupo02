@@ -21,29 +21,27 @@
         
 
         if($rown = $result->fetch_assoc()){
-            echo "<div class='sesionContenedor'><h1 class='subtitulo'>" . $rown['NomPeli'] . "</h1>";
+            echo "<div class='sesionContenedor'><h1 class='title'>" . $rown['NomPeli'] . "</h1>";
         }
-        echo "
-            <form>
-                <Label>Seleccione cine:  </Label>
+        echo '<div class="adolf">';
+        echo "<form class='cinefechaform'>
+                <Label>Seleccione cine</Label> <br>
                 <select>
                     <option value=''>Cine Elorrieta</option>
-                </select>
-            </form> </br></br>
-                ";
-        
-
+                </select> <br>
+            </form>";
         /*Seleccion de fecha*/
-        echo "<form method='post'>
-        <Label>Seleccione una fecha:  </Label>
+        echo "<form method='post' class='cinefechaform'>
+        <Label>Seleccione una fecha</Label> <br>
         <select name='fecsel'>";
         while($row = $resluet->fetch_assoc()){
             echo "<option value='".$row['fec']."'>".$row['fec']."</option>";
         }
-        echo "</select>
-        <input type='hidden' name='idpeli' value='".$idpe."'/> </br> </br>
+        echo "</select> <br>
+        <input type='hidden' name='idpeli' value='".$idpe."'/>
         <input type='submit' value='Mostrar sesiones' class='botonchachipiruli' name='recogersesion'>
         </form>";
+        echo '</div> <br>';
 
         if(isset($_POST['recogersesion']) && isset($_POST['fecsel'])){
             $fecseleccionada = $_POST['fecsel'];
@@ -53,7 +51,7 @@
 
             while($row = $resluet->fetch_assoc()){
 
-                echo " <h1>Sesiones para: "  . $row['fec'] . "</h1> ";
+                echo " <h1 class='title'>Sesiones para: "  . $row['fec'] . "</h1> ";
 
             
                 echo "
@@ -90,17 +88,12 @@
                             }
                             
                             echo "</select><br><br>";
-                            
+
                         if(!$valid){
                             echo "<input type='submit' class='botonchachipiruli' value='Reservar' name='resbot'/></form>";
                         }
-
-                       
-
                         else{
-                            echo "<P id='red'> </P>";
-                            echo "
-                                <script> anadirMensaje('red', 'Los sentimos, el aforo está agotado.')</script>";
+                            echo "<P class='red'> Los sentimos, el aforo está agotado.</P>";
                         }
 
                         echo "</div>"; /* aquí en el select se debe consultar el aforo disponible para cada sesión */

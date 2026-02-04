@@ -3,10 +3,10 @@
     list-style: none;
     justify-content: center;
     align-items: center;
-
     background-color: #f0f0f0;
     width: 100%;
     margin: 0px;
+    margin-bottom: 3em;
     padding: 0;
     border-radius: 0 0 1em 1em;
     flex-wrap: wrap;
@@ -34,8 +34,7 @@
     align-items: center;
     border-radius: 5px; 
     margin: 0;
-    width: 8rem;  
-
+    width: 8rem;
     justify-content: center;
 }
 
@@ -60,6 +59,7 @@
     justify-content: center;
     flex-wrap: wrap;
 }
+
 
 /*--------------------------------------------------------*/
 
@@ -88,9 +88,6 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-    }
-    .menu li a{
-    height: 2rem;
     }
 
     header{
@@ -178,10 +175,11 @@ header{
     margin: 1em;
 }
 
-#titulo, #title {
+.title {
     color: #0c4600; font-style: italic; font-size: 4em;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin: 0%;
+    justify-self: center;
 }
 
 header div{
@@ -263,6 +261,8 @@ header div{
 }
 
 #parrafotitulo{
+
+    
     display: flex;
     background-color: #e4d8e11f;
     box-shadow: #33333341 0px 3px 5px;  
@@ -282,7 +282,9 @@ header div{
 }
 
 .img img{
+
     max-width: 90%;
+
 }
 
 .titulopeli{
@@ -527,7 +529,7 @@ header div{
     box-shadow: #0000003f 0em 2em 2em;
     background-color: rgb(255, 244, 247);
     border-radius: 2em;
-    border: solid rgb(102, 64, 83) 0.2em;
+    border: solid rgba(241, 181, 210, 0.301) 0.2em;
     width: 15em;
     height: auto;
     padding: 1em;
@@ -544,6 +546,7 @@ header div{
     flex-direction: row;
     padding: 1em;
     background-color: rgb(255, 215, 222);
+    margin: 2em;
 }
 
 #boomshakalaka * {
@@ -562,12 +565,24 @@ header div{
     justify-content: center;
 }
 
-#red{
-    color: red;
+.adolf {
+    border-radius: 1em;
+    padding: 2em;
+    background-color: rgba(255, 215, 222, 0.568);
+    width: 25em;
+    max-width: 70%;
+    display: flex;
+    justify-content: center; justify-items: center;
+    flex-direction: column;
 }
 
-#pImg{
+.cinefechaform{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+}
 
-    padding: 3rem;
-   
+.red{
+    color: red;
 }

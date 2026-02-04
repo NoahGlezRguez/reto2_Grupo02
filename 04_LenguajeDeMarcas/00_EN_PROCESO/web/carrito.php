@@ -97,24 +97,22 @@ if(isset($_POST['pagar'])){
     if( !$valid){
         $_SESSION['carrito'] = array();
          $carrito = array();
-        echo'<script> winale("Compra realizada correctamente");</script>';
-        
-     
+        echo'<script> window.alert("Compra realizada correctamente");</script>';
     }
     else{
-       echo'<script> winale("error en los datos");</script>'; 
+       echo'<script> window.alert("error en los datos");</script>'; 
     }
 }
 
 // Añadimos el header
 $tit="Mi Carrito";
-$active4 = "class='menlisel'";
 require('./include/header.php');
 
 // De aqui para abajo va la parte visual de la pagina
 
 //el valid es para verificar si entra en la sesión, es decir si el carrito tiene algo para mostrar los botones de pagar y vaciar
 $valid = true;
+echo '<h1 class="title">Carrito</h1>';
 echo '<div id="megacardiv">';
 foreach($carrito as $i => $sesion){
     $sqlses = "SELECT * FROM sesion where IDSesion=". $sesion[0] .";";
@@ -129,7 +127,7 @@ foreach($carrito as $i => $sesion){
             $importe =  $rrftp['precio'] * $sesion[1];
             echo'<div class="sesdiv">' .
                 '<h1>'. $rowpe['NomPeli'] .'</h1>
-                <p> Cine: Elorrieta Cines :0 </p>
+                <p> Cine: Elorrieta Cines</p>
                 <p> Fecha: '. $rrftp['fec'] .'</p>
                 <p> Horario: '. $rrftp['hora_ini']. ' - ' . $rrftp['hora_fin'] .'</p>
                 <p> Sala: ' . $rrftp['NumSala'] . '</p>
@@ -140,56 +138,75 @@ foreach($carrito as $i => $sesion){
                 $total = $total + $importe;
         } 
     }
-<<<<<<< Updated upstream
 }
-
-echo '<form method="post">
-    <input type="submit" value="Pagar" name="pagar"/>
-    <input type="submit" value="Vaciar Carrito" name="vaciar"/>
-</form>'; /* corregir vaciar carrito */ 
-/* revisar */ 
-if(isset($_POST['vaciar'])){
-    $_SESSION['carrito'] = array();
-    $carrito = array();
-    
-=======
-
-    $sqlConfirm = "SELECT distinct IDPeli FROM pelicula where IDSesion in (".$sesion[0] ;
-}
+echo '</div>';
 // Aqui se guradarn todas las sesiones del carrito en un string para la consulta (●'◡'●)
 $sesiontoString='';
 foreach($carrito as $i => $sesion){
     if($i < count($carrito)-1){
-        $sesiontoString = $sesiontoString . "'".$sesion[0]."', ";
+        $sesiontoString = $sesiontoString .$sesion[0].", ";
     } else{
-        $sesiontoString = $sesiontoString . "'".$sesion[0]."'";
+        $sesiontoString = $sesiontoString .$sesion[0];
     }
 }
 
-echo $sesiontoString;
+//cálculo del descuento 
+if(count($carrito)>0){
 
-if(!$valid){ 
+    $sqlConfirm = "SELECT distinct IDPeli FROM sesion where IDSesion in (". $sesiontoString . ");";
+    $rowsids = $conn->query($sqlConfirm);
 
-    echo '<form method="post">
-            <inut disabled type="" value="" name="descuento"
-            <input disabled type="" value"" name="total">
-            <input type="submit" value="Pagar" name="pagar"/>
-            <input type="submit" value="Vaciar Carrito" name="vaciar"/>
-        </form>'; /* corregir vaciar carrito */ 
-        /* revisar */ 
+    //cuenta el número de filas distintas que hay en la consulta
+    $numrows  = $rowsids -> num_rows;
+    $descuento = 0;
 
->>>>>>> Stashed changes
+    if($numrows < 2){
+
+        $descuento = 0;
+        
+    }
+
+    else if($numrows == 2){
+
+        $descuento = 20;
+        //se calcula el descuento en función del total
+        $descuento = $total * ($descuento/100);
+        $total = $total - $descuento;
+    }
+
+    else{
+
+        $descuento = 30;
+        $descuento = $total * ($descuento/100);
+        $total = $total - $descuento;
+    }
+
+    
+
+
+// si el carrito tiene algo muestra los siguientes botones y valores 
+    if(!$valid){ 
+
+        isset($_SESSION["dni"]);
+        // aquí el uso de reandoly para que no se pueda modificar el valor del dni, descuento y total
+        // antes se usaba el disabled pero no se enviaba el valor por post al php
+        echo '<div id="boomshakalaka">
+                <form method="post">
+
+                <input type="hidden" value="web" name="plat">
+                <input readonly type="hidden" value="'. $_SESSION["dni"] .'" name="dnii">
+                <label name=""> Descuento: </label>
+                <input readonly type="number" value="'.$descuento.'" name="descuento"> <br>
+                <label>Total: </label>
+                <input readonly type="number" value="'.$total.'" name="total"> <br>
+                <input type="submit" value="Pagar" name="pagar" class="botonchachipiruli"/> <br>
+                <input type="submit" value="Vaciar Carrito" name="vaciar" class="botonchachipiruli"/>
+
+            </form>
+            </div>'; 
+    }
+
 }
-
-else if(isset($_POST['pagar'])){
-    /* Aquí iría la lógica de pago*/
-    echo "<p>Pago realizado con éxito. ¡Gracias por su compra!</p>";
-    $_SESSION['carrito'] = array();
-    $carrito = array();
-
-    /*falta poner el insert */
-}
-
 // Footer y cerramos la conexion
 require('./include/footer.php');
 $conn->close(); 

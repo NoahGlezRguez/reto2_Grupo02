@@ -8,7 +8,7 @@
     <main>
         <!-- this area is the one the you will work with -->
         <div id="bienvenida">
-            <h2  id="titulo">Bienvenidos a Cines Elorrieta</h2>
+            <h2  class="title">Bienvenidos a Cines Elorrieta</h2>
             <p id="parrafotitulo">Le damos la bienvenida al espacio definitivo para los apasionados del séptimo arte.
             Aquí encontrará una selección rigurosa de estrenos, análisis detallados y las últimas novedades de la industria. <br>
             Explore nuestro catálogo y descubra historias que trascienden la pantalla. Estamos comprometidos con ofrecerle una

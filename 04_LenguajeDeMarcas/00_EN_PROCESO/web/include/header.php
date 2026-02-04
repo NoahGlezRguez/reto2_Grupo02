@@ -35,7 +35,7 @@
   <header>
     <div id="logoMobile">
       <a href="index.php"><img src="img/logo.png" alt="Cines Elorrieta Logo" class="logoheader" /></a>
-      <h1 id="title">
+      <h1 class="title">
         Elorrieta <br />
         Web
       </h1>
@@ -76,13 +76,6 @@
           <li><a href='promociones.php'>Promociones</a></li>
           <li><a href='contacto.php'>Contacto</a></li>
           <li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
-    }
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
-
-    
+    }    
   ?>
 </ul>
