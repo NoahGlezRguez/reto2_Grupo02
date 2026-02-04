@@ -1,6 +1,7 @@
 <?php $tit="Contactame";?>
+<?php ?>
 <?php include('./include/dbconnect.php');?>
-<?php require('./include/header.php');?>
+<?php $active3 = "class='menlisel'"; require('./include/header.php');?>
         <!-- please do not modify this part 👆-->
 
         <!-- modificarlo a php para que se envíe en correo correctamente -->
@@ -8,7 +9,7 @@
     <main id="pagcontacto">  
         <!-- this area is the one the you will work with -->
         <div class="contactform">
-            <form  id="fromcon">
+            <form id="fromcon">
                 <h2>Contacto</h2>
                 <label for="name">Nombre:</label><br/>
                 <input type="text" id="name" name="name" required><br/><br/>

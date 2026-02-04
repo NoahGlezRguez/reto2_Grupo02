@@ -1,0 +1,22 @@
+
+----------------------------------------------
+Compra nº:                                   0
+Fecha:                              2026-02-03
+Hora:                                 17:05:53
+Plataforma:                                app
+Cliente:                                  null
+DNI:                                      null
+
+Pelicula:                    El llanto maldito
+Cant. Personas:                              1
+Importe                                    0.0
+Fecha                               2026-02-13
+Hora inicio:                          16:00:00
+
+
+Descuento:                               €0,00
+Importe:                                 €0,00
+
+Total:                                   €0,00
+----------------------------------------------
+

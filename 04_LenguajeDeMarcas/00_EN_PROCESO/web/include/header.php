@@ -35,7 +35,7 @@
   <header>
     <div id="logoMobile">
       <a href="index.php"><img src="img/logo.png" alt="Cines Elorrieta Logo" class="logoheader" /></a>
-      <h1 id="title">
+      <h1 class="title">
         Elorrieta <br />
         Web
       </h1>
@@ -56,17 +56,17 @@
   <!-- https://www.php.net/manual/en/reserved.variables.session.php-->
   <?php
     if (isset($_SESSION["nombre"])) {
-
-     
+      
+    //$active es el class="" y le das valor en la propia pag, el ?? '' es que si está vacio no hagas nada
         echo "
         <ul class='menu'>
-          <li><a href='index.php'>Inicio</a></li>
-          <li><a href='cartelera.php'>Cartelera</a></li>
-          <li><a href='promociones.php'>Promociones</a></li>
-          <li><a href='contacto.php'>Contacto</a></li>
+          <li><a href='index.php' ". ($active ?? '') ." '>Inicio</a></li>
+          <li><a href='cartelera.php' ". ($active1 ?? '') ." '>Cartelera</a></li>
+          <li><a href='promociones.php' ". ($active2 ?? '') ." '>Promociones</a></li>
+          <li><a href='contacto.php'  ". ($active3 ?? '') ." '>Contacto</a></li>
           <li> 🙋 " . $_SESSION["nombre"] . "</li>";
   
-        echo "<li><a href='carrito.php'>🛒(" . count($carrito) . ")</a></li>";
+        echo "<li><a href='carrito.php'  ". ($active4 ?? '') ." '>🛒(" . count($carrito) . ")</a></li>";
         echo "<li><a href=\"logout.php\" class=\"CerSes\"> Cerrar sesion </a></li>";
     } else {
       echo "
@@ -76,8 +76,6 @@
           <li><a href='promociones.php'>Promociones</a></li>
           <li><a href='contacto.php'>Contacto</a></li>
           <li><a href=\"login.php\"> 👤 Iniciar sesión</a></li>";
-    }
-
-    
+    }    
   ?>
 </ul>

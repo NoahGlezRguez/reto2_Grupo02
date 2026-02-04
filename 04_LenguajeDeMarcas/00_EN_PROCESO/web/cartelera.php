@@ -2,7 +2,7 @@
 <!-- https://www.php.net/manual/en/function.require.php-->
 <?php $tit="Cartelera";?>
 <?php include('./include/dbconnect.php');?>
-<?php require('./include/header.php'); ?>
+<?php $active1 = "class='menlisel'"; require('./include/header.php'); ?>
 
 <main id="cartelera">
 
@@ -45,7 +45,8 @@
                     </div>
             
                 </div>
-        </div>';
+        </div>
+        <p id="lebronjames"></p>';
     }
     
     $conn->close();
