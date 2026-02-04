@@ -67,6 +67,10 @@ if(isset($_POST['pagar'])){
      $sqlIdcom= "SELECT max(IDCompra) as num
                 FROM compra";
 
+    if($sqlcom->execute()){
+        $valid =false;
+    }
+
     $idcmax = $conn->query($sqlIdcom);
     $row= $idcmax -> fetch_assoc();
     $idcmax = $row['num'];
@@ -92,7 +96,7 @@ if(isset($_POST['pagar'])){
     }
 
     /* si se ejecuta la inserción de compra y también la de entradas correctamente*/
-    if($sqlcom->execute() && $valid){
+    if( !$valid){
         $_SESSION['carrito'] = array();
          $carrito = array();
         echo'<script> window.alert("Compra realizada correctamente");</script>';
