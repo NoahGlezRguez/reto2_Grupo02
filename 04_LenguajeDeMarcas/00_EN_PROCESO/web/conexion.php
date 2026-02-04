@@ -27,15 +27,14 @@ if(isset($_POST['registrarse'])){
 
     //condición de que si la consulta se ejecuta correctamente
     if($conn->query($sql) === true){
-        echo "<script> winale('Usuario nuevo guardado correctamente');window.location='crearCuenta.php';</script>";
+        echo "<script> alert('Usuario nuevo guardado correctamente');window.location='crearCuenta.php';</script>";
     }
 
     else{
     // mensaje de error con la base de datos
-        echo "<script> winale('Error'); window.location='crearCuenta.php';</script>";
+        echo "<script> alert('Error');window.location='crearCuenta.php';</script>";
     }
 } // ALERTA ERROR ALERTA ERROR SI PONES EL MISMO DNI DOS VECES, LA WEB SE MUERE, HAY QUE CONTROLARLO
-    // no se ha controlado porque la página se creó extra sin que lo pidieran y quedamos cortos de tiempo
 
 // Cerrar conexion
 $conn->close();

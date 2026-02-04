@@ -43,12 +43,10 @@ if (isset($_POST['iniciar_sesion'])) {
         // Si hemos encontrado el registro, iniciamos sesión y procedemos: vamos a la pagina de seleccion de cine
         header("Location: ../cartelera.php");
         exit();
-        
     } else {
         // Si no existe, mensaje de error (lo resuelvo mediante url)
         // header("Location: ../index.html?errorea=1");
-        echo "<script> winale('Usuario y/o contraseña incorrectos'); 
-        cambiarPagina('login.php');</script>";
+        echo "<script> alert('Usuario y/o contraseña incorrectos');window.location='login.php';</script>";
         exit();
     }
 }
