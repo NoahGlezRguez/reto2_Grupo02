@@ -6,8 +6,9 @@ public class ValidarLogin {
 
 	
 	/**
-	 * este método valida la existencia del usuario en la 
-	 * DB y de ser correcto devuelve un objeto cliente con los datos rellenados
+	 * este método pide al cliente que introduzca sus credenciales, valida la existencia del usuario en la 
+	 * base de datos y de ser correcto, muestra un mensaje de bienvenida y devuelve un objeto cliente
+	 * con los datos rellenados
 	 *  
 	 * @return <ul> <li>objeto cliente con datos</li> <li><b>null</b> si no existe</li> </ul>
 	 */
@@ -37,9 +38,13 @@ public class ValidarLogin {
 	}
 	
 	/**
+	 * Este método llama a otro para crear un usuario nuevo, pidiendo por pantalla que
+	 * se introduzcan los datos asociados al cliente y una vez 
+	 * validado lo envía a la base de datos. Da la opcion al cliente de confirmar
+	 * si los datos que ha introducido confirma guardarlos, y en caso de indicar que no, se
+	 * cancela la compra.
 	 * 
-	 * este método llama a otro para crear un usuario nuevo y una vez 
-	 * validado lo envía a la base de datos
+	 * @return objeto cliente con los datos intrducidos
 	 */
 	public static Cliente crearCuenta(){
 
