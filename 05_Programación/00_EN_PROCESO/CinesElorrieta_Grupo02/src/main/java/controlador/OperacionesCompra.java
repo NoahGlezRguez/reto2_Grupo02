@@ -10,6 +10,14 @@ import vista.*;
  */
 public class OperacionesCompra {
 	
+	/**
+	 * Este metodo contiene en bucle diversas operaciones dentro de la compra hasta que el usuario indique 
+	 * que ha terminado, sea por cancelar o por terminar con el pago.
+	 * Muestra un menu en pantalla con las operaciones disponibles y segun indica el usuario, va ejecutando
+	 * en ordes, recolectando los datos necesarios y almacenandolos en un objeto Compra.
+	 * 
+	 * Es aqui donde se guarda la informacion que esta viva durante la compra: entradas, cliente...
+	 */
 	public static void realizarCompra() {
 		
 		Compra 		compra = new Compra();
@@ -72,7 +80,14 @@ public class OperacionesCompra {
 		}
 	}
 	
-	//revisar y refactorizar esto
+	/**
+	 * Este metodo da la opcion al usuario de eliminar una de las entradas que hay acumuladas ya
+	 * en el carrito. Solo es posible que se ejecute mientras exista minimo una entrada en el.
+	 * Ademas, da la opcion de volver atras.
+	 * Cuando recoge la respuesta del usuario al pedir que indique cual quiere borrar, valida la respuesta
+	 * y ejecuta lo indicado, o vuelve a pedirlo si no fue valido.
+	 * @param compra
+	 */
 	private static void quitarEntradaDelCarrito(Compra compra) {
 
 		boolean esCorrecto;
@@ -102,7 +117,13 @@ public class OperacionesCompra {
 		} while (!esCorrecto);
 	}
 	
-	
+	/**
+	 * Este metodo condensa el proceso de finalizacion de la compra. Iniciar sesion, validar usuario, 
+	 * pagar, guardar la compra y las entradas en la base de datos, y ofrece la opcion de generar una 
+	 * factura de la compra.
+	 * @param compra - recibe el objeto compra con toda la informacion relevante
+	 * @return el objeto cliente con los datos correspondientes o null si se cancelo la compra
+	 */
 	private static Cliente finDeCompra(Compra compra) {
 		
 		Cliente cliente = null;
@@ -142,11 +163,13 @@ public class OperacionesCompra {
 	}
 	
 	/**
-	 * Este método gestiona el flujo del programa cuando el usuario selecciona en el menú previo "Comprar entradas".
-	 * Muestra los diferentes menús, recoge las selecciones realizadas por el usuario y si se cancela o se termina el proceso,
-	 * regresa al menú anterior. 
+	 * este metodo recoge el proceso de seleccion de la pelicula, el dia, la sesion, la cantidad de personas...
+	 * Todo lo necesario para generar una nueva entrada que añadir al carrito de la compra.
+	 * Cada fase de seleccion de informacion, permite volver atras. Se guarda en memoria la cantidad
+	 * minima de datos, y si llega al final y los datos son correctos, devuelve un objeto entrada con todos
+	 * sus valores asignados. Ademas, al final da la opcion de confirmar o cancelar.
 	 * 
-	 * @return false en caso de que haya terminado adecuadamente, y true si se ha cancelado el proceso de compra en algún punto.
+	 * @return nuevaEntrada generada con sus valores o con valor null si se cancela la operacion
 	 */
 	private static Entrada comprarEntradas(Compra compra) {
 		
@@ -207,7 +230,14 @@ public class OperacionesCompra {
 		return (nuevaEntrada);
 	}
 	
-	//el proceso de ver cartelera, elegir y peli y guardar los datos de la seleccion en un objeto pelicula
+	/**
+	 * Este metodo contiene la fase de elegir una pelicula de la cartelera disponible.
+	 * Primero muestra la cartelera, se queda con los id de las peliculas, pide al usuario que seleccione
+	 * una de las peliculas disponibles, valida su respuesta y permite la opcion de volver a la anterior
+	 * pantalla.
+	 * Cuando la opcion elegida es correcta, almacena en un objeto pelicula los datos de la pelicula.
+	 * @return - objeto pelicula con datos de la seleccion o con valor null en caso de volver atras
+	 */
 	private static Pelicula elegirPelicula() {
 		
 		ArrayList<Integer> 	cartelera = new ArrayList<>();
@@ -230,7 +260,15 @@ public class OperacionesCompra {
 		return (peliculaElegida); //sera null si puso la opcion de volver atras
 	}
 	
-	//el proceso de ver fechas posibles para la pelicula elegida, elegir una y guardar los datos de esa fecha en un string
+	/**
+	 * Este metodo recibe la pelicula elegida por el usuario y consulta que sesiones hay disponibles,
+	 * haciendo un agrupado por fecha de modo que solo muestra en pantalla los dias que se
+	 * ofrece dicha pelicula en el cine.
+	 * Pide al usuario que indique la fecha que le interesa, o si desea volver atras, y tras validar lo que 
+	 * ha introducido el usuario ejecuta lo indicado.
+	 * @param peliculaElegida - pelicula con sus datos, elegida por el cliente
+	 * @return String con la fecha seleccionada o null en caso de querer volver atras
+	 */
 	private static String elegirFecha(Pelicula peliculaElegida) {
 		
 		ArrayList<String>	fechas = new ArrayList<>();
@@ -270,9 +308,15 @@ public class OperacionesCompra {
 
 	
 	/**
-	 * 
-	 * @param sesionElegida
-	 * @return
+	 * Esta metodo recibe la sesion elegida por el cliente y el objeto de compra con los valores de la
+	 * actual compra (entradas del carrito...).
+	 * Consulta cuál es el aforo disponible para esa sesión y pide al cliente que introduzca el numero
+	 * de personas que se asignaran a esa entrada, mostrando el aforo exacto disponible para esa sesion.
+	 * Si excede o si es un valor menor que 1, sera invalido, a excepcion de si introduce -1 pues eso 
+	 * significa que desea volver atras. Devuelve solamente el numero de personas una vez ya validado.
+	 * @param sesionElegida - sesion seleccionada de la entrada
+	 * @param compra - objeto con la informacion relevante del proceso de compra activo
+	 * @return numero de personas que se asignara a la entrada o indicador de volver atras
 	 */
 	private static int elegirNumPersonas(Sesion sesionElegida, Compra compra) {
 		
