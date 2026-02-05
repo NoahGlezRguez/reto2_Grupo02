@@ -166,12 +166,7 @@ public class Compra {
 		return (porcentajeDescuento);
 	}
 	
-	/**
-	 * Este metodo calcula cual es el importe de la compra, sin aplicar descuento alguno,
-	 * añadiendo el importe total de cada entrada que hay en el carrito.
-	 * @return - importe total de la compra sin descuentos
-	 */
-	private double calcularPrecioDeCompra() {
+	public double calcularPrecioDeCompra() {
 		double precioTotal = 0;
 		
 		if (!entradas.isEmpty()) {
