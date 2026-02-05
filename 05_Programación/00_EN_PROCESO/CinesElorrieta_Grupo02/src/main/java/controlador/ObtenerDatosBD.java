@@ -11,7 +11,7 @@ import vista.*;
 public class ObtenerDatosBD {
 
 	/**
-	 * Guarda los datos de la pelicula seleccionada por el usuario a traves
+	 * Guarda los datos en un obejto, de la pelicula seleccionada por el usuario a traves
 	 * de una consulta
 	 * @param idPeliElegida - id de la pelicula seleccionada
 	 * @return - objeto de la pelicula con todos sus datos
@@ -64,13 +64,9 @@ public class ObtenerDatosBD {
 	}
 	
 	/**
-	 * 
-	 * @return este método consulta el login
+	 * Este método consulta el login y verifica si el usuario consta en la base de datos 
 	 * @param credenciales del usuario
-	 * @return <b>Objeto cliente</b> <br>
-	 *         <b>not null</b> el cliente existe y te devuelve el objeto con sus
-	 *         datos <br>
-	 *         <b>null </b> settea el objeto a null
+	 * @return Objeto cliente con datos si existe, en caso contrario, con valor null
 	 */
 	public static Cliente Consultarlogin(String dni, String password) {
 
@@ -129,7 +125,7 @@ public class ObtenerDatosBD {
 	}
 	
 	/**
-	 * Consulta y vuelca los datos de la sesion elegida por el usuario
+	 * Consulta y vuelca en un objeto los datos de la sesion elegida por el usuario
 	 * en un objeto sesion
 	 * @param idSesionElegida - id de la sesion que se desea consultar
 	 * @return objeto sesion con todos los datos asignados
@@ -186,9 +182,10 @@ public class ObtenerDatosBD {
 	}
 
 	/**
-	 * 
-	 * @param IdSesion
-	 * @return
+	 * Esta sesion consulta la sala de una sesion en concreto y guarda todos sus valores en
+	 * un objeto
+	 * @param IdSesion - la sesion de la que se consulta la sala
+	 * @return objeto sala - con valores consultados
 	 */
 	public static Sala consultarSala(int IdSesion) {
 		Sala sala = new Sala();
@@ -237,6 +234,10 @@ public class ObtenerDatosBD {
 		return (sala);
 	}
 
+	/**
+	 * Este metodo consulta la ultima compra para recoger el id de esta
+	 * @return idCompra - el id consultado
+	 */
 	public static int consultarCompraRealizada() {
 		
 		int idCompra = -1;
