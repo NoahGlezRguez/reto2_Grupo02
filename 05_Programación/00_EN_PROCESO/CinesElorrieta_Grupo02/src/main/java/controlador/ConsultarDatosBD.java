@@ -496,19 +496,18 @@ public class ConsultarDatosBD {
 		PreparedStatement sentencia = null;
 		ResultSet result = null;
 		String consulta = """
-					select ?
+					select %s
 					from cliente
-					where ? = ?
-				""";
+					where %s = ?
+				""".formatted(atributo, atributo);
 
 		try {
 
 			conexion = conectarConBD();
 			sentencia = conexion.prepareStatement(consulta);
 			
-			sentencia.setString(1, atributo);
-			sentencia.setString(2, atributo);
-			sentencia.setString(3, cadena);
+			
+			sentencia.setString(1, cadena);
 			
 			result = sentencia.executeQuery();
 
