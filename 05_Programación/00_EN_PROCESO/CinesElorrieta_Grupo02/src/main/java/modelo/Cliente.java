@@ -85,7 +85,7 @@ public class Cliente {
 	 * 
 	 * @return true si es correcto, false en caso contrario.
 	 */
-	private boolean validarDni(String cadena) {
+	public boolean validarDni(String cadena) {
 		
 		boolean valido = true;
 		int 	num = -1;
