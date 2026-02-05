@@ -132,7 +132,7 @@ public class Compra {
 		return (porcentajeDescuento);
 	}
 	
-	private double calcularPrecioDeCompra() {
+	public double calcularPrecioDeCompra() {
 		double precioTotal = 0;
 		
 		if (!entradas.isEmpty()) {
