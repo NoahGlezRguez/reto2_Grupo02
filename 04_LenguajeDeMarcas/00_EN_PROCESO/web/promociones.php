@@ -4,7 +4,7 @@
 <?php include('./include/dbconnect.php');?>
 <?php $active2 = "class='menlisel'"; require('./include/header.php'); ?>
 
-<div class="img"><img src="img/promo.png" class="indeximg" id="pImg"/></div>
+<div class="img"><img src="img/promo.png" width="50rem" heigh="50rem" class="descuent" id="pImg"/></div>
 
 <!-- footer -->
 <?php require('./include/footer.php'); ?>
