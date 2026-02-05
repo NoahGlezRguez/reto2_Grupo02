@@ -586,3 +586,12 @@ header div{
 .red{
     color: red;
 }
+
+
+
+.img #pImg{
+    max-width: 60%;
+    padding-bottom: 2rem;
+    border-radius: 1rem;
+  
+}
