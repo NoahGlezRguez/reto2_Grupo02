@@ -2,7 +2,9 @@ package modelo;
 import controlador.*;
 import vista.MostrarMsg;
 
-
+/**
+ * Esta clase genera un objeto cliente con varios atributos y varios metodos utilizados con este
+ */
 public class Cliente {
 	
 	String	dni;
@@ -77,10 +79,11 @@ public class Cliente {
 
 	
 	/**
-	 * this method checks if the letter, length and format of the Dni
-	 * is right.
+	 * Analiza si el formato de dni es correcto, sin verificar si la letra es la que pertenece.
+	 * Solamente cubre los digitos y una letra. Si la letra no fuera la correspondiente pero lo demas
+	 * si que estuviera correcto, devolvera true igualmente.
 	 * 
-	 * @return boolean true for right false for wrong 
+	 * @return true si es correcto, false en caso contrario.
 	 */
 	private boolean validarDni(String cadena) {
 		
@@ -113,9 +116,10 @@ public class Cliente {
 	
 	
 	/**
-	 * este método pide el DNI del cliente y valida el formato <br>
+	 * Este método pide el DNI del cliente y valida el formato y que no existe ya en la base de datos.
+	 * Mientras no sea correcto o este duplicado, lo vuelve a pedir.
 	 * 
-	 * @return String DNI
+	 * @return String DNI 
 	 */
 	private String pedirDni(){
 		
@@ -131,7 +135,8 @@ public class Cliente {
 	}
 	
 	/**
-	 * este método pide el nombre y valida que sean solo letras
+	 * Este método pide el nombre y valida que sean solo letras. Hasta que el formato no sea
+	 * el correcto, volverá a solicitar que se introduzcan los datos.
 	 * 
 	 * @return String nombre de cliente
 	 */
@@ -159,7 +164,8 @@ public class Cliente {
 	}
 	
 	/**
-	 * Este método pide el Email y valida el formato
+	 * Este método pide el Email y verifica que sea correcto. Hasta que el formato no sea
+	 * el correcto, volverá a solicitar que se introduzcan los datos.
 	 * @return String Email
 	 */
 	private String pedirEmail(){
@@ -203,7 +209,8 @@ public class Cliente {
 
 
 	/**
-	 * Este método pide aún apellido y lo valida
+	 * Este método pide aún apellido y lo valida. Hasta que el formato no sea
+	 * el correcto, volverá a solicitar que se introduzcan los datos.
 	 * @return String apellido validado
 	 */
 	private String pedirApellido(){
@@ -234,7 +241,8 @@ public class Cliente {
 	
 	
 	/**
-	 * Este método pide la contraseña al usuario y la valida
+	 * Este método pide la contraseña al usuario y la valida. Hasta que el formato no sea
+	 * el correcto, volverá a solicitar que se introduzcan los datos.
 	 * @return String contraseña
 	 */
 	public String  pedirContraseña(){
