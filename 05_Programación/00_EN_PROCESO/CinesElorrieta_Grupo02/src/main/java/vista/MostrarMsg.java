@@ -1,7 +1,13 @@
 package vista;
 
+/**
+ * Esta clase contiene metodos que imprimen mensajes meramente informativos.
+ */
 public class MostrarMsg {
 
+	/**
+	 * Imprime la pantalla de bienvenida de la maquina de venta de entradas del cine
+	 */
 	public static void bienvenida() {
 		        
         String a = """
@@ -26,6 +32,11 @@ public class MostrarMsg {
         System.out.print("\n".repeat(5) + a);        
 	}
 	
+	/**
+	 * Esta pantalla muestra la bienvenida al cliente de forma personalizada cuando este
+	 * inicia sesion
+	 * @param nombreCliente - nombre del cliente para personalizar un poco el mensaje
+	 */
 	public static void bienvenida(String nombreCliente) {
         
         String a = """
@@ -39,6 +50,10 @@ public class MostrarMsg {
         System.out.print(a);        
 	}
 	
+	/**
+	 * Despedida generica empleada en la pantalla de apagado de la maquina y tambien
+	 * en el final del proceso de compra.
+	 */
 	public static void despedida() {
         
         String a = """
@@ -57,7 +72,11 @@ public class MostrarMsg {
 
 	}
 	
-	
+	/**
+	 * Este metodo recibe el nombre del usuario para ofrecer una despedida personalizada
+	 * cuando este termina el proceso de compra.
+	 * @param nombreCliente - el nombre que se usa en el mensaje para eprsonalizar este.
+	 */
 	public static void despedida(String nombreCliente) {
         
         String a = """
@@ -77,22 +96,30 @@ public class MostrarMsg {
 	}
 	
 	/**
-	 * contiene un array de Strings con los siguientes mensajes: </br>
+	 * Este metodo imprime un mensaje de error segun se indique por parametros
+	 * Contiene un array de Strings con los siguientes mensajes de error: </br>
 	 * <ol start = "0">
-	 * <li>Error, formato no válido</li>
-	 * <li>Error, el usuario no existe</li>
-	 * <li>Error, el usuario ya existe</li>
-	 * <li>Error en la conexión</li>
-	 * <li>Usuario y/o contraseña incorrectos, por favor inténtelo de nuevo</li>
-	 * <li>Error, debe introducir al menos 8 caracteres</li>
-	 * <li>Por favor seleccione un opción válida</li>
-	 * <li>Por favor introduzca un valor positivo</li>
-	 * <li>Error, el formato introducido es muy largo</li>
-	 * <li></li>
+	 * <li>Error de conexion con la BBDD</li>
+	 * <li>Error al procesar los datos</li>
+	 * <li>Sesiones agotadas ese dia</li>
+	 * <li>Formato incorrecto</li>
+	 * <li>Usuario NO existe</li>
+	 * <li>Usuario YA existe</li>
+	 * <li>Usuario/pw incorrectos</li>
+	 * <li>no llega a 8 caracteres</li>
+	 * <li>opcion incorrecta</li>
+	 * <li>no hay fecha disponible</li>
+	 * <li>formato demasiado largo</li>
+	 * <li>entrada de datos vacia</li>
+	 * <li>carrito vacio</li>
+	 * <li>sin cartelera disponible</li>
+	 * <li>debe ser minimo una persona</li>
+	 * <li>excede del aforo disponible</li>
+	 * <li>no encuentra el archivo con datos de conexion con BBDD</li>
+	 * <li>error al intentar leer fichero</li>
 	 * </ol>
 	 * 
-	 * @param num ID del error
-	 * @return String mensaje  
+	 * @param num -  ID del error a mostrar
 	 */
 	public static void errores(int num) {
 				
@@ -106,7 +133,7 @@ public class MostrarMsg {
 				"usuario y/o contraseña incorrecto/s, prueba otra vez",//6
 				"debe introducir mínimo 8 caracteres",//7
 				"opción no válida",//8
-				"SRDFÑFGLIHDPKFGUHWOERUGHPEAROUGHPQAEORUGHQEPOR",//9
+				"no hay fecha disponible para esta pelicula",//9
 				"el formato introducido es muy largo",//10
 				"no has introducido nada",//11
 				"ahora mismo no hay nada en su carrito",//12
@@ -127,6 +154,9 @@ public class MostrarMsg {
 
 	}
 	
+	/**
+	 * Muestra una linea que indica que se esta en el proceso de iniciar sesion
+	 */
 	public static void mensajeSignIn() {
 		
 		String msg = 
@@ -134,6 +164,9 @@ public class MostrarMsg {
 		System.out.println(msg);
 	}
 	
+	/**
+	 * Muestra una linea que indica que se esta en el proceso de crear un nuevo usuario
+	 */
 	public static void mensajeSignUp() {
 		
 		String msg = 
@@ -142,23 +175,9 @@ public class MostrarMsg {
 	}
 	
 	/**
-	 * este método devuleve un mensaje tipo String 
-	 * <ol start = "0">
-	 * <li>Error en la conexión</li>
-	 * <li>Error en los datos</li>
-	 * <li>Nuevo usuario guardado correctamente</li>
-	 * <li>No quedan sesiones con aforo el día seleccionado</li>
-	 * <li>Se ha realizado la compra satisfactoriamente</li>
-	 * <li></li>
-	 * </ol>
-	 * @param num ID del mensaje 
-	 * @return String mensaje 
+	 * Este metodo muestra un mensaje de la operacion que se realiza, segun indica el valor recibido por parametros.
+	 * @param indice - indice del mensaje a mostrar
 	 */
-
-	
-	
-	//^^^^^^^^^CORREGIR LA DOC DE LOS METODOS^^^^^^^^^^^^^^
-
 	public static void operacionRealizada(int indice) {
 		String msg[] = {
 			"Se ha añadido una entrada a su cesta satisfactoriamente",

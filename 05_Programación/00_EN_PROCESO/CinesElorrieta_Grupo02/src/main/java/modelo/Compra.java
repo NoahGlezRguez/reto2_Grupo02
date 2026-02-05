@@ -7,7 +7,10 @@ import vista.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
+/**
+ * Esta clase genera y maneja un objeto para el proceso de compra de entradas del cine. Almacena las entradas, 
+ * los datos del cliente, los importes o descuentos...
+ */
 public class Compra {
 
 	private int					idCompra;
@@ -23,11 +26,19 @@ public class Compra {
 		
 	}
 	
+	/**
+	 * Añade una entrada nueva al carrito
+	 * @param nuevaEntrada - entrada nueva que se ha generado
+	 */
 	public void agregarEntrada(Entrada nuevaEntrada) {
 		entradas.add(nuevaEntrada);
 		MostrarMsg.operacionRealizada(0);
 	}
 	
+	/**
+	 * Elimina una entrada que existe dentro del carrito.
+	 * @param indiceEntrada - indicador de cuál es la entrada que debe borrarse
+	 */
 	public void eliminarEntrada(int indiceEntrada) {
 		
 		if (indiceEntrada >= 0 && indiceEntrada < entradas.size()) {
@@ -38,6 +49,11 @@ public class Compra {
 			MostrarMsg.errores(8);
 	}
 	
+	/**
+	 * Consulta el aforo que se ha ido ocupando en las entradas existentes dentro del carrito.
+	 * @param idSesion - sesion para la que se consulta
+	 * @return aforo ocupado de dicha sesion respecto al carrito
+	 */
 	public int conocerAforoCesta(int idSesion) {
 		int aforoCesta = 0;
 
@@ -48,6 +64,13 @@ public class Compra {
 		return (aforoCesta);
 	}
 
+	/**
+	 * Calcula inmediatamente los valores por si hubiera posibles cambios,
+	 * aplica los descuentos pertinentes tras analizar la diversidad de peliculas que hay
+	 * en el carrito y finalmente guarda en la base de datos los valores de la compra, 
+	 * posteriormente consulta cual es el id que le ha asigando esta, y con este valor, 
+	 * se guardan las entradas con el id de la compra asociado en la base de datos.
+	 */
 	public void guardarCompraEnBD() {
 		
 		precioCompra = calcularPrecioDeCompra();
@@ -60,6 +83,11 @@ public class Compra {
 		InsertarDatosBD.insertarEntradas(entradas, idCompra);
 	}
 
+	/**
+	 * Este metodo calcula inmediatamente los valores economicos del importe total o el descuento,
+	 * para mostrar el estado del carrito de forma fiable y actualizada.
+	 * Ademas, muestra la cesta/carrito con formato.
+	 */
 	public void mostrarCesta() {
 		
 		String 	cabecera, valores;
@@ -102,6 +130,12 @@ public class Compra {
 		System.out.println(valores);
 	}
 
+	/**
+	 * Este metodo calcula cual es el porcentaje de descuento en base a la diversidad de peliculas
+	 * existente en el carrito de entradas acumulado.
+	 * 
+	 * @return - el porcentaje correspondiente a la diversidad existente en el carrito
+	 */
 	private double calcularPorcenDescuento() {
 		
 		double				porcentajeDescuento = 0;
@@ -158,10 +192,7 @@ public class Compra {
 	
 	
 	/**
-	 * escribe en un fichero y funciona, se utilizará para la factura
-	 * en el reto, tendrá que recibir un objeto compra como parámetro,
-	 * consultar con la bd que entradas pertenecen a esa compra, 
-	 * obtener los datos y dar formáto a la factura.
+	 * Este metodo escribe con formato los datos de compra en formato factura en un fichero.
 	 */
 	public void generarFactura() {
 		
@@ -199,12 +230,13 @@ public class Compra {
 		
 	}
 
+
 	public void setComprador(Cliente comprador) {
 		this.comprador = comprador;
 	}
 	
 	/**
-	 * Devuelve la fecha y hora
+	 * Devuelve la fecha y hora actual en un array de dos valores tipo String con formato.
 	 * 
 	 * @return devuelve un array con fecha y hora
 	 */
@@ -218,9 +250,9 @@ public class Compra {
 	
 	
 	/**
-	 * Se encarga de generar la factura
+	 * Se encarga de generar la factura y almacenarla en un string que devuelve
 	 * 
-	 * @return la factura formateada
+	 * @return la factura formateada con los valores de la compra
 	 */
 	private String factura() {
 		String[] fechahora = tiempoActual();
@@ -260,9 +292,9 @@ public class Compra {
 	}
 	
 	/**
-	 * Genera una cadena con toda la informacion de las entradas
-	 * @param listaEntradas lista de objetos {@link Entrada}
-	 * @return un String que contiene la informacion de todas las entradas
+	 * Genera una cadena con toda la informacion de las entradas, y la guarda en un solo string.
+	 * @param listaEntradas lista de objetos {@link Entrada} con los datos respectivos
+	 * @return un String que contiene la informacion de todas las entradas 
 	 */
 	private static String recibirEntradas(ArrayList<Entrada> listaEntradas) {
 		 StringBuilder resultado = new StringBuilder();
@@ -278,13 +310,4 @@ public class Compra {
 		return resultado.toString();
 	}
 
-	
-	
-	/*¿¿QUE METODOS HACEN FALTA AQUI??*/
-	
-	/*-----------------------GETTERS Y SETTERS--------------------------------------*/
-	
-	
-	
-	/*------------------------------------------------------------------------------*/
 }
