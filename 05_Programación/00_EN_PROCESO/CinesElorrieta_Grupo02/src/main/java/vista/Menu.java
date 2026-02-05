@@ -9,12 +9,14 @@ import modelo.*;
  */
 public class Menu {
 
-	/**  ***FALTA TERMINAR ESTA DOCUMENTACION***     ***    ***  **  * * * * * * * 
+	/**  Este metodo recibe un titulo, las opciones entre las que puede elegir el usuario, y una peticion para 
+	 * el usuario para que introduzca una respuesta. Hasta que la seleccion no sea valida, repetira la peticion
+	 * con este menu. Al validarse, imprime una linea de separacion.
 	 *
-	 * @param titulo
-	 * @param opciones
-	 * @param peticion
-	 * @return
+	 * @param titulo - informacion sobre las opciones que se muestran
+	 * @param opciones - listados de opciones para el usuario
+	 * @param peticion - lo que se pide al usuario que introduzca
+	 * @return - indice real de la seleccion dentro de las opciones que se recibieron
 	 */
 	public static int opciones(String titulo, String opciones[], String peticion) {
 		
@@ -55,7 +57,12 @@ public class Menu {
 		return (seleccion);
 	}
 	
-	//sirve para las decisiones de confirmacion
+	/**
+	 * Este metodo gestiona peticiones de tipo Si o No. Si el usuario introduce una opcion incorrecta,
+	 * repite en bucle este menu. Al validarse, imprime una linea de separacion.
+	 * @param peticion
+	 * @return
+	 */
 	public static int siNo(String peticion) {
 			
 		int		seleccion = 0;
@@ -89,7 +96,13 @@ public class Menu {
 		return (seleccion - 1);
 		}
 	
-	//muestra una pelicula de la cartelera
+	/**
+	 * Este tipo de menu, imprime con formato la informacion de una pelicula.
+	 * @param i - numero de pelicula dentro de la cartelera
+	 * @param tituloPeli - titulo de la pelicula
+	 * @param genero - genero de la pelicula
+	 * @param duracion - duracion en minutos de la pelicula
+	 */
 	public static void cartelera(int i, String tituloPeli, String genero, int duracion) {
 		
 		String		pelicula = null;
@@ -106,7 +119,12 @@ public class Menu {
 		System.out.print(pelicula);
 	}
 	
-	//muestra una fecha de una peli de la cartelera
+	/**
+	 * Este menu muestra en pantalla la linea de fecha disponible para una pelicula.
+	 * @param i - numero de fecha posible
+	 * @param tituloPeli - titulo de la pelicula en cuestion
+	 * @param fechaOfertada - fecha con formato original
+	 */
 	public static void fecha(int i, String tituloPeli, String fechaOfertada) {
 		
 		String		fecha = null;
@@ -118,7 +136,15 @@ public class Menu {
 		System.out.print(fecha);
 	}
 	
-	//muestra los datos de una sesion de una pelicula de un dia determinado
+	/**
+	 * Este menu muestra en pantalla la informacion de una sesion disponible de una pelicula.
+	 * @param i - numero de sesion disponible
+	 * @param peliculaElegida - objeto de la pelicula con su informacion respectiva
+	 * @param fechaElegida - fecha de esa sesion
+	 * @param duracion - duracion de la pelicula
+	 * @param sala - sala donde se ofrece
+	 * @param precio - precio de la sesion
+	 */
 	public static void sesion(int i, String peliculaElegida, String fechaElegida, String duracion, int sala, double precio) {
 
 		String		sesionDisponible = null;
@@ -130,6 +156,12 @@ public class Menu {
 		System.out.print(sesionDisponible);
 	}
 	
+	/**
+	 * Este menu muetsra en pantalla la información actualizada del aforo disponible de esa sesion y la peticion
+	 * al cliente de que introduzca una seleccion.
+	 * @param sesionElegida
+	 * @param compra
+	 */
 	public static void pedirNumPersonas(Sesion sesionElegida, Compra compra) { 
 		
 		String	info = """
@@ -145,6 +177,13 @@ public class Menu {
 			
 	}
 	
+	/**
+	 * Este menu recibe informacion, y un indicador de qué cabecera imprimir para otros menus.
+	 * @param tipoMenu - indicador del tipo de cabecera
+	 * @param tituloPeli - pelicula indicada por el cliente
+	 * @param fecha - fecha de la sesion elegida
+	 * @param horaSesion - hora de la sesion elegida
+	 */
 	public static void cabeceraMenu(int tipoMenu, String tituloPeli, String fecha, String horaSesion) {
 		
 		String	lineaPeli = "\n\t[🎬] Película → ", fechaFormateada = null;
@@ -175,6 +214,10 @@ public class Menu {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	}
 	
+	/**
+	 * Este metodo muestra un mensaje por pantalla en casi todas las pantallas del proceso de compra para
+	 * indicar al cliente que podria volver facilmente a la pantalla anterior.
+	 */
 	public static void msgVolverAtras() {
 		String msg = """
 			\n\n\n\n--  ---  ----  ----  ----  ----  ----  ----  ----  ---  --
