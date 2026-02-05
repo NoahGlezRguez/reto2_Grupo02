@@ -1,5 +1,8 @@
 package modelo;
 
+/**
+ * Esta clase genera y gestiona un objeto con la informacion relevante de una entrada de cine creada en un proceso de compra.
+ */
 public class Entrada {
 
 	int		numPersonas;
@@ -29,6 +32,9 @@ public class Entrada {
 		
 	}
 	
+	/**
+	 * Este metodo imprime en la terminal una entrada existente en el carrito con todos sus datos.
+	 */
 	public void mostrarEntrada() {
 		
 		String	tituloPeli, fecha, hora;
