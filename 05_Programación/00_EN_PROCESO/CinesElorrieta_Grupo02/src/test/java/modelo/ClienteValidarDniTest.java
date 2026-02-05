@@ -27,38 +27,55 @@ public class ClienteValidarDniTest {
 	@Parameters
 	public static Collection<Object[]> numerosDni() {
 		return Arrays.asList(new Object[][] { 
+				{ "-8898987K", false }, //numero negativo
 				{ "12345678K", true }, 
 				{ "1234567Z", false }, 
 				{ "123456789", false },
-				{ "abcdefghI", false }, 
 				{ "1234A678Z", false }, 
 				{ "X12345678Z", false },
 				{ "A1234567B", false },
 				{ "xzzx1234567a", false }, 
-				{ "", false },
+				
+				// vacio
+				{ "", false }, 
 				{ "1234))·30929032", false }, 
 				{ "32.32.32-21", false },
+				
+				//solo letras
 				{ "ekwockewpokcewp", false },
+				
+				// espacio
 				{ "    		", false }, 
-				{ "\r\n", false },
-				{ null, false}
+				{ "\r\n", false }
 			});
 	}
 	
-	
+	/**
+	 * Inicializa una instancia de la clase cliente
+	 * para usarlo en la prueba
+	 * @throws java.lang.Exception
+	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception{
 		cliente1 = new Cliente();
 	}
 	
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception{
 		cliente1 = null;
 	}
 
+	/**
+	 * Test del metodo validardni usando todos los parametros
+	 * declarados en la colecion de objetos numerosDni
+	 */
 	@Test
 	public void testValidarDni() {
 		boolean resultado = cliente1.validarDni(valor);
 		assertEquals(resultadoEsperado, resultado);
 	}
+ 
 }

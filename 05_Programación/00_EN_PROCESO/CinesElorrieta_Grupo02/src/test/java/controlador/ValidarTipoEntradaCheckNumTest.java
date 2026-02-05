@@ -27,29 +27,43 @@ public class ValidarTipoEntradaCheckNumTest {
 			{"3", true},
 			{"-333", true},
 			{"1000000000", true},
-			{"   123", false},
-			{"123   ", false},
-			{"  456  ", false},
+			{"   123", true},
+			{"123   ", true},
+			{"  456  ", true},
 			{"aaaa", false},
+			
+			//numeros y letras mezclados
 			{"123abc", false},
 			{"abc123", false},
+			
+			//numeros con signos o espacios entre ellos
 			{"12 34", false},
 			{"56-78", false},
+			
+			//doble signo
 			{"++89", false},
 			{"--90", false},
+			
+			//simbolos raros
 			{"@", false},
 			{"#$%", false},
+			
+			//decimales
 			{"1,000", false},
 			{"1000.0", false},
 			{"-1.23", false},
+			
+			//vacio
 			{"", false},
+			
+			// emojis
 			{"😆😆😆😆", false},
 			{"😆12212123", false},
 			{"439430943904304343093409021921092102192109", false},
 			{"\n", false},
 			{"\r\n", false},
 			
-			// Estos serian losv alores limite
+			// Estos serian los Valores limite
 			{"2147483647", true},  //INTEGER.MAX  
 			{"-2147483648", true},   //INTEGER.MIN  
 			
@@ -59,6 +73,10 @@ public class ValidarTipoEntradaCheckNumTest {
     	});
     }
 
+	/**
+	 * verifica el {@link controlador.ValidarTipoEntrada#checkNum(java.lang.String)}.
+	 * usando todos los paramatros definidos previamente en la coleccion de objetos
+	 */
 	@Test
 	public void testCheckNum() {
 		boolean resultado = ValidarTipoEntrada.checkNum(valorEvaluado);

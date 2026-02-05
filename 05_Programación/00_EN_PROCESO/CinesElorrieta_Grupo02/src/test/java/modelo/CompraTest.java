@@ -10,14 +10,19 @@ public class CompraTest {
 	private static Pelicula pelicula1 = null;
 	private static Compra nuevaCompra = null;
 
+	private static final double preciopeli1 = 7.8;
+	private static final int cantidadPersonas1 = 37;
+
+	private static final double preciopeli2 = 13.5;
+	private static final int cantidadPersonas2 = 3;
+	
+	/**
+	 * Inicializacion de todos los recursos para hacer la compra
+	 * de entradas y calcular su precio
+	 * @throws Exception
+	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		double preciopeli1 = 7.8;
-		int cantidadPersonas1 = 37;
-
-		double preciopeli2 = 13.5;
-		int cantidadPersonas2 = 3;
-
 		pelicula1 = new Pelicula();
 		pelicula1.setNombrePeli("El llanto maldito");
 
@@ -55,12 +60,20 @@ public class CompraTest {
 
 	}
 
+	/**
+	 * 
+	 * @throws Exception
+	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		pelicula1 = null;
 		nuevaCompra = null;
 	}
 
+	/**
+	 * Test para comprobar si obtenemos el mismo
+	 * nombre asignado previamente
+	 */
 	@Test
 	public void testComprobarNombrePeliculaElegida() {
 		String nombrePeliculaEsperado = "El llanto maldito";
@@ -68,9 +81,12 @@ public class CompraTest {
 		assertEquals(nombrePeliculaEsperado, nombrePelicula);
 	}
 
+	/**
+	 * Test para calcular el precio de compra de dos entradas
+	 */
 	@Test
 	public void testPrecioCompra() {
-		double resultadoEsperado = (7.8 * 37) + (13.5 * 3);
+		double resultadoEsperado = (preciopeli1 * cantidadPersonas1) + (preciopeli2 * cantidadPersonas2);
 		double resultado = nuevaCompra.calcularPrecioDeCompra();
 		assertTrue(resultadoEsperado == resultado);
 	}
