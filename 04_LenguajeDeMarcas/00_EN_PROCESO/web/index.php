@@ -45,7 +45,7 @@
 
                 
 
-            <script>contarClicks("peliestrenos1");</script>';
+            <script>contarClicks("peliestrenos1");</script>
             
             <h2 id="prox">Proximamente en nuestros cines </h2>
             <div class="img">
