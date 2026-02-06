@@ -24,5 +24,15 @@ function anadirMensaje(id, msg){
     document.getElementById(id).innerHTML = msg;
 }
 
-
-
+/**
+ * esta funciín muestra en la consola las veces que se le hace click a un elemento 
+ * @param {*} id 
+ */
+function contarClicks(id) {
+    
+    let contador = 0;
+    document.getElementById(id) .addEventListener("click", function() {
+        contador++;
+        console.log("Clicks:", contador);
+    });
+}

@@ -39,9 +39,10 @@
         }
         echo "</select> <br>
         <input type='hidden' name='idpeli' value='".$idpe."'/>
-        <input type='submit' value='Mostrar sesiones' class='botonchachipiruli' name='recogersesion'>
+        <input type='submit' value='Mostrar sesiones' class='botonchachipiruli' name='recogersesion' id='recogersesion'/>
         </form>";
         echo '</div> <br>';
+
 
         if(isset($_POST['recogersesion']) && isset($_POST['fecsel'])){
             $fecseleccionada = $_POST['fecsel'];

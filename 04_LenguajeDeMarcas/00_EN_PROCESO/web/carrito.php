@@ -202,11 +202,13 @@ if(count($carrito)>0){
                 <input readonly type="number" value="'.$descuento.'" name="descuento"> <br>
                 <label>Total: </label>
                 <input readonly type="number" value="'.$total.'" name="total"> <br>
-                <input type="submit" value="Pagar" name="pagar" class="botonchachipiruli"/> <br>
+                <input type="submit" value="Pagar" name="pagar" class="botonchachipiruli" id="pago"/> <br>
                 <input type="submit" value="Vaciar Carrito" name="vaciar" class="botonchachipiruli"/>
 
             </form>
             </div>'; 
+
+            
     }
 
 }

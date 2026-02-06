@@ -36,14 +36,10 @@ if (isset($_POST['iniciar_sesion'])) {
     } else {
         // Si no existe, mensaje de error (lo resuelvo mediante url)
         // header("Location: ../index.html?errorea=1");
-<<<<<<< Updated upstream
+
         echo "<script> alert('Usuario y/o contraseña incorrectos');window.location='login.php';</script>";
-=======
-        echo "<script>
-            winale('Usuario y/o contraseña incorrectos');
-            tp('login.php');
-            </script>";
->>>>>>> Stashed changes
+
+
         exit();
     }
 }
@@ -64,7 +60,7 @@ if(isset($_POST['registrarse'])){
     if($conn->query($sql) === true){
         echo "<script>
         winale('Usuario nuevo guardado correctamente');
-        tp('crearCuenta.php');
+        tp('cartelera.php');
         </script>";
     }
 

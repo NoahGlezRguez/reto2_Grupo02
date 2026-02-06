@@ -24,7 +24,7 @@
 
             <div class="estrenos">
                 <div class="peliestrenos" >
-                    <img src="img/proximo2.png" alt="pelicula" width ="150px" height="200px">
+                    <img src="img/proximo2.png" alt="pelicula" width ="150px" height="200px" id="peliestrenos1">
                     <p><b>Título:</b> Secret admirer <br> <b>Estreno: </b> 22 de Agosto</p>
                 </div>
 
@@ -43,7 +43,10 @@
                 </div> 
             </div >
 
+                
 
+            <script>contarClicks("peliestrenos1");</script>';
+            
             <h2 id="prox">Proximamente en nuestros cines </h2>
             <div class="img">
 
