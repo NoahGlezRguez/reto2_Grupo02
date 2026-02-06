@@ -1,4 +1,4 @@
-/*drop database if exists cine_elorrieta; */
+drop database if exists cine_elorrieta; 
 create database cine_elorrieta
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_es_0900_ai_ci;
@@ -239,7 +239,7 @@ insert into cliente values('54769853Ñ', 'J', 'PG', 'jpg@gmail.com', md5('JPEG')
 insert into compra values(1, '2026-01-20 18:30:00', 'web', 0.00, 6.30, '12345678A'); /* bien */
 insert into compra values(2, '2026-01-20 18:31:00', 'app', 12.80, 51.2,  '54769853Ñ'); /* bien */
 insert into compra values(3, '2026-01-20 18:32:00', 'web', 2.64, 10.56, '12345678A');/* bien */
-insert into compra values(4, '2026-01-20 18:33:00', 'app', 6.45, 15,05, '12345678B');/* bien */
+insert into compra values(4, '2026-01-20 18:33:00', 'app', 6.45, 15.05, '12345678B');/* bien */
 insert into compra values(5, '2026-01-20 18:34:00', 'web', 0.00, 8.00, '21321265A');/* bien*/
 insert into compra values(6, '2026-01-20 18:35:00', 'app', 6.93, 27.72, '54769853Ñ');/*bien  */
 
@@ -349,7 +349,7 @@ compras. */
  
  select DNI, NomCli, Ape, mail, sum(descuento) as descuento_total_suma
  from cliente natural join compra
- group by descuento
+ group by descuento, DNI
  order by sum(descuento) desc
  limit 3;
  
