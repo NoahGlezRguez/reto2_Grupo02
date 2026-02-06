@@ -29,14 +29,14 @@ create table pelicula(
     IDGen int unsigned not null,
     constraint FK_genero_pelicula foreign key (IDGen) references Genero (IDGen) on update cascade
 );
- /* pendiente de revisart si creamos el atributo aforo disponible */
+
 create table sesion(
 
 	IDsesion int unsigned auto_increment primary key, 
     fec date not null,
     hora_ini time not null,
     hora_fin time not null,
-    precio decimal(4,2) not null,
+    precio decimal(10,2) not null,
     IDCine int unsigned not null,
 	NumSala int unsigned not null,
     IDPeli int unsigned not null,
@@ -63,8 +63,8 @@ create table Compra(
 	IDCompra int unsigned auto_increment primary key,
     FecCompra timestamp default current_timestamp not null,
     plataforma enum ('web','app') not null, 
-    descuento decimal (5,2) not null, 
-    total decimal(4,2) not null,
+    descuento decimal (10,2) not null, 
+    total decimal(10,2) not null,
 	DNI char(9) not null, /*cambiado a char aquí también*/
     constraint FK_Cliente_Compra foreign key (DNI) references Cliente (DNI) on update cascade on delete cascade
     
@@ -76,7 +76,7 @@ create table Entrada(
 
 	IDEntrada int unsigned auto_increment primary key,
     CantPersonas int unsigned not null,
-    importe decimal(4,2) not null, 
+    importe decimal(10,2) not null, 
     IDSesion int unsigned not null,
     IDCompra int unsigned not null,
     constraint FK_Sesion_Entrada foreign key (IDSesion) references Sesion(IDSesion) on update cascade on delete cascade,
@@ -235,12 +235,12 @@ insert into cliente values('54769853Ñ', 'J', 'PG', 'jpg@gmail.com', md5('JPEG')
 /*------------------- fin de insert de cliente -----------------*/
 
 /*----------------- insert de compra -------------------*/
-insert into compra values(1, current_timestamp, 'web', 0.00, 6.30, '12345678A');
-insert into compra values(2, current_timestamp, 'app', 20.00, 25.6,  '54769853Ñ');
-insert into compra values(3, current_timestamp, 'web', 20.00, 11.60, '12345678A');
-insert into compra values(4, current_timestamp, 'app', 30.00, 16.31, '12345678B');
-insert into compra values(5, current_timestamp, 'web', 0.00, 8.00, '21321265A');
-insert into compra values(6, current_timestamp, 'app', 20.00, 13.28, '54769853Ñ');
+insert into compra values(1, current_timestamp, 'web', 0.00, 6.30, '12345678A'); /* bien */
+insert into compra values(2, current_timestamp, 'app', 12.80, 51.2,  '54769853Ñ'); /* bien */
+insert into compra values(3, current_timestamp, 'web', 2.64, 10.56, '12345678A');/* bien */
+insert into compra values(4, current_timestamp, 'app', 6.45, 15,05, '12345678B');/* bien */
+insert into compra values(5, current_timestamp, 'web', 0.00, 8.00, '21321265A');/* bien*/
+insert into compra values(6, current_timestamp, 'app', 6.93, 27.72, '54769853Ñ');/*bien  */
 
 /*----------------- fin de insert de compra -------------------*/
 
@@ -249,46 +249,15 @@ insert into compra values(6, current_timestamp, 'app', 20.00, 13.28, '54769853Ñ
 insert into entrada values(1, 1, 6.30, 15, 1);
 insert into entrada values(2, 2, 16.00, 21, 2);
 insert into entrada values(3, 2, 16.00, 36, 2);
-
-
-
-
-insert into entrada values
-(null, 1, 6.30, 3, 3),
-(null, 1, 6.90, 7, 3);
-
-
-
-insert into entrada values
-(null, 1, 7.22, 1, 4),
-(null, 1, 8.00, 9, 4),
-(null, 1, 6.30, 15, 4);
-
-
-
-insert into entrada values
-(null, 1, 8.00, 10, 5);
-
-
-
-insert into entrada values
-(null, 1, 7.65, 8, 6),
-(null, 1, 9.00, 11, 6);
-
-
-
-insert into entrada values
-(null, 2, 18.00, 11, 6);
-
-/*-----------VERIFICAR----------------*/
-
-
+insert into entrada values(null, 1, 6.30, 3, 3), (null, 1, 6.90, 7, 3);
+insert into entrada values(null, 1, 7.22, 1, 4), (null, 1, 8.00, 9, 4), (null, 1, 6.30, 15, 4);
+insert into entrada values (null, 1, 8.00, 10, 5);
+insert into entrada values(null, 1, 7.65, 8, 6), (null, 1, 9.00, 11, 6);
+insert into entrada values (null, 2, 18.00, 11, 6);
 /*--------------------- fin de insert de entrada ---------------*/
 
 
-
 /* ---------------- consultas para comprobar la base de datos + consultas de ayuda para program ------------------*/
-
 
 /*datos que debería contener la entrada*/
 select identrada, cantpersonas, importe, numsala, hora_ini, hora_fin, nompeli, nomgen
@@ -315,11 +284,14 @@ and hora_ini > current_time();
 
 
 
-
+							   
 
 
 /* *************************************** CONSULTAS DEL RETO ***************************************** */
 /* ======================================================================================================== */
+
+use cine_elorrieta;
+
 /*● El dinero recaudado por cada película con recaudación superior a una cifra
 dada.*/
 select sum(importe) 'recaudacion €', nompeli, idpeli
