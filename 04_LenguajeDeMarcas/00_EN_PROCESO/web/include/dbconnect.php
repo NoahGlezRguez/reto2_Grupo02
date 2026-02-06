@@ -1,10 +1,10 @@
 <?php
 session_start();
 # cambiar: servidor, puerto, password
-$db_server = '10.5.6.44';
-$db_port = 3307;
-$db_user_name = 'dam_v';
-$db_password = 'Elorrieta00-';
+$db_server = '127.0.0.1';
+$db_port = 3306;
+$db_user_name = 'root';
+$db_password = '10759148';
 $db_name = 'cine_elorrieta';
 
 
@@ -47,8 +47,8 @@ if (isset($_POST['iniciar_sesion'])) {
     } else {
         // Si no existe, mensaje de error (lo resuelvo mediante url)
         // header("Location: ../index.html?errorea=1");
-        echo "<script> winale('Usuario y/o contraseña incorrectos'); 
-        cambiarPagina('login.php');</script>";
+        echo "<script> window.alert('Usuario y/o contraseña incorrectos'); 
+        window.location='../login.php';</script>";
         exit();
     }
 }

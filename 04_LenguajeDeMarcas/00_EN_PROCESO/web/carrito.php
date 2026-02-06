@@ -28,6 +28,7 @@ if (isset($_POST['idses']) && isset($_POST['resbot'])){
     }
     //usamos un array bidimensaional para guardar las sesiones y la cantidad de personas
     // para esa sesión
+   
     $esta_sesion[] = $idses;   
     $esta_sesion[] = $cantidad;
 
@@ -114,6 +115,8 @@ require('./include/header.php');
 $valid = true;
 echo '<h1 class="title">Carrito</h1>';
 echo '<div id="megacardiv">';
+//elimina todo lo que no sea un array porque daba un error
+    $carrito = array_filter($_SESSION['carrito'], 'is_array');
 foreach($carrito as $i => $sesion){
     $sqlses = "SELECT * FROM sesion where IDSesion=". $sesion[0] .";";
     $result = $conn->query($sqlses);
