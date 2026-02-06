@@ -32,8 +32,8 @@
             </form>";
         /*Seleccion de fecha*/
         echo "<form method='post' class='cinefechaform'>
-        <Label>Seleccione una fecha</Label> <br>
-        <select name='fecsel'>";
+        <Label for='fecsel'>Seleccione una fecha</Label> <br>
+        <select name='fecsel' id='fecsel'>";
         while($row = $resluet->fetch_assoc()){
             echo "<option value='".$row['fec']."'>".$row['fec']."</option>";
         }
@@ -79,8 +79,8 @@
                             echo "<p> De ". $rowf['hora_ini']. " hasta " . $rowf['hora_fin'] ."</p> <p> Sala " . $rowf['NumSala'] . "</p> <p> Precio: " . $rowf['precio'] . "€</p>";
                             echo "<form action='carrito.php' method='post'>
                             <input type='hidden' name='idses' value='". $rowf['IDsesion'] ."'/>
-                            <label> Cantidad de entradas: </label>
-                            <select name='cantidad'>";
+                            <label for='cantid'> Cantidad de entradas: </label>
+                            <select name='cantidad' id='cantid'>";
                             $valid = true;
                             for($i = 1; $i <= $rowAforo['aforo_disponible']; $i++){
                                 echo "<option value='$i'>$i</option>";

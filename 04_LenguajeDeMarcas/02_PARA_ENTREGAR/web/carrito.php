@@ -198,10 +198,10 @@ if(count($carrito)>0){
 
                 <input type="hidden" value="web" name="plat">
                 <input readonly type="hidden" value="'. $_SESSION["dni"] .'" name="dnii">
-                <label name=""> Descuento: </label>
-                <input readonly type="number" value="'.$descuento.'" name="descuento"> <br>
-                <label>Total: </label>
-                <input readonly type="number" value="'.$total.'" name="total"> <br>
+                <label type="descuento"> Descuento: </label>
+                <input readonly type="number" value="'.$descuento.'" name="descuento" id="descuento"> <br>
+                <label type="total">Total: </label>
+                <input readonly type="number" value="'.$total.'" name="total" id="total"> <br>
                 <input type="submit" value="Pagar" name="pagar" class="botonchachipiruli" id="pago"/> <br>
                 <input type="submit" value="Vaciar Carrito" name="vaciar" class="botonchachipiruli"/>
 
