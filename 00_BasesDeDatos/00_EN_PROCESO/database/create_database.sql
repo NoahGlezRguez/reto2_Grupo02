@@ -236,12 +236,12 @@ insert into cliente values('54769853Ñ', 'J', 'PG', 'jpg@gmail.com', md5('JPEG')
 /*------------------- fin de insert de cliente -----------------*/
 
 /*----------------- insert de compra -------------------*/
-insert into compra values(1, current_timestamp, 'web', 0.00, 6.30, '12345678A'); /* bien */
-insert into compra values(2, current_timestamp, 'app', 12.80, 51.2,  '54769853Ñ'); /* bien */
-insert into compra values(3, current_timestamp, 'web', 2.64, 10.56, '12345678A');/* bien */
-insert into compra values(4, current_timestamp, 'app', 6.45, 15,05, '12345678B');/* bien */
-insert into compra values(5, current_timestamp, 'web', 0.00, 8.00, '21321265A');/* bien*/
-insert into compra values(6, current_timestamp, 'app', 6.93, 27.72, '54769853Ñ');/*bien  */
+insert into compra values(1, '2026-01-20 18:30:00', 'web', 0.00, 6.30, '12345678A'); /* bien */
+insert into compra values(2, '2026-01-20 18:31:00', 'app', 12.80, 51.2,  '54769853Ñ'); /* bien */
+insert into compra values(3, '2026-01-20 18:32:00', 'web', 2.64, 10.56, '12345678A');/* bien */
+insert into compra values(4, '2026-01-20 18:33:00', 'app', 6.45, 15,05, '12345678B');/* bien */
+insert into compra values(5, '2026-01-20 18:34:00', 'web', 0.00, 8.00, '21321265A');/* bien*/
+insert into compra values(6, '2026-01-20 18:35:00', 'app', 6.93, 27.72, '54769853Ñ');/*bien  */
 
 /*----------------- fin de insert de compra -------------------*/
 
