@@ -1,7 +1,7 @@
 drop database if exists cine_elorrieta; 
 create database cine_elorrieta
-character set utf8mb4
-collate utf8mb4_es_0900_ai_ci;
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_es_0900_ai_ci;
 use cine_elorrieta;
 
 create table Cine(
@@ -326,6 +326,12 @@ from sesion s natural join pelicula p
 where s.precio > 6
 group by nompeli;
 
+/* por genero y por precio */
+select count(*) 'numero de sesiones', nompeli
+from sesion s natural join pelicula p
+where p.idgen = (select idgen from genero where nomgen = 'terror') and s.precio > 6
+group by nompeli;
+
 /*Debe permitir filtrar por género
 o por precio.?????*/
 
@@ -349,7 +355,7 @@ compras. */
  
  select DNI, NomCli, Ape, mail, sum(descuento) as descuento_total_suma
  from cliente natural join compra
- group by descuento, DNI
+ group by DNI
  order by sum(descuento) desc
  limit 3;
  
