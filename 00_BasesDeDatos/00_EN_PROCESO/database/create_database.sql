@@ -1,6 +1,7 @@
 /*drop database if exists cine_elorrieta; */
-create database cine_elorrieta;
-/*Falta el collate */
+create database cine_elorrieta
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_es_0900_ai_ci;
 use cine_elorrieta;
 
 create table Cine(
