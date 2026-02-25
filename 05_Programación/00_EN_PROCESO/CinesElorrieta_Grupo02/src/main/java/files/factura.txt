@@ -20,3 +20,90 @@ Importe:                                 €0,00
 Total:                                   €0,00
 ----------------------------------------------
 
+
+----------------------------------------------
+Compra nº:                                  64
+
+Fecha:                              2026-02-11
+Hora:                                 15:30:12
+Plataforma:                                app
+Cliente:                                     k
+DNI:                                 12345678K
+
+Película:                            El sillón
+Cant. Personas:                              5
+Importe:                                38,25€
+Fecha de la sesión:                 2026-02-18
+Hora inicio:                          18:30:00
+
+
+Descuento:                              €0,00€
+Importe:                               €38,25€
+
+Total:                                 €38,25€
+----------------------------------------------
+
+
+----------------------------------------------
+Compra nº:                                  65
+
+Fecha:                              2026-02-11
+Hora:                                 15:37:35
+Plataforma:                                app
+Cliente:                                     k
+DNI:                                 12345678K
+
+Película:                           Pinky Pink
+Cant. Personas:                              2
+Importe:                                14,40€
+Fecha de la sesión:                 2026-02-17
+Hora inicio:                          15:30:00
+
+Película:                    El llanto maldito
+Cant. Personas:                             10
+Importe:                                78,00€
+Fecha de la sesión:                 2026-02-14
+Hora inicio:                          21:30:00
+
+
+Descuento:                             €18,48€
+Importe:                               €92,40€
+
+Total:                                 €73,92€
+----------------------------------------------
+
+
+----------------------------------------------
+Compra nº:                                  66
+
+Fecha:                              2026-02-11
+Hora:                                 15:38:27
+Plataforma:                                app
+Cliente:                                     k
+DNI:                                 12345678K
+
+Película:                         Sweet dreams
+Cant. Personas:                              2
+Importe:                                17,00€
+Fecha de la sesión:                 2026-02-12
+Hora inicio:                          20:00:00
+
+Película:                    Tú, ella, él y yo
+Cant. Personas:                             11
+Importe:                                67,10€
+Fecha de la sesión:                 2026-02-15
+Hora inicio:                          18:00:00
+
+Película:                 Un pobre de derechas
+Cant. Personas:                              2
+Importe:                                13,00€
+Fecha de la sesión:                 2026-02-15
+Hora inicio:                          18:30:00
+
+
+Descuento:                             €29,13€
+Importe:                               €97,10€
+
+Total:                                 €67,97€
+----------------------------------------------
+
